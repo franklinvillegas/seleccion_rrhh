@@ -55,8 +55,14 @@ class EvaluacionController extends Controller
         return response()->json(['message' => 'Registro creado correctamente', 'identificador' => $nuevo->id]);
     }
 
-    public function modificar(Request $request, $id){
-        $editado = Evaluacion::findOrFail($id);
+    public function mostrar($id){
+        $mostrar = DB::select("select e.id,pc.id,p.documento,p.apellido_pat,p.apellido_mat,p.nombres,e.num_registro,sp.nombre_sede as provincia, sr.nombre_sede as region
+        from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
+                                            INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
+                                            INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
+                                            INNER JOIN persona p ON pc.id_persona=p.id 
+                                                                WHERE pc.id_sede_provincial=". 1 ." and id_convocatoria=".$id);
+        return $mostrar;
         $editado->update($request->all());
         return response()->json(['message' => 'Registro actualizado correctamente']);
     }

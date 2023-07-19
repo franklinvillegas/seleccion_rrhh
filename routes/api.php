@@ -377,7 +377,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('llenar_combo', [EvaluacionController::class, 'llenarCombo']);
     Route::get('listar', [EvaluacionController::class, 'listar']);
     Route::post('crear', [EvaluacionController::class, 'crear']);
-    Route::put('modificar/{id}', [EvaluacionController::class, 'modificar']);
+    Route::get('mostrar/{id}', [EvaluacionController::class, 'mostrar']);
     Route::post('modificar_imagen', [EvaluacionController::class, 'modificarImagen']);
     Route::put('eliminar/{id}', [EvaluacionController::class, 'eliminar']);
     Route::put('activar/{id}', [EvaluacionController::class, 'activar']);
