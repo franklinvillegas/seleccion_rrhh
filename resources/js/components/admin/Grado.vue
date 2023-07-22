@@ -78,6 +78,7 @@ export default {
           { label: "Apelldio Materno", field: "apellido_mat" },
           { label: "Nombres", field: "nombres" },
           { label: "Numero Registro", field: "num_registro" },
+          { label: "Fecha Registro", field: "created_at" },
         ],
         total: 0,
         filtrosBusqueda: {

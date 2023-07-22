@@ -59,10 +59,10 @@ import EvaluacionPregunta from './components/campus/EvaluacionPregunta';
 Vue.use(Router)
 
 let routes = [
-    // {
-    //     path: '*', 
-    //     redirect: '/inicio',
-    // },
+    {
+        path: '*', 
+        redirect: '/inicio',
+    },
 
     {
         path: '/auth',

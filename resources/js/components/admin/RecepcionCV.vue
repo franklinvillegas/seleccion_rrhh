@@ -25,6 +25,9 @@
         <div class="row justify-content-md-center">
             <div class="col-md-5">
                 <div class="form-group">
+                    <label for="">DOCUMENTO</label>
+                    <input type="text" name="" class="form-control" v-model="mostrar.documento" disabled>
+                </div><div class="form-group">
                     <label for="">APELLIDOS</label>
                     <input type="text" name="" class="form-control" v-model="mostrar.apellidos" disabled>
                 </div>
@@ -65,6 +68,7 @@ export default {
                 ordenPor: 'apellido_pat',
             },
             mostrar: {
+                documento : '',
                 apellidos: '',
                 nombres: '',
                 provincia: '',
@@ -83,10 +87,12 @@ export default {
                     if (response.data.flag == 0) {
                         this.$toastr.e(response.data.message);
                         this.mostrar.apellidos = data.persona[0].apellido_pat + " " + data.persona[0].apellido_mat;
+                        this.mostrar.documento = data.persona[0].documento;
                         this.mostrar.nombres = data.persona[0].nombres;
                         this.mostrar.provincia = data.proceso[0].id_sede_provincial;
                         this.mostrar.num_registro = data.num_registro;
                         console.log(data);
+                        this.numeroDni='';
                     } else {
                         this.$toastr.s(response.data.message);
                         this.mostrar.apellidos = data.persona[0].apellido_pat + " " + data.persona[0].apellido_mat;
@@ -94,6 +100,8 @@ export default {
                         this.mostrar.provincia = data.proceso[0].id_sede_provincial;
                         this.mostrar.num_registro = data.numero;
                         console.log(data);
+                        this.numeroDni='';
+
                     }
                     //         this.listaAlumnos.data=response.data.lista;
                     //         console.log(this.listaAlumnos);

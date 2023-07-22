@@ -81,7 +81,7 @@
 
                                     <li class="mb-1" v-if="validarPermisos(1)">
                                         <a class="nav-link" href="#" @click.prevent="redireccionar('Datos')">
-                                            <i class="fas fa-address-card me-3"></i>Evaluacin de CV
+                                            <i class="fas fa-address-card me-3"></i>Evaluación de CV
                                         </a>
                                     </li>
                                     <li class="mb-1" v-if="validarPermisos(1)">

@@ -375,9 +375,10 @@ Route::middleware('auth:api')->group(function () {
   Route::group(['prefix' => 'evaluacion'], function () {
     Route::get('ver/{id}/{convocatoria}', [EvaluacionController::class, 'ver']);
     Route::get('llenar_combo', [EvaluacionController::class, 'llenarCombo']);
-    Route::get('listar', [EvaluacionController::class, 'listar']);
-    Route::post('crear', [EvaluacionController::class, 'crear']);
+    Route::get('evaluar/{id}/{convocatoria}', [EvaluacionController::class, 'evaluar']);
+    Route::post('guardar', [EvaluacionController::class, 'guardar']);
     Route::get('mostrar/{id}', [EvaluacionController::class, 'mostrar']);
+    Route::get('mostrarReporte/{id}', [EvaluacionController::class, 'mostrarReporte']);
     Route::post('modificar_imagen', [EvaluacionController::class, 'modificarImagen']);
     Route::put('eliminar/{id}', [EvaluacionController::class, 'eliminar']);
     Route::put('activar/{id}', [EvaluacionController::class, 'activar']);

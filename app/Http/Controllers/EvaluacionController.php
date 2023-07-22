@@ -37,9 +37,15 @@ class EvaluacionController extends Controller
     }        
     }
     
-    public function llenarCombo(){
-        $select = Evaluacion::select('id', 'Evaluacion')->where('activo',true)->get();
-        return $select;
+    public function evaluar($dni,$convocatoria){
+        $proceso = DB::select("select e.id as id,pc.id as id_persona_convocatoria,p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,e.num_registro,rnp,office,certificado_lengua,
+        profesion,grado,criterio_cv_1,criterio_cv_2,criterio_cv_3,criterio_cv_4,criterio_cv_5,criterio_cv_6,estado_cv, e.updated_at
+        from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
+                                            INNER JOIN persona p ON pc.id_persona=p.id 
+                                                                WHERE pc.id_sede_provincial=1 and id_convocatoria=" .$convocatoria. " and documento=" .$dni);
+        
+        return response()->json(['message' => 'Se realizo el registro', 'data' => $proceso]);
+        ;
     }
    
     public function listar(){
@@ -49,22 +55,30 @@ class EvaluacionController extends Controller
         return $lista->get();
     }
 
-    public function crear(Request $request){
-        $nuevo = new Evaluacion($request->all());
-        $nuevo->save();
-        return response()->json(['message' => 'Registro creado correctamente', 'identificador' => $nuevo->id]);
+    public function guardar(Request $request){
+        $guardar = Evaluacion::findOrFail($request->id);        
+        $guardar->update($request->all());
+        return response()->json(['message' => 'Guardado correctamente', 'identificador' => $guardar->id]);
     }
 
     public function mostrar($id){
-        $mostrar = DB::select("select e.id,pc.id,p.documento,p.apellido_pat,p.apellido_mat,p.nombres,e.num_registro,sp.nombre_sede as provincia, sr.nombre_sede as region
+        $mostrar = DB::select("select e.id,pc.id,p.documento,p.apellido_pat,p.apellido_mat,p.nombres,e.num_registro,sp.nombre_sede as provincia, sr.nombre_sede as region,e.created_at
         from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
                                             INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
                                             INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
                                             INNER JOIN persona p ON pc.id_persona=p.id 
                                                                 WHERE pc.id_sede_provincial=". 1 ." and id_convocatoria=".$id);
         return $mostrar;
-        $editado->update($request->all());
-        return response()->json(['message' => 'Registro actualizado correctamente']);
+    }
+    public function mostrarReporte($id){
+        $mostrar = DB::select("select e.id as id,pc.id as id_persona_convocatoria,p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,e.num_registro,rnp,office,certificado_lengua,
+        profesion,grado,criterio_cv_1,criterio_cv_2,criterio_cv_3,criterio_cv_4,criterio_cv_5,criterio_cv_6,estado_cv, e.created_at,sp.nombre_sede as provincia, sr.nombre_sede as region
+        from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
+            INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
+            INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
+            INNER JOIN persona p ON pc.id_persona=p.id 
+                WHERE pc.id_sede_provincial=1 and id_convocatoria=" .$id);
+        return $mostrar;
     }
 
     public function eliminar($id){
