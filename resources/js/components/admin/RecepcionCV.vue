@@ -84,6 +84,7 @@ export default {
             axios.get("api/evaluacion/ver/" + this.numeroDni + "/" + this.idConvocatoria)
                 .then((response) => {
                     let data = response.data;
+                    this.mostrar.documento=this.numeroDni;
                     if (response.data.flag == 0) {
                         this.$toastr.e(response.data.message);
                         this.mostrar.apellidos = data.persona[0].apellido_pat + " " + data.persona[0].apellido_mat;

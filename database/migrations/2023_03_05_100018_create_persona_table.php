@@ -18,9 +18,11 @@ class CreatePersonaTable extends Migration
         Schema::create('persona', function (Blueprint $table) {
             $table->id();
             $table->string('nombres', 250);
-            $table->string('apellido_pat', 50);
-            $table->string('apellido_mat', 50);
-            $table->string('sexo', 50);
+            $table->string('apellido_pat', 50)->nullable();
+            $table->string('apellido_mat', 50)->nullable();
+            $table->string('sexo', 50)->nullable();
+            $table->string('grado', 50)->nullable();
+            $table->string('profesion', 50)->nullable();
             $table->string('telefono2', 50)->nullable();
             $table->date('fecha_nac')->nullable();
             $table->string('documento')->nullable();
@@ -28,7 +30,7 @@ class CreatePersonaTable extends Migration
             $table->timestamps();
            
         });
-        DB::table('persona')->insert(array('nombres'=>'admin', 'apellido_pat'=>'admin', 'apellido_mat'=>'admin', 'sexo'=>'-'));
+        DB::table('persona')->insert(array('nombres'=>'admin', 'apellido_pat'=>'admin', 'apellido_mat'=>'admin', 'sexo'=>'-','grado'=>'admin'));
         /*docentes*/
     }
 

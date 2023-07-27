@@ -22,6 +22,7 @@ Route::group(['prefix' => 'exportar'], function () {
     Route::get('etiquetas', [ExportController::class, 'exportEtiquetas']);
     Route::get('ocupaciones', [ExportController::class, 'exportOcupaciones']);
     Route::get('palabras-vetadas', [ExportController::class, 'exportPalabrasVetadas']);
+    Route::get('reporte_cv', [ExportController::class, 'reporteCV']);
     Route::get('usuarios', [ExportController::class, 'exportUsuarios']);
 
 });

@@ -12,6 +12,7 @@ use App\Http\Controllers\CalificacionPreguntaController;
 use App\Http\Controllers\BandejaController;
 use App\Http\Controllers\PalabrasBetadasController;
 use App\Http\Controllers\AyudaController;
+use App\Http\Controllers\ExportController;
 
 use App\Http\Controllers\NivelController;
 use App\Http\Controllers\GradoController;
@@ -36,7 +37,7 @@ use App\Http\Controllers\ConvocatoriaController;
 use App\Http\Controllers\EvaluacionPreguntaController;
 use App\Http\Controllers\EvaluacionRespuestaMatriculaController;
 use App\Http\Controllers\AsistenciaController;
-use App\Http\Controllers\NotasController;
+use App\Http\Controllers\ExamenController;
 use App\Http\Controllers\CriterioController;
 
 
@@ -193,7 +194,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('ver/{dni}', [EvaluacionController::class, 'ver']);
     Route::get('llenar_combo', [EvaluacionController::class, 'llenarCombo']);
     Route::get('listar', [EvaluacionController::class, 'listar']);
-    Route::post('crear', [EvaluacionController::class, 'crear']);
+    Route::post('guardar', [EvaluacionController::class, 'guardar']);
     Route::put('modificar/{id}', [EvaluacionController::class, 'modificar']);
     Route::post('modificar_imagen', [EvaluacionController::class, 'modificarImagen']);
     Route::put('eliminar/{id}', [EvaluacionController::class, 'eliminar']);
@@ -413,18 +414,18 @@ Route::middleware('auth:api')->group(function () {
     Route::get('obtener_ayudas', [AsistenciaController::class, 'obtenerAyudas']);
   });
    //Grupo Asistencia
-   Route::group(['prefix' => 'notas'], function () {
-    Route::get('ver/{id}', [NotasController::class, 'ver']);
-    Route::get('llenar_combo', [NotasController::class, 'llenarCombo']);
-    Route::get('listar', [NotasController::class, 'listar']);
-    Route::get('listarEvaluacion/{id_evaluacion}', [NotasController::class, 'listarEvaluacion']);
-    Route::post('crear', [NotasController::class, 'crear']);
-    Route::post('reporte', [NotasController::class, 'reporte']);
-    Route::put('modificar/{id}', [NotasController::class, 'modificar']);
-    Route::post('modificar_imagen', [NotasController::class, 'modificarImagen']);
-    Route::put('eliminar/{id}', [NotasController::class, 'eliminar']);
-    Route::put('activar/{id}', [NotasController::class, 'activar']);
-    Route::get('obtener_ayudas', [NotasController::class, 'obtenerAyudas']);
+   Route::group(['prefix' => 'examen'], function () {
+    Route::get('ver/{id}', [ExamenController::class, 'ver']);
+    Route::get('llenar_combo', [ExamenController::class, 'llenarCombo']);
+    Route::get('listar', [ExamenController::class, 'listar']);
+    Route::get('listarEvaluacion/{id_evaluacion}', [ExamenController::class, 'listarEvaluacion']);
+    Route::post('generar', [ExamenController::class, 'generar']);
+    Route::post('reporte', [ExamenController::class, 'reporte']);
+    Route::put('modificar/{id}', [ExamenController::class, 'modificar']);
+    Route::post('modificar_imagen', [ExamenController::class, 'modificarImagen']);
+    Route::put('eliminar/{id}', [ExamenController::class, 'eliminar']);
+    Route::put('activar/{id}', [ExamenController::class, 'activar']);
+    Route::get('obtener_ayudas', [ExamenController::class, 'obtenerAyudas']);
   });
   //Grupo Criterio
   Route::group(['prefix' => 'criterio'], function () {
@@ -467,6 +468,19 @@ Route::middleware('auth:api')->group(function () {
     Route::put('eliminar/{id}', [EvaluacionRespuestaMatriculaController::class, 'eliminar']);
     Route::put('activar/{id}', [EvaluacionRespuestaMatriculaController::class, 'activar']);
     Route::get('obtener_ayudas', [EvaluacionRespuestaMatriculaController::class, 'obtenerAyudas']);
+  });
+  //Grupo EvaluacionRespuestaMatricula
+  Route::group(['prefix' => 'export'], function () {
+    Route::post('reporte_cv', [ExportController::class, 'reporteCV']);
+    Route::get('llenar_combo', [ExportController::class, 'llenarCombo']);
+    Route::get('listar', [ExportController::class, 'listar']);
+    Route::get('listarRespuestas/{id_evaluacion}/{id_matricula}', [ExportController::class, 'listarRespuestas']);
+    Route::post('crear', [ExportController::class, 'crear']);
+    Route::put('modificar/{id}', [ExportController::class, 'modificar']);
+    Route::post('modificar_imagen', [ExportController::class, 'modificarImagen']);
+    Route::put('eliminar/{id}', [ExportController::class, 'eliminar']);
+    Route::put('activar/{id}', [ExportController::class, 'activar']);
+    Route::get('obtener_ayudas', [ExportController::class, 'obtenerAyudas']);
   });
 
 });

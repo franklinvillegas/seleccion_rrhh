@@ -203,6 +203,18 @@ class ExportController extends Controller
         $cabecera = ['Emisor','Receptor','Mensaje','Estado','F.Registro',];
         return new GeneralExport($resultado, $valores, $cabecera);
     }
+    public function reporteCV(Request $request){
+        $query = "select p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,e.num_registro, e.created_at
+        from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
+            INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
+            INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
+            INNER JOIN persona p ON pc.id_persona=p.id 
+                WHERE pc.id_sede_provincial=1 and id_convocatoria=1";
+        $resultado = DB::select($query);
+        $valores = array("titulo"=>"Reporte de Recepción de CVs", "nombre_hoja"=>"CV Recibidos", "nom_archivo"=>"Reporte_CV_Recibidos_SN_ENLA2023".date('Y_m_d'));
+        $cabecera = ['DNI','Nombres','Registro','Fecha_Registro',];
+        return new GeneralExport($resultado, $valores, $cabecera);
+    }
 
     public function prueba(){
         try {

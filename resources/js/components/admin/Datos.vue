@@ -72,12 +72,12 @@
                         procesos de recojo de información a escala nacional en el sector público o privado. o seis (06)
                         meses en coordinación/ supervisión en proyectos de aplicación de instrumentos de evaluación a nivel
                         nacional o regional. </td>
-                    <td><input type="radio" name="experiencia" v-model="evaluacion1.criterio_cv_1" value="1"> Si <input
-                            type="radio" name="experiencia" v-model="evaluacion1.criterio_cv_1" value="2"> No </td>
+                    <td><input type="radio" name="experiencia" v-model="evaluacion1.criterio_cv_1" value="SI"> Si <input
+                            type="radio" name="experiencia" v-model="evaluacion1.criterio_cv_1" value="NO"> No </td>
                 </tr>
                 <tr>
                     <th scope="row" style="background-color: #95D0FC;">CUMPLE CON LO SOLICITADO</th>
-                    <td v-if="evaluacion1.rnp == 1 && evaluacion1.office == 1 && evaluacion1.criterio_cv_1 == 1"><label
+                    <td v-if="evaluacion1.rnp == 'SI' && evaluacion1.office == 'SI' && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.profesion=='SI' "><label
                             :value="evaluacion1.estado_cv">SI</label> </td>
                     <td v-else><label :value="evaluacion1.estado_cv">NO</label></td>
 
@@ -93,26 +93,26 @@
                 </tr>
                 <tr>
                     <td scope="row">Formacion academica</td>
-                    <td><input type="text" name="formacion" v-model="evaluacion1.grado" @keypress="soloNumeros4($event)"
+                    <td v-if="evaluacion1.rnp == 'SI' && evaluacion1.office == 'SI' && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.profesion=='SI' "><input type="text" name="formacion" v-model="evaluacion1.grado" @keypress="soloNumeros4($event)"
                             maxlength="1"> </td>
                 </tr>
                 <tr>
                     <td scope="row">Experiencia en coordinacion/supervision en proyectos de aplicacionde instrumentos de
                         evaluacion a nivel nacional o regional</td>
-                    <td><input type="text" name="expAplicacion" v-model="evaluacion1.criterio_cv_2"
+                    <td v-if="evaluacion1.rnp == 'SI' && evaluacion1.office == 'SI' && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.profesion=='SI' "><input type="text" name="expAplicacion" v-model="evaluacion1.criterio_cv_2"
                             @keypress="soloNumeros5($event)" maxlength="1"> </td>
                 </tr>
                 <tr>
                     <td scope="row">Experiencia en actividades de Coordinacion y Supervison de procesos de recojo de
                         einformacion a escala nacional en el sector publico o privado</td>
-                    <td><input type="text" name="expRecojo" v-model="evaluacion1.criterio_cv_3"
+                    <td v-if="evaluacion1.rnp == 'SI' && evaluacion1.office == 'SI' && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.profesion=='SI' "><input type="text" name="expRecojo" v-model="evaluacion1.criterio_cv_3"
                             @keypress="soloNumeros5($event)" maxlength="1"> </td>
                 </tr>
                 <tr>
                     <td scope="row">Es opcional: cuenta con constancio o certificaso emitido por alguna organizacion
                         indigena o centros de estudios en lengua originaria o declaracion judara en lengua originaria
                         (Ashaninka, Qechua Cusco Collao, Qechua Chanka, Shipibo-Konibo, Aymara, Awajun)</td>
-                    <td><input type="radio" name="lengua" v-model="evaluacion1.certificado_lengua" value="SI"> Si <input
+                    <td v-if="evaluacion1.rnp == 'SI' && evaluacion1.office == 'SI' && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.profesion=='SI' "><input type="radio" name="lengua" v-model="evaluacion1.certificado_lengua" value="SI"> Si <input
                             type="radio" name="lengua" v-model="evaluacion1.certificado_lengua" value="NO"> No </td>
                 </tr>
 
