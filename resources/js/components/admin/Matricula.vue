@@ -44,7 +44,7 @@
 </template>
   
 <script>
-import Helper from "../../services/Helper";
+// import Helper from "../../services/Helper";
 
 export default {
     name: "Ayudas",
@@ -145,8 +145,8 @@ export default {
         exportar() {
             let url =
                 process.env.MIX_APP_URL +
-                "/exportar/reporte_cv" +
-                Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
+                "/exportar/reporte_cv"(this.listarRegistros.filtrosBusqueda);
+                // Helper.getFilterURL
             window.open(url);
         },
     },
