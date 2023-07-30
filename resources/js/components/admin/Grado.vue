@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import Helper from "../../services/Helper";
+// import Helper from "../../services/Helper";
 
 export default {
   name: "Ayudas",
