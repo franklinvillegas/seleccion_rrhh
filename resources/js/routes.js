@@ -89,7 +89,7 @@ let routes = [
             
             { path: 'recepciocv', name: 'RecepcionCV', component: RecepcionCV },
             { path: 'grado', name: 'Grado', component: Grado },
-            { path: 'seccion', name: 'Seccion', component: Seccion },
+            // { path: 'seccion', name: 'Seccion', component: Seccion },
             { path: 'datos', name: 'Datos', component: Datos },
             { path: 'matricula', name: 'Matricula', component: Matricula },
             { path: 'notas', name: 'Notas', component: Notas },
