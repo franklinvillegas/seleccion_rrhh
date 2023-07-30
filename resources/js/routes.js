@@ -12,8 +12,8 @@ import Main from './components/layouts/Main';
 import Inicio from './components/pages/Inicio';
 
 //admin
-import MainAdmin from './components/layouts/MainAdmin';
-import InicioAdmin from './components/admin/Inicio';
+// import MainAdmin from './components/layouts/MainAdmin';
+// import InicioAdmin from './components/admin/Inicio';
 
 
 ///Gestion
