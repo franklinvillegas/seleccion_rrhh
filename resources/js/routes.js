@@ -17,12 +17,12 @@ import InicioAdmin from './components/admin/Inicio';
 
 
 ///Gestion
-import RecepcionCV from './components/admin/RecepcionCV';
-import Grado from './components/admin/Grado';
-// import Seccion from './components/admin/Seccion';
-import Datos from './components/admin/Datos';
-import Matricula from './components/admin/Matricula';
-import Notas from './components/admin/Notas';
+// import RecepcionCV from './components/admin/RecepcionCV';
+// import Grado from './components/admin/Grado';
+// // import Seccion from './components/admin/Seccion';
+// import Datos from './components/admin/Datos';
+// import Matricula from './components/admin/Matricula';
+// import Notas from './components/admin/Notas';
 
 
 

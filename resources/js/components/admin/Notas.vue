@@ -1,7 +1,7 @@
 <template>
     <div class="p-3 pt-5">
         <div class="col-md-12" style="margin-left: -15px;">
-            <h4 class="text-color-2 mb-3">Notas de alumno</h4>
+            <h4 class="text-color-2 mb-3">Registro de Notas</h4>
         </div>
         <br>
         <!--  <div class="row justify-content-md-center">
