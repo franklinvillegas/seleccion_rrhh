@@ -29,10 +29,10 @@ import Notas from './components/admin/Notas';
 Vue.use(Router)
 
 let routes = [
-    {
-        path: '*', 
-        redirect: '/inicio',
-    },
+    // {
+    //     path: '*', 
+    //     redirect: '/inicio',
+    // },
 
     {
         path: '/auth',
