@@ -19,28 +19,12 @@ import InicioAdmin from './components/admin/Inicio';
 ///Gestion
 import RecepcionCV from './components/admin/RecepcionCV';
 import Grado from './components/admin/Grado';
-import Seccion from './components/admin/Seccion';
+// import Seccion from './components/admin/Seccion';
 import Datos from './components/admin/Datos';
 import Matricula from './components/admin/Matricula';
 import Notas from './components/admin/Notas';
 
-//Alumno
-import MainAlumno from './components/layouts/MainAlumno';
-import DatosAlumno from './components/alumno/Datos';
 
-//Docente
-import MainDocente from './components/layouts/MainDocente';
-
-
-//Campus
-import MainCampus from './components/layouts/MainCampus';
-import InicioCampus from './components/campus/Inicio';
-import BibliotecaVirtual from './components/campus/BibliotecaVirtual';
-import ContenidoDigital from './components/campus/ContenidoDigital';
-import ReunionVirtual from './components/campus/ReunionVirtual';
-import EvaluacionVirtual from './components/campus/EvaluacionVirtual';
-import IniciarEvaluacionVirtual from './components/campus/IniciarEvaluacionVirtual';
-import EvaluacionPregunta from './components/campus/EvaluacionPregunta';
 
 Vue.use(Router)
 
