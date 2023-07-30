@@ -60,7 +60,6 @@
 
 <script>
 
-import Helper from "../../services/Helper";
 import Chart from '../charts/Chart.vue'
 
     export default {
