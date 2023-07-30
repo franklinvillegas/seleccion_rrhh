@@ -12,17 +12,17 @@ import Main from './components/layouts/Main';
 import Inicio from './components/pages/Inicio';
 
 //admin
-// import MainAdmin from './components/layouts/MainAdmin';
-// import InicioAdmin from './components/admin/Inicio';
+import MainAdmin from './components/layouts/MainAdmin';
+import InicioAdmin from './components/admin/Inicio';
 
 
 ///Gestion
-// import RecepcionCV from './components/admin/RecepcionCV';
-// import Grado from './components/admin/Grado';
+import RecepcionCV from './components/admin/RecepcionCV';
+import Grado from './components/admin/Grado';
 // // import Seccion from './components/admin/Seccion';
-// import Datos from './components/admin/Datos';
-// import Matricula from './components/admin/Matricula';
-// import Notas from './components/admin/Notas';
+import Datos from './components/admin/Datos';
+import Matricula from './components/admin/Matricula';
+import Notas from './components/admin/Notas';
 
 
 
