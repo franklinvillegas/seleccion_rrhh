@@ -20,6 +20,7 @@ class COnvocatoriaController extends Controller
     }
    
     public function listar(){
+        return "hola";
         $lista = Convocatoria::select();
         return $lista->get();
     }
