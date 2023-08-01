@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\COnvocatoria;
+use App\Models\Convocatoria;
 
 class COnvocatoriaController extends Controller
 {
@@ -20,7 +20,6 @@ class COnvocatoriaController extends Controller
     }
    
     public function listar(){
-        return "hola";
         $lista = Convocatoria::select();
         return $lista->get();
     }
