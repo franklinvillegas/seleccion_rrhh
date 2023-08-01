@@ -28,7 +28,8 @@
         <label><b> - DNI:</b></label>
         <label v-text="evaluacion1.documento"></label>
         <br>
-        <table class="table1 table-bordered">
+        <div v-if="idConvocatoria">
+        <table class="table1 table-bordered" >
             <thead>
                 <tr>
                     <th scope="col" colspan="2" style="text-align:center;background-color: #95D0FC;">FORMATO DE EVALUACION
@@ -56,22 +57,43 @@
                             name="grado" v-model="evaluacion1.rnp" value="NO"> No </td>
                 </tr>
                 <tr>
-                    <td scope="row">Minimo bachiller universitario,(Exepto carreras vinculadas al cuidado personalu oficios)
+                    <td scope="row">Minimo bachiller universitario,(Exepto carreras vinculadas al cuidado personal u oficios)
                     </td>
                     <td><input type="radio" name="profesion" v-model="evaluacion1.profesion" value="SI"> Si <input type="radio"
                             name="profesion" v-model="evaluacion1.profesion" value="NO"> No </td>
                 </tr>
-                <tr>
-                    <td scope="row">Manejo de herramientas de office (Procesador de textos, hoja de calculo, etc)(Constancia
-                        o certificado)</td>
+                <tr v-if="idConvocatoria==1">
+                    <td scope="row">
+                        <label >Manejo de herramientas de office (Procesador de textos, hoja de calculo, etc)(Constancia
+                        o certificado)</label>
+                        </td>
                     <td><input type="radio" name="office" v-model="evaluacion1.office" value="SI"> Si <input type="radio"
                             name="office" v-model="evaluacion1.office" value="NO"> No </td>
                 </tr>
-                <tr>
-                    <td scope="row">Experiencia no menor a dos (02) años en actividades de Coordinación y supervisión de
-                        procesos de recojo de información a escala nacional en el sector público o privado. o seis (06)
-                        meses en coordinación/ supervisión en proyectos de aplicación de instrumentos de evaluación a nivel
-                        nacional o regional. </td>
+                <tr v-if="idConvocatoria==2">
+                    <td scope="row">
+                        <label>Manejo de hojas de cálculo Excel y herramientas de Office (DJ, constancia o certificado)</label></td>
+                    <td><input type="radio" name="office" v-model="evaluacion1.office" value="SI"> Si <input type="radio"
+                            name="office" v-model="evaluacion1.office" value="NO"> No </td>
+                </tr>
+                <tr v-if="idConvocatoria==1">
+                    <td scope="row">                        
+                            <label>Experiencia no menor a dos (02) años en actividades de Coordinación y supervisión de
+                            procesos de recojo de información a escala nacional en el sector público o privado. o seis (06)
+                            meses en coordinación/ supervisión en proyectos de aplicación de instrumentos de evaluación a nivel
+                            nacional o regional.</label>
+                    </td>
+                    <td><input type="radio" name="experiencia" v-model="evaluacion1.criterio_cv_1" value="SI"> Si <input
+                            type="radio" name="experiencia" v-model="evaluacion1.criterio_cv_1" value="NO"> No </td>
+                </tr>
+                <tr v-if="idConvocatoria==2">
+                    <td scope="row">
+                        <label >Experiencia no menor a seis (6) meses en monitoreo de procesos de recojo de
+                            informacion a escala nacional en el sector publico o privado, o en proyectos de aplicación
+                            de instrumentos de evaluacion a nivel nacional o regional, o doce (12) meses en actividades de
+                        Coordinación y/o supervisión de procesos de recojo de informacion a escala nacional en el sector 
+                    público o privado; o de proyectos de aplicacion de instrumentos de evaluación a nivel nacional o regional.</label>
+                    </td>
                     <td><input type="radio" name="experiencia" v-model="evaluacion1.criterio_cv_1" value="SI"> Si <input
                             type="radio" name="experiencia" v-model="evaluacion1.criterio_cv_1" value="NO"> No </td>
                 </tr>
@@ -96,19 +118,31 @@
                     <td v-if="evaluacion1.rnp == 'SI' && evaluacion1.office == 'SI' && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.profesion=='SI' "><input type="text" name="formacion" v-model="evaluacion1.grado" @keypress="soloNumeros4($event)"
                             maxlength="1"> </td>
                 </tr>
-                <tr>
+                <!-- de aqui es para supervisor-->
+                <tr v-if="idConvocatoria==1">
                     <td scope="row">Experiencia en coordinacion/supervision en proyectos de aplicacionde instrumentos de
                         evaluacion a nivel nacional o regional</td>
                     <td v-if="evaluacion1.rnp == 'SI' && evaluacion1.office == 'SI' && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.profesion=='SI' "><input type="text" name="expAplicacion" v-model="evaluacion1.criterio_cv_2"
                             @keypress="soloNumeros5($event)" maxlength="1"> </td>
                 </tr>
-                <tr>
+                <tr v-if="idConvocatoria==1">
                     <td scope="row">Experiencia en actividades de Coordinacion y Supervison de procesos de recojo de
                         einformacion a escala nacional en el sector publico o privado</td>
                     <td v-if="evaluacion1.rnp == 'SI' && evaluacion1.office == 'SI' && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.profesion=='SI' "><input type="text" name="expRecojo" v-model="evaluacion1.criterio_cv_3"
                             @keypress="soloNumeros5($event)" maxlength="1"> </td>
                 </tr>
-                <tr>
+                <!-- de aqui es para monitor-->
+                <tr v-if="idConvocatoria==2">
+                    <td scope="row">Experiencia en monitoreo de procesos de recojo de información a escala nacional en el sector público o privado, o en proyectos de aplicación de instrumentos de evaluación a nivel nacional o regional.</td>
+                    <td v-if="evaluacion1.rnp == 'SI' && evaluacion1.office == 'SI' && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.profesion=='SI' "><input type="text" name="expAplicacion" v-model="evaluacion1.criterio_cv_2"
+                            @keypress="soloNumeros4($event)" maxlength="1"> </td>
+                </tr>
+                <tr v-if="idConvocatoria==2">
+                    <td scope="row">Experiencia en coordinación y/o supervisión de procesos de recojo de información a escala nacional en el sector público o privado, o en proyectos de aplicación de instrumentos de evaluación a nivel nacional o regional.</td>
+                    <td v-if="evaluacion1.rnp == 'SI' && evaluacion1.office == 'SI' && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.profesion=='SI' "><input type="text" name="expRecojo" v-model="evaluacion1.criterio_cv_3"
+                            @keypress="soloNumeros5($event)" maxlength="1"> </td>
+                </tr>
+                <tr v-if="idConvocatoria==1">
                     <td scope="row">Es opcional: cuenta con constancio o certificaso emitido por alguna organizacion
                         indigena o centros de estudios en lengua originaria o declaracion judara en lengua originaria
                         (Ashaninka, Qechua Cusco Collao, Qechua Chanka, Shipibo-Konibo, Aymara, Awajun)</td>
@@ -118,9 +152,10 @@
 
             </tbody>
         </table>
-        <button class="btn btn-outline-secondary float-right" type="button" @click="guardar">
+        <button class="btn btn-secondary float-right" type="button" @click="guardar">
             Guardar
         </button>
+    </div>
         <hr>
     </div>
 </template>
