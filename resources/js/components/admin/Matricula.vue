@@ -63,7 +63,7 @@ export default {
                     { label: "Lengua Originaria", field: "certificado_lengua" },
                     { label: "Maximo Grado Alcanzado", field: "grado" },
                     { label: "Experiencia Especifica", field: "criterio_cv_2" },
-                    { label: "Exxperiendia general", field: "criterio_cv_2" },
+                    { label: "Exxperiendia general", field: "criterio_cv_3" },
 
                     { label: "Numero Registro", field: "num_registro" },
                     { label: "Fecha Registro", field: "created_at" },
