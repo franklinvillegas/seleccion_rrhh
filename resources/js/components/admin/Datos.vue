@@ -89,10 +89,10 @@
                 <tr v-if="idConvocatoria==2">
                     <td scope="row">
                         <label >Experiencia no menor a seis (6) meses en monitoreo de procesos de recojo de
-                            informacion a escala nacional en el sector publico o privado, o en proyectos de aplicación
-                            de instrumentos de evaluacion a nivel nacional o regional, o doce (12) meses en actividades de
-                        Coordinación y/o supervisión de procesos de recojo de informacion a escala nacional en el sector 
-                    público o privado; o de proyectos de aplicacion de instrumentos de evaluación a nivel nacional o regional.</label>
+                            información a escala nacional en el sector publico o privado, o en proyectos de aplicación
+                            de instrumentos de evaluación a nivel nacional o regional, o doce (12) meses en actividades de
+                        Coordinación y/o supervisión de procesos de recojo de información a escala nacional en el sector 
+                    público o privado; o de proyectos de aplicación de instrumentos de evaluación a nivel nacional o regional.</label>
                     </td>
                     <td><input type="radio" name="experiencia" v-model="evaluacion1.criterio_cv_1" value="SI"> Si <input
                             type="radio" name="experiencia" v-model="evaluacion1.criterio_cv_1" value="NO"> No </td>

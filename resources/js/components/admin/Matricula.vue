@@ -44,7 +44,7 @@
 </template>
   
 <script>
-// import Helper from "../../services/Helper";
+import Helper from "../../services/Helper";
 
 export default {
     name: "Ayudas",
@@ -63,8 +63,7 @@ export default {
                     { label: "Lengua Originaria", field: "certificado_lengua" },
                     { label: "Maximo Grado Alcanzado", field: "grado" },
                     { label: "Experiencia Especifica", field: "criterio_cv_2" },
-                    { label: "Exxperiendia general", field: "criterio_cv_3" },
-
+                    { label: "Experiendia general", field: "criterio_cv_3" },
                     { label: "Numero Registro", field: "num_registro" },
                     { label: "Fecha Registro", field: "created_at" },
                 ],
@@ -144,10 +143,9 @@ export default {
         },
         exportar() {
             let url =
-                process.env.MIX_APP_URL +
-                "/exportar/reporte_cv"(this.listarRegistros.filtrosBusqueda);
-                // Helper.getFilterURL
-            window.open(url);
+                process.env.MIX_APP_URL +"/exportar/reporte_cv" +
+        Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
+      window.open(url);
         },
     },
 };
