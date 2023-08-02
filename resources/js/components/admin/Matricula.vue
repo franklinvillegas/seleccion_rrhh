@@ -44,7 +44,7 @@
 </template>
   
 <script>
-import Helper from "../../services/Helper";
+import Helper from "../../services/helper";
 
 export default {
     name: "Ayudas",
@@ -71,7 +71,7 @@ export default {
                 filtrosBusqueda: {
                     tipo: "",
                     orden: "asc",
-                    ordenPor: "id",
+                    ordenPor: "datos",
                     regPagina: "10",
                 },
 
