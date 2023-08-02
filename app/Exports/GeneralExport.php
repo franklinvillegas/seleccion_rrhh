@@ -93,10 +93,10 @@ class GeneralExport implements FromArray, ShouldAutoSize, WithHeadings, WithTitl
                         'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_GRADIENT_LINEAR,
                         'rotation' => 5,
                         'startColor' => [
-                            'argb' => 'b887cc',
+                            'argb' => '50c4f2',
                         ],
                         'endColor' => [
-                            'argb' => 'b887cc',
+                            'argb' => '50c4f2',
                         ],
                     ],
                 ];                

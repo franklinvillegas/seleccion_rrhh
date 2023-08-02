@@ -13,6 +13,7 @@ class Convocatoria extends Model
             'id_cargo',
             'codigo',
             'nombre',
+            'nivel'
     ];
     public function grado_curso(){
     return $this->belongsTo(GradoCurso::class, 'id_gracur', 'id');

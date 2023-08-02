@@ -21,12 +21,12 @@ class CreateEvaluacionTable extends Migration
             $table->string('certificado_lengua',2)->nullable();
             $table->string('profesion',250)->nullable();
             $table->string('grado',50)->nullable();
-            $table->string('criterio_cv_1',1)->nullable();
-            $table->string('criterio_cv_2',1)->nullable();
-            $table->string('criterio_cv_3',1)->nullable();
-            $table->string('criterio_cv_4',1)->nullable();
-            $table->string('criterio_cv_5',1)->nullable();
-            $table->string('criterio_cv_6',1)->nullable();
+            $table->string('criterio_cv_1',5)->nullable();
+            $table->string('criterio_cv_2',5)->nullable();
+            $table->string('criterio_cv_3',5)->nullable();
+            $table->string('criterio_cv_4',5)->nullable();
+            $table->string('criterio_cv_5',5)->nullable();
+            $table->string('criterio_cv_6',5)->nullable();
             $table->double('ponderado_1')->nullable();
             $table->double('ponderado_2')->nullable();
             $table->double('ponderado_3')->nullable();

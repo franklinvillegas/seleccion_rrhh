@@ -18,6 +18,7 @@ class CreateCargoTable extends Migration
             $table->string('nombre',50)->nullable();
             $table->string('codigo',5)->nullable();
             $table->string('nombre2',50)->nullable();
+            $table->integer('nivel')->nullable();
             $table->timestamps();
         });
     }

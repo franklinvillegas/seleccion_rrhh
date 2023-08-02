@@ -84,7 +84,7 @@ export default {
         filtrosBusqueda: {
           tipo: "",
           orden: "asc",
-          ordenPor: "id",
+          ordenPor: "num_registro",
           regPagina: "10",
         },
 

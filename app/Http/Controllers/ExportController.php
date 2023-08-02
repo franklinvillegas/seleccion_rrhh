@@ -204,16 +204,208 @@ class ExportController extends Controller
         return new GeneralExport($resultado, $valores, $cabecera);
     }
     public function reporteCV(Request $request){
-        $query = "select p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,e.num_registro, e.created_at
-        from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
-            INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
-            INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
-            INNER JOIN persona p ON pc.id_persona=p.id 
-                WHERE pc.id_sede_provincial=1 and id_convocatoria=1";
-        $resultado = DB::select($query);
-        $valores = array("titulo"=>"Reporte de Recepción de CVs", "nombre_hoja"=>"CV Recibidos", "nom_archivo"=>"Reporte_CV_Recibidos_SN_ENLA2023".date('Y_m_d'));
-        $cabecera = ['DNI','Nombres','Registro','Fecha_Registro',];
-        return new GeneralExport($resultado, $valores, $cabecera);
+        $convocatoria = $request->cargo;
+        switch ($convocatoria) {
+            case 1:
+                $query = "select
+                @row_number := @row_number + 1 AS `index`,
+                provincia AS sede_provincial,
+                region AS sede_regional,
+                documento AS dni,
+                apellidos_y_nombres,
+                fecha_nac,
+                edad,
+                profesion,
+                persona_grado,
+                num_registro AS registro_de_cv,
+                rnp,
+                eva_profesion AS formacion_academica_minima,
+                office,
+                criterio_cv_1 AS experiencia_minima,
+                CUMPLE_PERFIL_SOLICITADO,
+                grado AS formacion_academica,
+                criterio_cv_2 AS experiencia_laboral_1,
+                criterio_cv_3 AS experiencia_laboral_2,
+                certificado_lengua AS manejo_lenguas_originarias,
+                CASE
+                    WHEN (fecha_nac < '1993-07-30' OR fecha_nac > '1967-07-31') THEN 'Observado'
+                    ELSE ''
+                END AS rango_edad,
+                CASE
+                    WHEN (rnp = 'NO' OR profesion = 'NO' OR office = 'NO' OR criterio_cv_1 = 'NO') THEN 'DESAPROBADO'
+                    ELSE 'APROBADO'
+                END AS estado,
+                CASE
+                    WHEN estado = ESTADO2 THEN 'OK'
+                    ELSE 'ERROR'
+                END AS VALIDACION_DE_ESTADO,
+                CASE
+                    WHEN estado = 'APROBADO' THEN (grado * 5 * 0.35) + (criterio_cv_2 * 4 * 0.4) + (criterio_cv_3 * 4 * 0.25)
+                    ELSE NULL
+                END AS puntaje_ponderado,
+                fecha_evaluacion
+            
+            FROM (
+                SELECT
+                    e.id AS id,
+                    pc.id AS id_persona_convocatoria,
+                    p.documento,
+                    CONCAT(p.apellido_pat, ' ', p.apellido_mat, ' ', p.nombres) AS apellidos_y_nombres,
+                    p.fecha_nac,
+                    p.profesion,
+                    p.grado AS persona_grado,
+                    e.grado,
+                    e.profesion AS eva_profesion,
+                    e.num_registro,
+                    e.rnp,
+                    e.office,
+                    e.criterio_cv_1,
+                    e.certificado_lengua,
+                    e.criterio_cv_2,
+                    e.criterio_cv_3,
+                    e.criterio_cv_4,
+                    e.criterio_cv_5,
+                    e.criterio_cv_6,
+                    e.estado_cv,
+                    e.created_at,
+                    sp.nombre_sede AS provincia,
+                    sr.nombre_sede AS region,
+                    e.updated_at AS fecha_evaluacion,
+                    TIMESTAMPDIFF(YEAR, p.fecha_nac, CURDATE()) AS edad,
+                    CASE
+                        WHEN e.rnp = 'NO' OR e.profesion = 'NO' OR e.office = 'NO' OR e.criterio_cv_1 = 'NO' THEN 'NO'
+                        ELSE 'SI'
+                    END AS CUMPLE_PERFIL_SOLICITADO,
+                    CASE
+                        WHEN (e.rnp = 'NO' OR e.profesion = 'NO' OR e.office = 'NO' OR e.criterio_cv_1 = 'NO') THEN 'DESAPROBADO'
+                        ELSE 'APROBADO'
+                    END AS estado,
+                    CASE
+                        WHEN (e.grado >= 1 AND (e.criterio_cv_2 >= 2 OR e.criterio_cv_3 >= 2)) THEN 'APROBADO'
+                        ELSE 'DESAPROBADO'
+                    END AS ESTADO2
+                FROM
+                    evaluacion e
+                INNER JOIN
+                    persona_convocatoria pc ON e.id_persona_convocatoria = pc.id
+                INNER JOIN
+                    sede_provincial sp ON pc.id_sede_provincial = sp.id
+                INNER JOIN
+                    sede_regional sr ON sp.id_sede_regional = sr.id
+                INNER JOIN
+                    persona p ON pc.id_persona = p.id
+                WHERE
+                    pc.id_sede_provincial = 1 AND id_convocatoria = 2
+            ) AS subquery, (SELECT @row_number := 0) AS t;";
+                $resultado = DB::select($query);
+                $valores = array("titulo"=>"REPORTE ED EVALUACION DE CV", "nombre_hoja"=>"Ev- CV", "nom_archivo"=>"Reporte_CV_Evaluados_SN_ENLA2023".date('Y_m_d'));
+                $cabecera = ['N°','SEDE REGIONAL','SEDE PROVINCIAL','DNI','APELLIDOS Y NOMBRES','FECHA DE NACIMIENTO','EDAD','PROFESIÓN','GRADO','REGISTRO CV','TIENE RNP',
+                'FORMACIÓN ACADÉMICA MÍNIMA','MANEJO DE OFFICE','EXPERIENCIA MÍNIMA','CUMPLE CON EL PERFIL SOLICITACO','FORMACIÓN ACADEMICA','EXPERIENCIA LABORAL 1','EXPERIENCIA LABORAL 2',
+                'MANEJO DE LENGUAS ORIGINARIAS','RANGO DE EDAD','ESTADO','VALIDACIÓN DE ESTADO','PUNTAJE PONDERADO','FECHA Y HORA EVALUACION',];
+                return new GeneralExport($resultado, $valores, $cabecera);
+                break;
+            case 2:
+                $query = "select
+                @row_number := @row_number + 1 AS `index`,
+                provincia AS sede_provincial,
+                region AS sede_regional,
+                documento AS dni,
+                apellidos_y_nombres,
+                fecha_nac,
+                edad,
+                profesion,
+                persona_grado,
+                num_registro AS registro_de_cv,
+                rnp,
+                eva_profesion AS formacion_academica_minima,
+                office,
+                criterio_cv_1 AS experiencia_minima,
+                CUMPLE_PERFIL_SOLICITADO,
+                grado AS formacion_academica,
+                criterio_cv_2 AS experiencia_laboral_1,
+                criterio_cv_3 AS experiencia_laboral_2,
+                CASE
+                    WHEN NOT (fecha_nac >= '2003-08-03' AND fecha_nac <= '1957-08-04') THEN 'Observado'
+                    ELSE ''
+                END AS rango_edad,
+                CASE
+                    WHEN (rnp = 'NO' OR profesion = 'NO' OR office = 'NO' OR criterio_cv_1 = 'NO') THEN 'DESAPROBADO'
+                    ELSE 'APROBADO'
+                END AS estado,
+                CASE
+                    WHEN estado = ESTADO2 THEN 'OK'
+                    ELSE 'ERROR'
+                END AS VALIDACION_DE_ESTADO,
+                CASE
+                    WHEN estado = 'APROBADO' THEN (grado * 5 * 0.35) + (criterio_cv_2 * 5 * 0.4) + (criterio_cv_3 * 4 * 0.25)
+                    ELSE NULL
+                END AS puntaje_ponderado,
+                fecha_evaluacion
+            
+            FROM (
+                SELECT
+                    e.id AS id,
+                    pc.id AS id_persona_convocatoria,
+                    p.documento,
+                    CONCAT(p.apellido_pat, ' ', p.apellido_mat, ' ', p.nombres) AS apellidos_y_nombres,
+                    p.fecha_nac,
+                    p.profesion,
+                    p.grado AS persona_grado,
+                    e.grado,
+                    e.profesion AS eva_profesion,
+                    e.num_registro,
+                    e.rnp,
+                    e.office,
+                    e.criterio_cv_1,
+                    e.certificado_lengua,
+                    e.criterio_cv_2,
+                    e.criterio_cv_3,
+                    e.criterio_cv_4,
+                    e.criterio_cv_5,
+                    e.criterio_cv_6,
+                    e.estado_cv,
+                    e.created_at,
+                    sp.nombre_sede AS provincia,
+                    sr.nombre_sede AS region,
+                    e.updated_at AS fecha_evaluacion,
+                    TIMESTAMPDIFF(YEAR, p.fecha_nac, CURDATE()) AS edad,
+                    CASE
+                        WHEN e.rnp = 'NO' OR e.profesion = 'NO' OR e.office = 'NO' OR e.criterio_cv_1 = 'NO' THEN 'NO'
+                        ELSE 'SI'
+                    END AS CUMPLE_PERFIL_SOLICITADO,
+                    CASE
+                        WHEN (e.rnp = 'NO' OR e.profesion = 'NO' OR e.office = 'NO' OR e.criterio_cv_1 = 'NO') THEN 'DESAPROBADO'
+                        ELSE 'APROBADO'
+                    END AS estado,
+                    CASE
+                        WHEN (e.grado >= 1 AND (e.criterio_cv_2 >= 2 OR e.criterio_cv_3 >= 2)) THEN 'APROBADO'
+                        ELSE 'DESAPROBADO'
+                    END AS ESTADO2
+                FROM
+                    evaluacion e
+                INNER JOIN
+                    persona_convocatoria pc ON e.id_persona_convocatoria = pc.id
+                INNER JOIN
+                    sede_provincial sp ON pc.id_sede_provincial = sp.id
+                INNER JOIN
+                    sede_regional sr ON sp.id_sede_regional = sr.id
+                INNER JOIN
+                    persona p ON pc.id_persona = p.id
+                WHERE
+                    pc.id_sede_provincial = 1 AND id_convocatoria = 2
+            ) AS subquery, (SELECT @row_number := 0) AS t;";
+                $resultado = DB::select($query);
+                $valores = array("titulo"=>"REPORTE ED EVALUACION DE CV", "nombre_hoja"=>"Ev- CV", "nom_archivo"=>"Reporte_CV_Evaluados_SN_ENLA2023".date('Y_m_d'));
+                $cabecera = ['N°','SEDE REGIONAL','SEDE PROVINCIAL','DNI','APELLIDOS Y NOMBRES','FECHA DE NACIMIENTO','EDAD','PROFESIÓN','GRADO','REGISTRO CV','TIENE RNP',
+                'FORMACIÓN ACADÉMICA MÍNIMA','MANEJO DE OFFICE','EXPERIENCIA MÍNIMA','CUMPLE CON EL PERFIL SOLICITACO','FORMACIÓN ACADEMICA','EXPERIENCIA LABORAL 1','EXPERIENCIA LABORAL 2',
+                'RANGO DE EDAD','ESTADO','VALIDACIÓN DE ESTADO','PUNTAJE PONDERADO','FECHA Y HORA EVALUACION',];
+                return new GeneralExport($resultado, $valores, $cabecera);
+                break;
+            default:
+                # code...
+                break;
+        }
+        
     }
 
     public function prueba(){

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Convocatoria;
+use App\Models\User;
+
 
 class COnvocatoriaController extends Controller
 {
@@ -20,8 +22,9 @@ class COnvocatoriaController extends Controller
     }
    
     public function listar(){
-        $lista = Convocatoria::select();
-        return $lista->get();
+        $user = auth()->user();        
+        $lista = Convocatoria::select('id', 'nombre')->where('nivel','>',$user->tipo_usuario)->get();
+        return $lista;
     }
 
     public function crear(Request $request){

@@ -189,7 +189,7 @@ export default {
             } 
         },
         validarPermisos(rol){
-            if(this.$store.getters.getAuthUser('rol') == rol){
+            if(this.$store.getters.getAuthUser('rol') >= rol){
                 return true;
             }
             return false;

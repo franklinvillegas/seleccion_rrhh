@@ -73,6 +73,7 @@ export default {
                     orden: "asc",
                     ordenPor: "datos",
                     regPagina: "10",
+                    cargo: '',
                 },
 
                 deshabilitarEdicion: false,
@@ -142,6 +143,7 @@ export default {
                         });
         },
         exportar() {
+            this.listarRegistros.filtrosBusqueda.cargo=this.idConvocatoria;
             let url =
                 process.env.MIX_APP_URL +"/exportar/reporte_cv" +
         Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
