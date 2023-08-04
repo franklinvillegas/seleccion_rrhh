@@ -29,15 +29,16 @@
 
         <div class="tab-pane fade show active" id="paso1" role="tabpanel" aria-labelledby="paso1-tab">
             <div class="row">
-                
+
                 <div class="form-group col-3">
                     <p class="m-0">
                         <strong>Convocatoria</strong>
                     </p>
                     <select name="convocatoria" v-model="idConvocatoria" class="form-control" data-vv-as="Convocatoria"
-                    placeholder="Seleccione Convocatoria" v-validate="'required'">
-                    <option v-for="row in listarConvocatorias" :key="row.id" :value="row.id" v-text="row.nombre"></option>
-                </select>
+                        placeholder="Seleccione Convocatoria" v-validate="'required'">
+                        <option v-for="row in listarConvocatorias" :key="row.id" :value="row.id" v-text="row.nombre">
+                        </option>
+                    </select>
                     <span class="text-danger">{{ errors.first("form_registro.convocatoria") }}</span>
                 </div>
                 <div class="form-group col-3">
@@ -58,27 +59,16 @@
                             placeholder: 'Buscar en la tabla',
                         }">
                             <template slot="table-row" slot-scope="props">
-                                <span v-if="props.column.field == 'index'">
-                                    {{ props.index + 1 }}
-                                </span>
-                                <span v-if="props.column.field == 'nombre_completo'">
-                                    {{ props.row.matricula.estudiante.persona.apellido_pat }}
-                                    {{ props.row.matricula.estudiante.persona.apellido_mat }}
-                                    {{ props.row.matricula.estudiante.persona.nombres }}
-                                </span>
-                                <span v-if="props.column.field == 'nota'">
-                                    <input type="text" v-model="props.row.nota" class="form-control" data-vv-as="Documento"
-                                        placeholder="Documento" name="num_docid"
-                                        @keyup.enter="modificarNota(props.row.id, props.row.nota, props.row.observacion)">
-                                </span>
-                                <span v-if="props.column.field == 'observacion'">
-                                    <input type="text" v-model="props.row.razon" class="form-control"
-                                        data-vv-as="observacion" placeholder="observacion" name="num_docid"
-                                        @keyup.enter="modificarNota(props.row.id, props.row.nota, props.row.observacion)">
+
+                                <span v-if="props.column.field == 'nota_examen'">
+                                    <input type="text" v-model="props.row.nota_examen" class="form-control" data-vv-as="Nota"
+                                        placeholder="Nota" name="nota_examen"
+                                        @keyup.enter="modificarNota(props.row.id, props.row.nota_examen)">
                                 </span>
                             </template>
                         </vue-good-table>
                     </div>
+
                 </div>
             </fieldset>
         </div>
@@ -106,27 +96,25 @@ export default {
 
             listarConvocatorias: [],
             listarRegistros: {
-        data: [],
-        columns: [
-          { label: "Sede Regional", field: "region" },
-          { label: "Sede Provincial", field: "provincia" },
-          { label: "N° Documento", field: "documento" },
-          { label: "Apellido Paterno", field: "apellido_pat" },
-          { label: "Apelldio Materno", field: "apellido_mat" },
-          { label: "Nombres", field: "nombres" },
-          { label: "Numero Registro", field: "num_registro" },
-          { label: "Fecha Registro", field: "created_at" },
-        ],
-        total: 0,
-        filtrosBusqueda: {
-          tipo: "",
-          orden: "asc",
-          ordenPor: "id",
-          regPagina: "10",
-        },
+                data: [],
+                columns: [
 
-        deshabilitarEdicion: false,
-      },
+                    { label: "N° DNI", field: "documento" },
+                    { label: "Apellido Paterno", field: "apellido_pat" },
+                    { label: "Apelldio Materno", field: "apellido_mat" },
+                    { label: "Nombres", field: "nombres" },
+                    { label: "Nota Examen", field: "nota_examen" },
+                ],
+                total: 0,
+                filtrosBusqueda: {
+                    tipo: "",
+                    orden: "asc",
+                    ordenPor: "id",
+                    regPagina: "10",
+                },
+
+                deshabilitarEdicion: false,
+            },
         }
     },
     created() {
@@ -145,7 +133,7 @@ export default {
                     this.$toastr.e(error.response.data.message);
                 });
         },
-        
+
         limpiarFormulario() {
             this.modal = {
                 titulo: '',
@@ -189,15 +177,15 @@ export default {
                 }
             });
         },
-        modificarNota(id, nota, razon) {
+        modificarNota(id, nota) {
             const data = {
                 nota,
-                razon,
             }
-            axios.put("api/notas/modificar/" + id, data)
+            axios.put("api/examen/modificar/" + id, data)
                 .then((response) => {
-                    this.$toastr.s(response.data.message);
+                    this.$toastr.s(response.data);
                     this.generarLista();
+                    
                 })
                 .catch((error) => {
                     console.log(error);
@@ -231,23 +219,21 @@ export default {
                 });
         },
         generarLista() {
-            let datos ={
-                convocatoria : this.idConvocatoria,
-                provincia : this.idProcincia,
+            let datos = {
+                convocatoria: this.idConvocatoria,
+                provincia: this.idProcincia,
             }
-            this.$validator.validateAll('form_registro').then(result => {
-                if (result) {
-                    axios.post("api/examen/generar", datos)
-                        .then((response) => {
-                            this.$toastr.s(response.data.message);
-                            console.log(response.data);
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                            this.$toastr.e(error.response.data.message);
-                        });
-                }
-            });
+            console.log(datos);
+            axios.post("api/examen/generar", datos)
+                .then((response) => {
+                    this.listarRegistros.data = response.data;
+                    this.$toastr.s(response.data.message);
+                })
+                .catch((error) => {
+                    console.log("error");
+                });
+
+
         },
         obtenerTipo(row) {
             if (row.tipo == 1) return 'Inicio';

@@ -395,7 +395,7 @@ class ExportController extends Controller
                     pc.id_sede_provincial = 1 AND id_convocatoria = 2
             ) AS subquery, (SELECT @row_number := 0) AS t;";
                 $resultado = DB::select($query);
-                $valores = array("titulo"=>"REPORTE ED EVALUACION DE CV", "nombre_hoja"=>"Ev- CV", "nom_archivo"=>"Reporte_CV_Evaluados_SN_ENLA2023".date('Y_m_d'));
+                $valores = array("titulo"=>"REPORTE ED EVALUACION DE CV", "nombre_hoja"=>"Ev- CV", "nom_archivo"=>"Reporte_CV_Evaluados_mN_ENLA2023".date('Y_m_d'));
                 $cabecera = ['N°','SEDE REGIONAL','SEDE PROVINCIAL','DNI','APELLIDOS Y NOMBRES','FECHA DE NACIMIENTO','EDAD','PROFESIÓN','GRADO','REGISTRO CV','TIENE RNP',
                 'FORMACIÓN ACADÉMICA MÍNIMA','MANEJO DE OFFICE','EXPERIENCIA MÍNIMA','CUMPLE CON EL PERFIL SOLICITACO','FORMACIÓN ACADEMICA','EXPERIENCIA LABORAL 1','EXPERIENCIA LABORAL 2',
                 'RANGO DE EDAD','ESTADO','VALIDACIÓN DE ESTADO','PUNTAJE PONDERADO','FECHA Y HORA EVALUACION',];

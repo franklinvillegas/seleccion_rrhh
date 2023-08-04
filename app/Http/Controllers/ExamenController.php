@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\DB;
 class ExamenController extends Controller
 {
     
-    public function generear($id)
+    public function generar(Request $request)
     {   
-        return 'hola';
-        $evaluacion = DB::select("select e.id_persona_convocatoria, e.resultado_cv, e.total_ponderado
-        FROM bd_seleccion_ra.evaluacion e INNER JOIN bd_seleccion_ra.persona_convocatoria pc on e.id_persona_convocatoria = pc.id
-                                                                            INNER JOIN bd_seleccion_ra.persona per on pc.id_persona = per.id
-            WHERE e.estado_cv = 1 and pc.id_convocatoria =".$request."ORDER BY per.apellido_pat");
-        return $evaluacion;
+        $examen = DB::select("select e.id, per.documento, per.apellido_pat, per.apellido_mat, per.nombres, e.nota_examen
+        FROM examen e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria = pc.id
+            INNER JOIN persona per on pc.id_persona = per.id
+                WHERE pc.id_convocatoria =".$request->convocatoria." ORDER BY per.apellido_pat");
+        return $examen;
+
     }
 
     /**
@@ -72,8 +72,9 @@ class ExamenController extends Controller
      */
     public function modificar($id,Request $request)
     {
-        $editadoAsistencia = Notas::findOrFail($id);        
-        $editadoAsistencia->update($request->all());
+        $editarnota = Examen::findOrFail($id);        
+        $editarnota->update(['nota_examen'=>$request->nota]);
+        return $editarnota;
     }
 
     /**

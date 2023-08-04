@@ -28,6 +28,7 @@ class User extends Authenticatable
         'provider_id',
         'provider_token',
         'provider_expires_in',
+        'id_sede_provincial',
     
         'activo',
         'es_admin',

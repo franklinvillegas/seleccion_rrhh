@@ -90,6 +90,11 @@
                                         </a>
                                     </li>
                                     <li class="mb-1" v-if="validarPermisos(1)">
+                                        <a class="nav-link" href="#"  @click.prevent="redireccionar('AsistenciaAdmin')">
+                                            <i class="fas fa-edit me-3"></i>Asistencia Examen
+                                        </a>
+                                    </li>
+                                    <li class="mb-1" v-if="validarPermisos(1)">
                                         <a class="nav-link" href="#"  @click.prevent="redireccionar('Notas')">
                                             <i class="fas fa-file-alt me-3"></i>Notas Examen
                                         </a>

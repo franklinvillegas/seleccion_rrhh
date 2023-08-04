@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Persona;
 use App\Models\Asistencia;
+use App\Models\PersonaConvocatoria;
+use App\Models\Evaluacion;
 use App\Models\DocenteCurso;
 use App\Models\Matricula;
 
@@ -13,10 +15,31 @@ class AsistenciaController extends Controller
 {
     //
      //funciones generales de mantenimiento
-     public function ver($id){
-        $ver = Asistencia::with(['persona',
-            ])->findOrFail($id);
-        return $ver;
+     public function ver($dni,$id_convocatoria){
+        $persona = Persona::select('id','nombres','apellido_pat','apellido_mat','documento' )->where('documento',$dni)->get();
+
+        $proceso = PersonaConvocatoria::select('id','id_persona','id_convocatoria','id_sede_provincial')
+        ->where('id_persona',$persona[0]['id'])
+        ->where('id_convocatoria',$id_convocatoria)
+        ->get();
+        
+                    $resultado = Asistencia::select()->where('id_persona_convocatoria',$proceso[0]['id'])->get();
+                    
+                if ($resultado[0]->estado==0) {
+                    $asistencia = Asistencia::findOrFail($resultado[0]->id);
+                    $asistencia->estado = 1;
+                    $asistencia->update(['estado' => '1']);
+                    return response()->json(['message' => 'Asistencia guardada correctamente', 'persona' => $persona, 'proceso'=>$proceso,'asistencia'=>$resultado,'flag'=>0]);
+                }
+                else if ($resultado[0]->estado==1) {
+                    $asistencia = Asistencia::select()->where('id_persona_convocatoria',$proceso[0]['id'])->get(); 
+                    return response()->json(['message' => 'El postulante ya registro su ingreso', 'persona' => $persona, 'proceso'=>$proceso,'asistencia'=>$asistencia,'flag'=>1]);
+                
+                } else {
+                    return response()->json(['message' => 'El postulante no esta registrado','flag'=>3]);
+ 
+                }            
+        
     }
     
     public function llenarCombo(){

@@ -402,7 +402,7 @@ Route::middleware('auth:api')->group(function () {
   });
   //Grupo Asistencia
   Route::group(['prefix' => 'asistencia'], function () {
-    Route::get('ver/{id}', [AsistenciaController::class, 'ver']);
+    Route::get('ver/{id}/{convocatoria}', [AsistenciaController::class, 'ver']);
     Route::get('llenar_combo', [AsistenciaController::class, 'llenarCombo']);
     Route::get('listar', [AsistenciaController::class, 'listar']);
     Route::get('listarEvaluacion/{id_evaluacion}', [AsistenciaController::class, 'listarEvaluacion']);
@@ -413,7 +413,7 @@ Route::middleware('auth:api')->group(function () {
     Route::put('activar/{id}', [AsistenciaController::class, 'activar']);
     Route::get('obtener_ayudas', [AsistenciaController::class, 'obtenerAyudas']);
   });
-   //Grupo Asistencia
+   //Grupo examen
    Route::group(['prefix' => 'examen'], function () {
     Route::get('ver/{id}', [ExamenController::class, 'ver']);
     Route::get('llenar_combo', [ExamenController::class, 'llenarCombo']);
