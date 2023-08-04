@@ -21,9 +21,7 @@ class EvaluacionController extends Controller
         ->where('id_persona',$persona[0]['id'])
         ->where('id_convocatoria',$convocatoria)
         ->get();
-        return var_dump($proceso);
-        if ($proceso->isEmpty()) {
-            return "no";
+        
             $user = auth()->user();
             $id_region_user = DB::select("select sr.id from sede_regional sr RIGHT JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id=".$user->id);
             $id_region_proceso = DB::select("select sr.id from sede_regional sr RIGHT JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id=". $proceso[0]->id_sede_provincial);
@@ -45,9 +43,7 @@ class EvaluacionController extends Controller
             else {
                 return response()->json(['message' => 'El postulante no petenece a la sede', 'persona' => $persona, 'proceso'=>$proceso,'numero'=>$resultado[0]->max_num_registro+1,'flag'=>1]);
             }
-        } else {
-            return "si";
-        }
+        
         
            
         
