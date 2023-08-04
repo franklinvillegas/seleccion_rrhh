@@ -232,8 +232,8 @@ class ExportController extends Controller
                     ELSE ''
                 END AS rango_edad,
                 CASE
-                    WHEN (rnp = 'NO' OR profesion = 'NO' OR office = 'NO' OR criterio_cv_1 = 'NO') THEN 'DESAPROBADO'
-                    ELSE 'APROBADO'
+                    WHEN (rnp = 'SI' AND profesion = 'SI' AND office = 'SI' AND criterio_cv_1 = 'SI') THEN 'APROBADO'
+                    ELSE 'DESAPROBADO'
                 END AS estado,
                 CASE
                     WHEN estado = ESTADO2 THEN 'OK'
@@ -273,12 +273,12 @@ class ExportController extends Controller
                     e.updated_at AS fecha_evaluacion,
                     TIMESTAMPDIFF(YEAR, p.fecha_nac, CURDATE()) AS edad,
                     CASE
-                        WHEN e.rnp = 'NO' OR e.profesion = 'NO' OR e.office = 'NO' OR e.criterio_cv_1 = 'NO' THEN 'NO'
-                        ELSE 'SI'
+                        WHEN e.rnp = 'SI' AND e.profesion = 'SI' AND e.office = 'SI' AND e.criterio_cv_1 = 'SI' THEN 'SI'
+                        ELSE 'NO'
                     END AS CUMPLE_PERFIL_SOLICITADO,
                     CASE
-                        WHEN (e.rnp = 'NO' OR e.profesion = 'NO' OR e.office = 'NO' OR e.criterio_cv_1 = 'NO') THEN 'DESAPROBADO'
-                        ELSE 'APROBADO'
+                        WHEN (e.rnp = 'SI' AND e.profesion = 'SI' AND e.office = 'SI' AND e.criterio_cv_1 = 'SI') THEN 'APROBADO'
+                        ELSE 'DESAPROBADO'
                     END AS estado,
                     CASE
                         WHEN (e.grado >= 1 AND (e.criterio_cv_2 >= 2 OR e.criterio_cv_3 >= 2)) THEN 'APROBADO'
@@ -295,7 +295,7 @@ class ExportController extends Controller
                 INNER JOIN
                     persona p ON pc.id_persona = p.id
                 WHERE
-                    pc.id_sede_provincial = 1 AND id_convocatoria = 2
+                    pc.id_sede_provincial = 1 AND id_convocatoria = 1
             ) AS subquery, (SELECT @row_number := 0) AS t;";
                 $resultado = DB::select($query);
                 $valores = array("titulo"=>"REPORTE ED EVALUACION DE CV", "nombre_hoja"=>"Ev- CV", "nom_archivo"=>"Reporte_CV_Evaluados_SN_ENLA2023".date('Y_m_d'));
@@ -329,8 +329,8 @@ class ExportController extends Controller
                     ELSE ''
                 END AS rango_edad,
                 CASE
-                    WHEN (rnp = 'NO' OR profesion = 'NO' OR office = 'NO' OR criterio_cv_1 = 'NO') THEN 'DESAPROBADO'
-                    ELSE 'APROBADO'
+                    WHEN (rnp = 'SI' AND profesion = 'SI' AND office = 'SI' AND criterio_cv_1 = 'SI') THEN 'APROBADO'
+                    ELSE 'DESAPROBADO'
                 END AS estado,
                 CASE
                     WHEN estado = ESTADO2 THEN 'OK'
@@ -370,12 +370,12 @@ class ExportController extends Controller
                     e.updated_at AS fecha_evaluacion,
                     TIMESTAMPDIFF(YEAR, p.fecha_nac, CURDATE()) AS edad,
                     CASE
-                        WHEN e.rnp = 'NO' OR e.profesion = 'NO' OR e.office = 'NO' OR e.criterio_cv_1 = 'NO' THEN 'NO'
-                        ELSE 'SI'
+                        WHEN e.rnp = 'SI' AND e.profesion = 'SI' AND e.office = 'SI' AND e.criterio_cv_1 = 'SI' THEN 'SI'
+                        ELSE 'NO'
                     END AS CUMPLE_PERFIL_SOLICITADO,
                     CASE
-                        WHEN (e.rnp = 'NO' OR e.profesion = 'NO' OR e.office = 'NO' OR e.criterio_cv_1 = 'NO') THEN 'DESAPROBADO'
-                        ELSE 'APROBADO'
+                        WHEN (e.rnp = 'SI' AND e.profesion = 'SI' AND e.office = 'SI' AND e.criterio_cv_1 = 'SI') THEN 'APROBADO'
+                        ELSE 'DESAPROBADO'
                     END AS estado,
                     CASE
                         WHEN (e.grado >= 1 AND (e.criterio_cv_2 >= 2 OR e.criterio_cv_3 >= 2)) THEN 'APROBADO'
