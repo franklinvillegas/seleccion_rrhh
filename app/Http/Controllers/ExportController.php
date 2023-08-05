@@ -438,8 +438,6 @@ class ExportController extends Controller
                     INNER JOIN
                         sede_regional sr ON sp.id_sede_regional = sr.id;";
                 $resultado = DB::select($query);
-                return $resultado;
-
                 $valores = array("titulo"=>"REPORTE ED EVALUACION DE CV", "nombre_hoja"=>"Ev- CV", "nom_archivo"=>"Reporte_CV_Evaluados_SN_ENLA2023".date('Y_m_d'));
                 $cabecera = ['N°','SEDE REGIONAL','SEDE PROVINCIAL','DNI','APELLIDOS Y NOMBRES','FECHA DE NACIMIENTO','EDAD','PROFESIÓN','GRADO','REGISTRO CV','TIENE RNP',
                 'FORMACIÓN ACADÉMICA MÍNIMA','MANEJO DE OFFICE','EXPERIENCIA MÍNIMA','CUMPLE CON EL PERFIL SOLICITACO','FORMACIÓN ACADEMICA','EXPERIENCIA LABORAL 1','EXPERIENCIA LABORAL 2',
