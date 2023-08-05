@@ -25,6 +25,7 @@ import Grado from './components/admin/Grado';
 import Datos from './components/admin/Datos';
 import Matricula from './components/admin/Matricula';
 import Notas from './components/admin/Notas';
+import ReporteNotas from './components/admin/ReporteNotas';
 
 
 
@@ -79,6 +80,8 @@ let routes = [
             { path: 'datos', name: 'Datos', component: Datos },
             { path: 'matricula', name: 'Matricula', component: Matricula },
             { path: 'notas', name: 'Notas', component: Notas },
+            { path: 'reporte_notas', name: 'ReporteNotas', component: ReporteNotas },
+
             // { path: 'evaluacion', name: 'Evaluacion', component: Evaluacion },
             
  

@@ -22,6 +22,18 @@ class ExamenController extends Controller
 
     }
 
+    public function rankear(Request $request)
+    {   
+        $ranking = DB::select("update examen
+        SET fase2_ponderado = (nota_examen * 0.4) + (total_fase1 * 0.55) + (ponderado1 * 0.05)
+        WHERE id_persona_convocatoria IN (
+            SELECT id 
+            FROM persona_convocatoria 
+            WHERE id_sede_provincial = ".$request->provincia." and id_convocatoria = ".$request->convocatoria." );");
+            return response()->json(['message' => 'Se Rankeo a los postulantes solicitados',]);
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -30,26 +42,11 @@ class ExamenController extends Controller
      */
     public function reporte(Request $request)
     {
-        $matricula = Matricula::where('id_sec',$request->seccion['id_seccion'])->with(['estudiante:id,id_per','estudiante.persona:id,apellido_pat,apellido_mat,nombres'])->get();
-        $criterios = Criterio::where('id_act',$request->seccion['id_competencia'])->get();
-        foreach ($matricula as $keyM => $valueM) {
-            $arrayCriterio=array();
-            foreach ($criterios as $keyC => $valueC) {
-                $notaCriterio = Notas::where('id_crit',$valueC->id)->where('id_matric',$valueM->id)->first();
-                if ($notaCriterio) {
-                    $criterio = new ArrarObject();
-                    return $criterio;
-                    $criterio->nota=$notaCriterio->nota;
-                    return $criterio;
-                    $criterio->id=$notaCriterio->id_crit;
-                    return $criterio;
-                    array_push($arrayCriterio,$criterio);
-                }
-                
-            }
-            $valueM->criterio=$arrayCriterio;   
-        }   
-        return response()->json(['message' => 'Se Genero correctamente la asistencia', 'lista' => $matricula,'criterio' => $criterios]);
+        $examen = DB::select("select e.id, per.documento, per.apellido_pat, per.apellido_mat, per.nombres, e.nota_examen, e.total_fase1,e.ponderado1
+        FROM examen e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria = pc.id
+            INNER JOIN persona per on pc.id_persona = per.id
+                WHERE pc.id_convocatoria =".$request->convocatoria." and pc.id_sede_provincial = ".$request->provincia." ORDER BY per.apellido_pat");
+        return $examen;
         
     }
 

@@ -420,6 +420,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('listar', [ExamenController::class, 'listar']);
     Route::get('listarEvaluacion/{id_evaluacion}', [ExamenController::class, 'listarEvaluacion']);
     Route::post('generar', [ExamenController::class, 'generar']);
+    Route::post('rankear', [ExamenController::class, 'rankear']);
     Route::post('reporte', [ExamenController::class, 'reporte']);
     Route::put('modificar/{id}', [ExamenController::class, 'modificar']);
     Route::post('modificar_imagen', [ExamenController::class, 'modificarImagen']);
@@ -472,6 +473,7 @@ Route::middleware('auth:api')->group(function () {
   //Grupo EvaluacionRespuestaMatricula
   Route::group(['prefix' => 'export'], function () {
     Route::post('reporte_cv', [ExportController::class, 'reporteCV']);
+    Route::post('examen', [ExportController::class, 'reporteCV']);
     Route::get('llenar_combo', [ExportController::class, 'llenarCombo']);
     Route::get('listar', [ExportController::class, 'listar']);
     Route::get('listarRespuestas/{id_evaluacion}/{id_matricula}', [ExportController::class, 'listarRespuestas']);

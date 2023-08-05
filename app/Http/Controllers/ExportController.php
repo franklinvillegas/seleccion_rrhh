@@ -228,11 +228,11 @@ class ExportController extends Controller
                 criterio_cv_3 AS experiencia_laboral_2,
                 certificado_lengua AS manejo_lenguas_originarias,
                 CASE
-                    WHEN (fecha_nac < '1993-07-30' OR fecha_nac > '1967-07-31') THEN 'Observado'
+                    WHEN (edad < 30 OR edad > 55) THEN 'Observado'
                     ELSE ''
                 END AS rango_edad,
                 CASE
-                    WHEN (rnp = 'SI' AND profesion = 'SI' AND office = 'SI' AND criterio_cv_1 = 'SI') THEN 'APROBADO'
+                    WHEN (rnp = 'SI' AND eva_profesion = 'SI' AND office = 'SI' AND criterio_cv_1 = 'SI') THEN 'APROBADO'
                     ELSE 'DESAPROBADO'
                 END AS estado,
                 CASE
@@ -244,7 +244,6 @@ class ExportController extends Controller
                     ELSE NULL
                 END AS puntaje_ponderado,
                 fecha_evaluacion
-            
             FROM (
                 SELECT
                     e.id AS id,
@@ -407,6 +406,47 @@ class ExportController extends Controller
         }
         
     }
+    public function examen(Request $request){
+        $convocatoria = $request->cargo;
+
+                $query = "select
+                        ROW_NUMBER() OVER (ORDER BY e.id) AS `index`,
+                        sp.nombre_sede AS nombre_sede_provincial,
+                        sr.nombre_sede AS nombre_sede_regional,
+                        p.documento,
+                        CONCAT(p.apellido_pat, ' ', p.apellido_mat, ' ', p.nombres) AS apellidos_y_nombres,
+                        e.total_fase1,
+                        e.nota_examen,
+                        e.ponderado1,
+                        ROUND((e.nota_examen * 0.4) + (e.total_fase1 * 0.55) + (e.ponderado1 * 0.05), 2) AS fase2_ponderado,
+                        CASE
+                            WHEN ROUND((e.nota_examen * 0.4) + (e.total_fase1 * 0.55) + (e.ponderado1 * 0.05), 2) >= 9 THEN 1
+                            ELSE 0
+                        END AS estado,
+                        CASE
+                            WHEN ROUND((e.nota_examen * 0.4) + (e.total_fase1 * 0.55) + (e.ponderado1 * 0.05), 2) >= 9 THEN 'APROBADO'
+                            ELSE 'DESAPROBADO'
+                        END AS estado_letras
+                    FROM
+                        examen e
+                    INNER JOIN
+                        persona_convocatoria pc ON e.id_persona_convocatoria = pc.id
+                    INNER JOIN
+                        persona p ON pc.id_persona = p.id
+                    INNER JOIN
+                        sede_provincial sp ON pc.id_sede_provincial = sp.id
+                    INNER JOIN
+                        sede_regional sr ON sp.id_sede_regional = sr.id;";
+                $resultado = DB::select($query);
+                return $resultado;
+
+                $valores = array("titulo"=>"REPORTE ED EVALUACION DE CV", "nombre_hoja"=>"Ev- CV", "nom_archivo"=>"Reporte_CV_Evaluados_SN_ENLA2023".date('Y_m_d'));
+                $cabecera = ['N°','SEDE REGIONAL','SEDE PROVINCIAL','DNI','APELLIDOS Y NOMBRES','FECHA DE NACIMIENTO','EDAD','PROFESIÓN','GRADO','REGISTRO CV','TIENE RNP',
+                'FORMACIÓN ACADÉMICA MÍNIMA','MANEJO DE OFFICE','EXPERIENCIA MÍNIMA','CUMPLE CON EL PERFIL SOLICITACO','FORMACIÓN ACADEMICA','EXPERIENCIA LABORAL 1','EXPERIENCIA LABORAL 2',
+                'MANEJO DE LENGUAS ORIGINARIAS','RANGO DE EDAD','ESTADO','VALIDACIÓN DE ESTADO','PUNTAJE PONDERADO','FECHA Y HORA EVALUACION',];
+                return new GeneralExport($resultado, $valores, $cabecera);    
+    }
+
 
     public function prueba(){
         try {

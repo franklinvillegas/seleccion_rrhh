@@ -100,7 +100,7 @@
                                         </a>
                                     </li>
                                     <li class="mb-1" v-if="validarPermisos(1)">
-                                        <a class="nav-link" href="#"  @click.prevent="redireccionar('Asistencia')">
+                                        <a class="nav-link" href="#"  @click.prevent="redireccionar('ReporteNotas')">
                                             <i class="fa fa-check-square me-3"></i>Reporte Notas
                                         </a>
                                     </li>

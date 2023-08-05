@@ -41,17 +41,30 @@
                     </select>
                     <span class="text-danger">{{ errors.first("form_registro.convocatoria") }}</span>
                 </div>
-                <div class="form-group col-3">
+                <div class="form-group col-2">
                     <p class="m-0">
-                        <strong>Generar registro de notas</strong>
+                        <strong>Generar Reporte</strong>
                     </p>
                     <button class="btn btn-outline-success float-left" type="button" @click="generarLista"> Generar
                     </button>
                 </div>
 
+                <div class="form-group col-2">
+                    <p class="m-0">
+                        <strong>Rankear</strong>
+                    </p>
+                    <button class="btn btn-outline-success float-left" type="button" @click="generarRanking"> Rankerar
+                    </button>
+                    <button class="btn btn-outline-secondary float-right" type="button" @click="exportar">
+                    reporte
+                </button>
+                </div>
+                
+                
+
             </div>
             <fieldset class="scheduler-border">
-                <legend class="scheduler-border">Listado</legend>
+                <legend class="scheduler-border">Reporte de Examen</legend>
                 <div class="control-group">
                     <div class="table-responsive">
                         <vue-good-table :columns="listarRegistros.columns" :rows="listarRegistros.data" :search-options="{
@@ -61,9 +74,9 @@
                             <template slot="table-row" slot-scope="props">
 
                                 <span v-if="props.column.field == 'nota_examen'">
-                                    <input type="number" v-model="props.row.nota_examen" class="form-control" data-vv-as="Nota"
-                                        placeholder="Nota" name="nota_examen" max="5" min="0"
-                                        @keyup.enter="modificarNota(props.row.id, props.row.nota_examen)">
+                                    <input type="text" v-model="props.row.nota_examen" class="form-control" data-vv-as="Nota"
+                                        placeholder="Nota" name="nota_examen"
+                                        @keyup="modificarNota(props.row.id, props.row.nota_examen)">
                                 </span>
                             </template>
                         </vue-good-table>
@@ -83,7 +96,7 @@
 
 <script>
 
-// import Helper from "../../services/Helper";
+import Helper from "../../services/helper";
 
 export default {
     name: 'Ayudas',
@@ -103,7 +116,9 @@ export default {
                     { label: "Apellido Paterno", field: "apellido_pat" },
                     { label: "Apelldio Materno", field: "apellido_mat" },
                     { label: "Nombres", field: "nombres" },
+                    { label: "Ponderado Ev. CV", field: "total_fase1" },
                     { label: "Nota Examen", field: "nota_examen" },
+                    { label: "Adicional Leguas", field: "ponderado1" },
                 ],
                 total: 0,
                 filtrosBusqueda: {
@@ -218,13 +233,30 @@ export default {
                     this.$toastr.e(error.response.data.message);
                 });
         },
+        generarRanking() {
+            let datos = {
+                convocatoria: this.idConvocatoria,
+                provincia: this.idProcincia,
+            }
+            console.log(datos);
+            axios.post("api/examen/rankear", datos)
+                .then((response) => {
+                    this.listarRegistros.data = response.data;
+                    this.$toastr.s(response.data.message);
+                })
+                .catch((error) => {
+                    console.log("error");
+                });
+
+
+        },
         generarLista() {
             let datos = {
                 convocatoria: this.idConvocatoria,
                 provincia: this.idProcincia,
             }
             console.log(datos);
-            axios.post("api/examen/generar", datos)
+            axios.post("api/examen/reporte", datos)
                 .then((response) => {
                     this.listarRegistros.data = response.data;
                     this.$toastr.s(response.data.message);
@@ -242,9 +274,12 @@ export default {
 
         },
         exportar() {
-            let url = process.env.MIX_APP_URL + '/exportar/ocupaciones' + Helper.getFilterURL(this.listarSecciones.filtrosBusqueda);
-            window.open(url);
-        }
+            this.listarRegistros.filtrosBusqueda.cargo=1;
+            let url =
+                process.env.MIX_APP_URL +"/exportar/examen" +
+        Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
+      window.open(url);
+        },
 
     },
 }
