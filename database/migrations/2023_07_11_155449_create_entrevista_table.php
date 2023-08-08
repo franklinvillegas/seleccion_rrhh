@@ -30,6 +30,8 @@ class CreateEntrevistaTable extends Migration
             $table->string('estado',15)->nullable();
             $table->string('resultado',15)->nullable();
             $table->text('observaciones')->nullable();
+            $table->boolean('estado');
+
 
             $table->foreign('id_persona_convocatoria')->references('id')->on('persona_convocatoria');
 

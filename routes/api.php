@@ -189,18 +189,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('obtener_ayudas', [AyudaController::class, 'obtenerAyudas']);
   });
 
-  //Grupo evaluacion
-  Route::group(['prefix' => 'evaluacion'], function () {
-    Route::get('ver/{dni}', [EvaluacionController::class, 'ver']);
-    Route::get('llenar_combo', [EvaluacionController::class, 'llenarCombo']);
-    Route::get('listar', [EvaluacionController::class, 'listar']);
-    Route::post('guardar', [EvaluacionController::class, 'guardar']);
-    Route::put('modificar/{id}', [EvaluacionController::class, 'modificar']);
-    Route::post('modificar_imagen', [EvaluacionController::class, 'modificarImagen']);
-    Route::put('eliminar/{id}', [EvaluacionController::class, 'eliminar']);
-    Route::put('activar/{id}', [EvaluacionController::class, 'activar']);
-    Route::get('obtener_ayudas', [EvaluacionController::class, 'obtenerAyudas']);
-  });
+  
 
   //Grupo Grado
   Route::group(['prefix' => 'grado'], function () {
@@ -374,7 +363,7 @@ Route::middleware('auth:api')->group(function () {
 
   //Grupo Evaluacion
   Route::group(['prefix' => 'evaluacion'], function () {
-    Route::get('ver/{id}/{convocatoria}', [EvaluacionController::class, 'ver']);
+    Route::get('ver/{id}', [EvaluacionController::class, 'ver']);
     Route::get('llenar_combo', [EvaluacionController::class, 'llenarCombo']);
     Route::get('evaluar/{id}/{convocatoria}', [EvaluacionController::class, 'evaluar']);
     Route::post('guardar', [EvaluacionController::class, 'guardar']);

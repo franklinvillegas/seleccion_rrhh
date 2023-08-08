@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
 use App\Models\Persona;
 use App\Models\Evaluacion;
 use App\Models\User;
@@ -14,34 +16,31 @@ class EvaluacionController extends Controller
 {
     //
      //funciones generales de mantenimiento
-     public function ver($dni,$convocatoria){
-
+     public function ver($dni){
         $persona = Persona::select('id','nombres','apellido_pat','apellido_mat','documento' )->where('documento',$dni)->get();
         $proceso = PersonaConvocatoria::select('id','id_persona','id_convocatoria','id_sede_provincial')
-        ->where('id_persona',$persona[0]['id'])
-        ->where('id_convocatoria',$convocatoria)
-        ->get();
-        
-            $user = auth()->user();
-            $id_region_user = DB::select("select sr.id from sede_regional sr RIGHT JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id=".$user->id);
-            $id_region_proceso = DB::select("select sr.id from sede_regional sr RIGHT JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id=". $proceso[0]->id_sede_provincial);
+        ->where('id_persona',$persona[0]['id'])->latest()
+        ->first();
+        $user = auth()->user();
+            $id_region_user = DB::select("select sr.id from sede_regional sr RIGHT JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id=".$user->id_sede_provincial);            
+            $id_region_proceso = DB::select("select sr.id from sede_regional sr RIGHT JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id=". $proceso->id_sede_provincial);
             if ($id_region_user==$id_region_proceso) {
-                $duplicado = Evaluacion::where('id_persona_convocatoria',$proceso[0]['id'])->first();
+                $duplicado = Evaluacion::where('id_persona_convocatoria',$proceso->id)->first();
                 if ($duplicado) {
-                    $resultado = Evaluacion::select('num_registro')->where('id_persona_convocatoria',$proceso[0]['id'])->get();
-                    return response()->json(['message' => 'Ya esta registrado', 'persona' => $persona, 'proceso'=>$proceso,'num_registro'=>$resultado[0]['num_registro'],'flag'=>0]);
+
+                    $resultado = Evaluacion::select('num_registro')->where('id_persona_convocatoria',$proceso->id)->first();
+                    return response()->json(['message' => 'Ya esta registrado', 'persona' => $persona, 'proceso'=>$proceso,'num_registro'=>$resultado->num_registro,'flag'=>0]);
                 }
                 else {
-                    $resultado = DB::select("select MAX(num_registro) as max_num_registro
-                    from persona_convocatoria pc
+                    $resultado = DB::select("select MAX(num_registro) as max_num_registro from persona_convocatoria pc 
                     INNER JOIN evaluacion e ON pc.id = e.id_persona_convocatoria
-                    WHERE id_convocatoria = ".$convocatoria." and id_sede_provincial = ".$proceso[0]['id_sede_provincial']);    
-                    $evaluacion = Evaluacion::create(['id_persona_convocatoria' => $proceso[0]['id'], 'num_registro' => $resultado[0]->max_num_registro+1,]);
-                    return response()->json(['message' => 'Se realizo el registro', 'persona' => $persona, 'proceso'=>$proceso,'numero'=>$resultado[0]->max_num_registro+1,'flag'=>1]);
+                    WHERE pc.id_convocatoria = ".$proceso->id_convocatoria." and pc.id_sede_provincial = ".$proceso->id_sede_provincial);
+                    $evaluacion = Evaluacion::create(['id_persona_convocatoria' => $proceso->id, 'num_registro' => $resultado[0]->max_num_registro+1,]);
+                    return response()->json(['message' => 'Se realizo el registro', 'persona' => $persona, 'proceso'=>$proceso,'num_registro'=>$resultado[0]->max_num_registro+1,'flag'=>1]);
                 }
             } 
             else {
-                return response()->json(['message' => 'El postulante no petenece a la sede', 'persona' => $persona, 'proceso'=>$proceso,'numero'=>$resultado[0]->max_num_registro+1,'flag'=>1]);
+                return response()->json(['message' => 'El postulante no petenece a la sede Regional', 'persona' => $persona, 'proceso'=>$proceso,'flag'=>1]);
             }
         
         
@@ -50,12 +49,16 @@ class EvaluacionController extends Controller
                 
     }
     
-    public function evaluar($dni,$convocatoria){
+    public function evaluar($dni){
+        $persona = Persona::select('id','nombres','apellido_pat','apellido_mat','documento' )->where('documento',$dni)->get();
+        $per_con = PersonaConvocatoria::select('id','id_persona','id_convocatoria','id_sede_provincial')
+        ->where('id_persona',$persona[0]['id'])->latest()
+        ->first();
         $proceso = DB::select("select e.id as id,pc.id as id_persona_convocatoria,p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,e.num_registro,rnp,office,certificado_lengua,
         e.profesion,e.grado,e.criterio_cv_1,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.criterio_cv_5,e.criterio_cv_6,e.estado_cv,e.updated_at
         from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
                                             INNER JOIN persona p ON pc.id_persona=p.id 
-                                                                WHERE pc.id_sede_provincial=1 and id_convocatoria=" .$convocatoria. " and documento=" .$dni);
+                                                                WHERE pc.id_sede_provincial=1 and id_convocatoria=" .$per_con->id_sede_provincial. " and documento=" .$dni);
         return response()->json(['message' => 'Se realizo el registro', 'data' => $proceso]);
     }
    

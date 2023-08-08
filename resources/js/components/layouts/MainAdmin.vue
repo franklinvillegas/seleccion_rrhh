@@ -80,7 +80,7 @@
                                 <ul class="list-unstyled ps-0" style="font-size:20px;">
 
                                     <li class="mb-1" v-if="validarPermisos(1)">
-                                        <a class="nav-link" href="#" @click.prevent="redireccionar('Datos')">
+                                        <a class="nav-link" href="#" @click.prevent="redireccionar('EvaluacionCV')">
                                             <i class="fas fa-address-card me-3"></i>Evaluación de CV
                                         </a>
                                     </li>

@@ -4,7 +4,7 @@
             <h4 class="text-color-2 mb-3">REGISTRO DE RECEPCION DE CURRICULUM</h4>
         </div>
         <br>
-        <div class="form-group col-3">
+        <!-- <div class="form-group col-3">
             <p class="m-0">
                 <strong>Convocatoria</strong>
             </p>
@@ -12,8 +12,8 @@
                 placeholder="Seleccione Convocatoria" v-validate="'required'">
                 <option v-for="row in listarConvocatorias" :key="row.id" :value="row.id" v-text="row.nombre"></option>
             </select>
-            <!-- <span class="text-danger">{{errors.first("form_registro.nivel")}}</span> -->
-        </div>
+            <span class="text-danger">{{errors.first("form_registro.nivel")}}</span>
+        </div> -->
         <div class="row justify-content-md-center">
             <div class="col-md-5">
                 <div class="form-group">
@@ -80,7 +80,7 @@ export default {
     },
     methods: {
         buscar() {
-            axios.get("api/evaluacion/ver/" + this.numeroDni + "/" + this.idConvocatoria)
+            axios.get("api/evaluacion/ver/" + this.numeroDni)
                 .then((response) => {
                     let data = response.data;
                     this.mostrar.documento=this.numeroDni;

@@ -22,7 +22,7 @@ import AsistenciaAdmin from './components/admin/Asistencia';
 import RecepcionCV from './components/admin/RecepcionCV';
 import Grado from './components/admin/Grado';
 // // import Seccion from './components/admin/Seccion';
-import Datos from './components/admin/Datos';
+import EvaluacionCV from './components/admin/EvaluacionCV';
 import Matricula from './components/admin/Matricula';
 import Notas from './components/admin/Notas';
 import ReporteNotas from './components/admin/ReporteNotas';
@@ -77,7 +77,7 @@ let routes = [
             { path: 'recepciocv', name: 'RecepcionCV', component: RecepcionCV },
             { path: 'grado', name: 'Grado', component: Grado },
             // { path: 'seccion', name: 'Seccion', component: Seccion },
-            { path: 'datos', name: 'Datos', component: Datos },
+            { path: 'evaluacioncv', name: 'EvaluacionCV', component: EvaluacionCV },
             { path: 'matricula', name: 'Matricula', component: Matricula },
             { path: 'notas', name: 'Notas', component: Notas },
             { path: 'reporte_notas', name: 'ReporteNotas', component: ReporteNotas },

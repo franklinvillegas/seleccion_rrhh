@@ -18,6 +18,7 @@ class CreatePersonaConvocatoriaTable extends Migration
             $table->unsignedBigInteger('id_persona');
             $table->unsignedBigInteger('id_convocatoria');
             $table->unsignedBigInteger('id_sede_provincial');
+            $table->boolean('estado');
 
             $table->foreign('id_persona')->references('id')->on('persona');
             $table->foreign('id_convocatoria')->references('id')->on('convocatoria');

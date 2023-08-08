@@ -35,6 +35,7 @@ class CreateCapacitacionTable extends Migration
             $table->string('estado_capa2',15)->nullable();
             $table->text('observacion')->nullable();
             $table->string('condicion',15)->nullable();
+            $table->boolean('estado');
 
             $table->foreign('id_persona_convocatoria')->references('id')->on('persona_convocatoria');
 

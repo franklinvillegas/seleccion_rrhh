@@ -37,6 +37,8 @@ class CreateEvaluacionTable extends Migration
             $table->string('estado_cv',15)->nullable();
             $table->string('resultado_cv',15)->nullable();
             $table->integer('num_registro')->nullable();
+            $table->boolean('estado');
+
 
             $table->foreign('id_persona_convocatoria')->references('id')->on('persona_convocatoria');
 

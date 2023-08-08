@@ -22,7 +22,7 @@ class CreateExamenTable extends Migration
             $table->double('ponderado2')->nullable();
             $table->double('ponderado3')->nullable();
             $table->double('fase2_ponderado')->nullable();
-            $table->double('estado')->nullable();
+            $table->boolean('estado')->nullable();
 
             $table->foreign('id_persona_convocatoria')->references('id')->on('persona_convocatoria');
 
