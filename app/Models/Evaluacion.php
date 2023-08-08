@@ -31,6 +31,7 @@ class Evaluacion extends Model
             'ponderado_6',
             'total_ponderado',
             'estado_cv',
+            'estado',
             'resultado_cv',
             'num_registro'
     ];

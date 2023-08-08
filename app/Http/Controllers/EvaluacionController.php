@@ -9,6 +9,7 @@ use App\Models\Persona;
 use App\Models\Evaluacion;
 use App\Models\User;
 use App\Models\PersonaConvocatoria;
+use App\Models\SedeProvincial;
 use Illuminate\Support\Facades\DB;
 
 
@@ -27,16 +28,17 @@ class EvaluacionController extends Controller
             if ($id_region_user==$id_region_proceso) {
                 $duplicado = Evaluacion::where('id_persona_convocatoria',$proceso->id)->first();
                 if ($duplicado) {
-
+                    $provincia = SedeProvincial::where('id',$proceso->id_sede_provincial)->first();
                     $resultado = Evaluacion::select('num_registro')->where('id_persona_convocatoria',$proceso->id)->first();
-                    return response()->json(['message' => 'Ya esta registrado', 'persona' => $persona, 'proceso'=>$proceso,'num_registro'=>$resultado->num_registro,'flag'=>0]);
+                    return response()->json(['message' => 'Ya esta registrado', 'persona' => $persona, 'proceso'=>$proceso,'num_registro'=>$resultado->num_registro,'provincia'=>$provincia, 'flag'=>0]);
                 }
                 else {
                     $resultado = DB::select("select MAX(num_registro) as max_num_registro from persona_convocatoria pc 
                     INNER JOIN evaluacion e ON pc.id = e.id_persona_convocatoria
                     WHERE pc.id_convocatoria = ".$proceso->id_convocatoria." and pc.id_sede_provincial = ".$proceso->id_sede_provincial);
-                    $evaluacion = Evaluacion::create(['id_persona_convocatoria' => $proceso->id, 'num_registro' => $resultado[0]->max_num_registro+1,]);
-                    return response()->json(['message' => 'Se realizo el registro', 'persona' => $persona, 'proceso'=>$proceso,'num_registro'=>$resultado[0]->max_num_registro+1,'flag'=>1]);
+                    $provincia = SedeProvincial::where('id',$proceso->id_sede_provincial)->first();
+                    $evaluacion = Evaluacion::create(['id_persona_convocatoria' => $proceso->id, 'num_registro' => $resultado[0]->max_num_registro+1,'estado'=> 0 ,]);
+                    return response()->json(['message' => 'Se realizo el registro', 'persona' => $persona, 'proceso'=>$proceso,'num_registro'=>$evaluacion->num_registro,'provincia'=>$provincia,'flag'=>1]);
                 }
             } 
             else {

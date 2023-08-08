@@ -89,17 +89,18 @@ export default {
                         this.mostrar.apellidos = data.persona[0].apellido_pat + " " + data.persona[0].apellido_mat;
                         this.mostrar.documento = data.persona[0].documento;
                         this.mostrar.nombres = data.persona[0].nombres;
-                        this.mostrar.provincia = data.proceso[0].id_sede_provincial;
+                        this.mostrar.provincia = data.provincia.nombre_sede;
                         this.mostrar.num_registro = data.num_registro;
                         console.log(data);
+                        console.log(this.mostrar);
                         this.numeroDni='';
                     } else {
                         this.$toastr.s(response.data.message);
                         this.mostrar.apellidos = data.persona[0].apellido_pat + " " + data.persona[0].apellido_mat;
+                        this.mostrar.documento = data.persona[0].documento;
                         this.mostrar.nombres = data.persona[0].nombres;
-                        this.mostrar.provincia = data.proceso[0].id_sede_provincial;
-                        this.mostrar.num_registro = data.numero;
-                        console.log(data);
+                        this.mostrar.provincia = data.provincia.nombre_sede;
+                        this.mostrar.num_registro = data.num_registro;
                         this.numeroDni='';
 
                     }
