@@ -19,9 +19,9 @@
                 <button class="btn btn-outline-secondary float-right" type="button" @click="mostrar">
                     Mostrar
                 </button>
-                <button class="btn btn-outline-secondary float-right" type="button" @click="exportar">
+                <!-- <button class="btn btn-outline-secondary float-right" type="button" @click="exportar">
                     reporte
-                </button>
+                </button> -->
             </div>
         </div>
         <div class="table-responsive">

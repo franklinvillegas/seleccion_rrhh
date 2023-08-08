@@ -78,22 +78,26 @@ class EvaluacionController extends Controller
     }
 
     public function mostrar($id){
+        $user = auth()->user();
+        $id_region_user = DB::select("select sr.id from sede_regional sr RIGHT JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id=".$user->id_sede_provincial);            
         $mostrar = DB::select("select e.id,pc.id,p.documento,p.apellido_pat,p.apellido_mat,p.nombres,e.num_registro,sp.nombre_sede as provincia, sr.nombre_sede as region,e.created_at
         from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
                                             INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
                                             INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
                                             INNER JOIN persona p ON pc.id_persona=p.id 
-                                                                WHERE pc.id_sede_provincial=". 1 ." and id_convocatoria=".$id);
+                                                                WHERE sr.id=". $id_region_user[0]->id ." and id_convocatoria=".$id);
         return $mostrar;
     }
     public function mostrarReporte($id){
+        $user = auth()->user();
+        $id_region_user = DB::select("select sr.id from sede_regional sr RIGHT JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id=".$user->id_sede_provincial);            
         $mostrar = DB::select("select e.id as id,pc.id as id_persona_convocatoria,p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,e.num_registro,rnp,office,certificado_lengua,
         p.profesion,e.grado,e.criterio_cv_1,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.criterio_cv_5,e.criterio_cv_6,e.estado_cv, e.created_at,sp.nombre_sede as provincia, sr.nombre_sede as region
         from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
             INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
             INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
             INNER JOIN persona p ON pc.id_persona=p.id 
-                WHERE pc.id_sede_provincial=1 and id_convocatoria=" .$id);
+                WHERE sr.id=" . $id_region_user[0]->id . " and id_convocatoria=" .$id);
         return $mostrar;
     }
 
