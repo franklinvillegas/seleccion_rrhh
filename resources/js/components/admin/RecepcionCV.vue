@@ -39,6 +39,10 @@
                     <label for="">SEDE PROVINCIAL</label>
                     <input type="text" name="" class="form-control" v-model="mostrar.provincia" disabled>
                 </div>
+                <div class="form-group" disabled>
+                    <label for="">CARGO</label>
+                    <input type="text" name="" class="form-control" v-model="mostrar.cargo" disabled>
+                </div>
                 <div class="form-group">
                     <label for="">REGISTRO</label>
                     <input type="text" name="" class="form-control" v-model="mostrar.num_registro" disabled>
@@ -71,6 +75,7 @@ export default {
                 apellidos: '',
                 nombres: '',
                 provincia: '',
+                cargo: '',
                 num_registro: '',
             }
         }
@@ -90,6 +95,7 @@ export default {
                         this.mostrar.documento = data.persona[0].documento;
                         this.mostrar.nombres = data.persona[0].nombres;
                         this.mostrar.provincia = data.provincia.nombre_sede;
+                        this.mostrar.cargo = data.cargo;
                         this.mostrar.num_registro = data.num_registro;
                         console.log(data);
                         console.log(this.mostrar);
