@@ -45,12 +45,14 @@ class EvaluacionController extends Controller
         }                
 }
     
-    public function evaluar($dni){
+    public function evaluar($dni,$id_convocatoria){
         $persona = Persona::select('id','nombres','apellido_pat','apellido_mat','documento' )->where('documento',$dni)->get();
         $per_con = PersonaConvocatoria::select('id','id_persona','id_convocatoria','id_sede_provincial')
         ->where('id_persona',$persona[0]['id'])->latest()
         ->first();
-        $user = auth()->user();
+        if ($per_con->id_convocatoria == $id_convocatoria) {
+            # code...
+            $user = auth()->user();
         $id_region_user = DB::select("select sr.id from sede_regional sr RIGHT JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id=".$user->id_sede_provincial);            
         $proceso = DB::select("select e.id as id,pc.id as id_persona_convocatoria,p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,e.num_registro,rnp,office,certificado_lengua,
         e.profesion,e.grado,e.criterio_cv_1,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.criterio_cv_5,e.criterio_cv_6,e.estado_cv,e.updated_at
@@ -59,7 +61,14 @@ class EvaluacionController extends Controller
                                             INNER JOIN sede_provincial sp on sp.id=pc.id_sede_provincial
                                             INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id 
                                                                 WHERE sr.id=" . $id_region_user[0]->id . " and id_convocatoria=" .$per_con->id_convocatoria. " and documento=" .$dni);
-        return response()->json(['message' => 'Se realizo el registro', 'data' => $proceso]);
+        return response()->json(['message' => 'Datos cargados OK', 'data' => $proceso,'flag' => 1]);
+        } else {
+            # code...
+        return response()->json(['message' => 'DNI no pertenece al cargo', 'flag' => 0]);
+
+        }
+        
+        
     }
    
     public function listar(){
@@ -70,9 +79,10 @@ class EvaluacionController extends Controller
     }
 
     public function guardar(Request $request){
-        $guardar = Evaluacion::findOrFail($request->id); 
+        $guardar = Evaluacion::findOrFail($request->id);
+        $guardar->estado=1; 
         $guardar->update($request->all());
-        return response()->json(['message' => 'Guardado correctamente', 'identificador' => $guardar->id]);
+        return response()->json(['message' => 'Guardado correctamente', 'identificador' => $guardar]);
     }
 
     public function mostrar($id){
@@ -89,14 +99,43 @@ class EvaluacionController extends Controller
     public function mostrarReporte($id){
         $user = auth()->user();
         $id_region_user = DB::select("select sr.id from sede_regional sr RIGHT JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id=".$user->id_sede_provincial);            
-        $mostrar = DB::select("select e.id as id,pc.id as id_persona_convocatoria,p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,e.num_registro,rnp,office,certificado_lengua,
-        p.profesion,e.grado,e.criterio_cv_1,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.criterio_cv_5,e.criterio_cv_6,e.estado_cv, e.created_at,sp.nombre_sede as provincia, sr.nombre_sede as region
-        from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
-            INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
-            INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
-            INNER JOIN persona p ON pc.id_persona=p.id 
-                WHERE sr.id=" . $id_region_user[0]->id . " and id_convocatoria=" .$id);
-        return $mostrar;
+        switch ($id) {
+            case 1:
+                # code...
+                $mostrar = DB::select("select e.id as id,pc.id as id_persona_convocatoria,p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,e.num_registro,rnp,office,certificado_lengua,
+                    p.profesion,e.grado,e.criterio_cv_1,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.criterio_cv_5,e.criterio_cv_6,e.estado_cv, e.created_at,sp.nombre_sede as provincia, sr.nombre_sede as region
+                    from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
+                        INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
+                        INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
+                        INNER JOIN persona p ON pc.id_persona=p.id 
+                        WHERE sr.id=" . $id_region_user[0]->id . " and id_convocatoria=" .$id ." and e.estado=" . 1);
+                return $mostrar;
+                break;
+            case 2:
+                # code...
+                break;
+            case 3:
+                # code...
+                $mostrar = DB::select("select e.id as id,pc.id as id_persona_convocatoria,p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,e.num_registro,rnp,office,
+                    p.profesion,e.grado,e.criterio_cv_1,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.criterio_cv_5,e.criterio_cv_6,e.estado_cv, e.created_at,sp.nombre_sede as provincia, sr.nombre_sede as region
+                    from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
+                        INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
+                        INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
+                        INNER JOIN persona p ON pc.id_persona=p.id 
+                        WHERE sr.id=" . $id_region_user[0]->id . " and id_convocatoria=" .$id ." and e.estado=" . 1);
+                return $mostrar;
+                break;
+            case 4:
+                # code...
+                break;
+            case 5:
+                # code...
+                break;
+            case 6:
+                # code...
+                break;
+        }
+        
     }
 
     public function eliminar($id){
