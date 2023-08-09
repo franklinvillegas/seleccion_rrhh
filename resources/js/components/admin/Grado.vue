@@ -6,11 +6,11 @@
     </div>
     <br />
     <div class="form-group col-12">
-      <div class=" col-4">
-        <p class="m-0">
+      <div class=" col-4 col-md-4">
+        <p class="md-12">
           <strong>Convocatoria</strong>
         </p>
-        <select name="convocatoria" v-model="idConvocatoria" class="form-control" data-vv-as="Convocatoria"
+        <select lass=" col-md-4" name="convocatoria" v-model="idConvocatoria" class="form-control" data-vv-as="Convocatoria"
           placeholder="Seleccione Convocatoria" v-validate="'required'">
           <option v-for="row in listarConvocatorias" :key="row.id" :value="row.id" v-text="row.nombre"></option>
         </select>

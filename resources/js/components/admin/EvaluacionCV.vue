@@ -17,8 +17,9 @@
         <div class="row justify-content-md-center">
             <div class="col-md-5">
                 <div class="form-group">
-                    <label for="">Ingrese Número de DNI</label>
-                    <input type="text" name="" class="form-control" v-model="numeroDni" @keyup.enter="buscar">
+                    <label >Ingrese Número de DNI</label>
+                    <input v-if="idConvocatoria"  type="text" name="" class="form-control" v-model="numeroDni" @keyup.enter="buscar">
+                    <input v-else disabled type="text" name="" class="form-control" v-model="numeroDni" @keyup.enter="buscar">
                 </div>
             </div>
         </div>
@@ -28,12 +29,12 @@
         <label><b> - DNI:</b></label>
         <label v-text="evaluacion1.documento"></label>
         <br>
-        <div v-if="idConvocatoria">
+        <div v-if="idConvocatoria==1 || idConvocatoria==2">
         <table class="table1 table-bordered" >
             <thead>
                 <tr>
                     <th scope="col" colspan="2" style="text-align:center;background-color: #95D0FC;">FORMATO DE EVALUACION
-                        DE CV PARA EL CARGO DE SUPERVISOR</th>
+                        DE CV PARA EL CARGO DE SUPERVISO REGIONAL</th>
                 </tr>
             </thead>
             <tbody>
@@ -155,7 +156,82 @@
         <button class="btn btn-secondary float-right" type="button" @click="guardar">
             Guardar
         </button>
-    </div>
+        </div>
+        <!-- modal para TAP -->
+        <div v-if="idConvocatoria==3">
+        <table class="table1 table-bordered" >
+            <thead>
+                <tr>
+                    <th scope="col" colspan="2" style="text-align:center;background-color: #95D0FC;">FORMATO DE EVALUACION
+                        DE CV PARA EL TECNICO ADMINISTRATIVO REGIONAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="row">N° registro de CV recepcionado</td>
+                    <td><input type="text" v-model="evaluacion1.num_registro" disabled></td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <th scope="row" style="background-color: #95D0FC;">Requisitos del Perfil</th>
+                    <th style="background-color: #95D0FC;">
+                        <p>Cumple con el requisito Si NO</p>
+                    </th>
+                </tr>
+                <tr>
+                    <td scope="row">Inscrito en el Registro Nacional de Proveedores (RNP)
+                    </td>
+                    <td><input type="radio" name="grado" v-model="evaluacion1.rnp" value="SI"> Si <input type="radio"
+                            name="grado" v-model="evaluacion1.rnp" value="NO"> No </td>
+                </tr>
+                <tr>
+                    <td scope="row">Mínimo egresado técnico (Excepto carreras vinculadas al cuidado personal u oficios).
+                    </td>
+                    <td><input type="radio" name="profesion" v-model="evaluacion1.profesion" value="SI"> Si <input type="radio"
+                            name="profesion" v-model="evaluacion1.profesion" value="NO"> No </td>
+                </tr>
+                <tr>
+                    <td scope="row">
+                        <label >Mínimo una (01) experiencia en labores administrativas en instituciones públicas o privadas.</label>
+                    </td>
+                    <td><input type="radio" name="experiencia" v-model="evaluacion1.criterio_cv_1" value="SI"> Si <input
+                            type="radio" name="experiencia" v-model="evaluacion1.criterio_cv_1" value="NO"> No </td>
+                </tr>                
+                <tr>
+                    <th scope="row" style="background-color: #95D0FC;">CUMPLE CON LO SOLICITADO</th>
+                    <td v-if="evaluacion1.rnp == 'SI' && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.profesion=='SI' "><label
+                            :value="evaluacion1.estado_cv">SI</label> </td>
+                    <td v-else><label :value="evaluacion1.estado_cv">NO</label></td>
+
+                </tr>
+                <tr>
+                    <th scope="row" colspan="2"></th>
+                </tr>
+                <tr>
+                    <th scope="row" style="background-color: #95D0FC;">CRITERIOS</th>
+                    <th style="background-color: #95D0FC;">
+                        <P>Calificacion (Segun puntuacion de los criterios)</P>
+                    </th>
+                </tr>
+                <tr>
+                    <td scope="row">Formacion academica</td>
+                    <td v-if="evaluacion1.rnp == 'SI'  && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.profesion=='SI' "><input type="text" name="formacion" v-model="evaluacion1.grado" @keypress="soloNumeros4($event)"
+                            maxlength="1"> </td>
+                </tr>
+                <!-- de aqui es para supervisor-->
+                <tr>
+                    <td scope="row">Experiencia  administrativas en instituciones públicas o privadas</td>
+                    <td v-if="evaluacion1.rnp == 'SI' && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.profesion=='SI' "><input type="text" name="expAplicacion" v-model="evaluacion1.criterio_cv_2"
+                            @keypress="soloNumeros5($event)" maxlength="1"> </td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-secondary float-right" type="button" @click="guardar">
+            Guardar
+        </button>
+        </div>
         <hr>
     </div>
 </template>
