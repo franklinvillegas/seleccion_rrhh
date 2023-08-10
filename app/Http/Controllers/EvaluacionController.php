@@ -50,7 +50,7 @@ class EvaluacionController extends Controller
     public function evaluar($dni,$id_convocatoria){
         $persona = Persona::select('id','nombres','apellido_pat','apellido_mat','documento' )->where('documento',$dni)->get();
         $per_con = PersonaConvocatoria::select('id','id_persona','id_convocatoria','id_sede_provincial')
-        ->where('id_persona',$persona[0]['id'])->latest()
+        ->where('id_persona',$persona[0]['id'])->latest('id')
         ->first();
         if ($per_con->id_convocatoria == $id_convocatoria) {
             # code...
