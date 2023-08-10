@@ -2,7 +2,7 @@
   <div class="p-3 pt-5">
     <div class="col-md-12" style="margin-left: -15px">
 
-      <h4 class="text-color-2 mb-3">REPORTE DE RECEPCION CURRICULAR</h4>
+      <h4 class="text-color-2 mb-3">CONVOCATORIA: Reporte de Recepcion de CV</h4>
     </div>
     <br />
     <div class="form-group col-12">
