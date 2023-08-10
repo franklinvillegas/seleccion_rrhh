@@ -55,9 +55,9 @@
                     </p>
                     <button class="btn btn-outline-success float-left" type="button" @click="generarRanking"> Rankerar
                     </button>
-                    <button class="btn btn-outline-secondary float-right" type="button" @click="exportar">
+                    <!-- <button class="btn btn-outline-secondary float-right" type="button" @click="exportar">
                     reporte
-                </button>
+                </button> -->
                 </div>
                 
                 
