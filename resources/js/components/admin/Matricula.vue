@@ -2,7 +2,7 @@
     <div class="p-3 pt-5">
         <div class="col-md-12" style="margin-left: -15px">
 
-            <h4 class="text-color-2 mb-3">Reporte de rececpcion de Curriculos</h4>
+            <h4 class="text-color-2 mb-3">REPORTE DE CV EVALUADOS</h4>
         </div>
         <br />
         <div class="form-group col-12">
@@ -100,9 +100,6 @@ export default {
                 });
         },
         mostrar() {
-            console.log("llegorpt");
-            console.log(this.idConvocatoria);
-
             axios
                 .get("api/evaluacion/mostrarReporte/" + this.idConvocatoria)
                 .then((response) => {

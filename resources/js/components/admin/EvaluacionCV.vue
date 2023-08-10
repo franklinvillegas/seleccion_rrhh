@@ -257,7 +257,7 @@
                         <td scope="row">Formacion academica</td>
                         <td
                             v-if="evaluacion1.rnp == 'SI' && evaluacion1.office == 'SI' && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.profesion == 'SI'">
-                            <input type="text" name="formacion" v-model="evaluacion1.grado" @keypress="soloNumeros4($event)"
+                            <input type="text" name="formacion" v-model="evaluacion1.grado" @keypress="soloNumeros5($event)"
                                 maxlength="1"> </td>
                     </tr>
                     <tr>
@@ -265,7 +265,7 @@
                         <td
                             v-if="evaluacion1.rnp == 'SI' && evaluacion1.office == 'SI' && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.profesion == 'SI'">
                             <input type="text" name="expAplicacion" v-model="evaluacion1.criterio_cv_2"
-                                @keypress="soloNumeros5($event)" maxlength="1"> </td>
+                                @keypress="soloNumeros6($event)" maxlength="1"> </td>
                     </tr>
                 </tbody>
             </table>
@@ -449,7 +449,7 @@
                         <td scope="row">Formacion academica</td>
                         <td
                             v-if="evaluacion1.rnp == 'SI' &&  (evaluacion1.criterio_cv_1 == 'A' ||  evaluacion1.criterio_cv_1 == 'B') && evaluacion1.profesion == 'SI'">
-                            <input type="text" name="formacion" v-model="evaluacion1.grado" @keypress="soloNumeros4($event)"
+                            <input type="text" name="formacion" v-model="evaluacion1.grado" @keypress="soloNumeros5($event)"
                                 maxlength="1"> </td>
                     </tr>
                     <tr>
@@ -479,7 +479,7 @@
                 Guardar
             </button>
         </div>
-
+        <!-- modal para SPA -->
         <div v-if="idConvocatoria == 6">
             <table class="table1 table-bordered">
                 <thead>
@@ -559,7 +559,7 @@
                         <td scope="row">Formacion academica</td>
                         <td
                             v-if="evaluacion1.rnp == 'SI' &&  (evaluacion1.criterio_cv_1 == 'A' ||  evaluacion1.criterio_cv_1 == 'B') && evaluacion1.profesion == 'SI'">
-                            <input type="text" name="formacion" v-model="evaluacion1.grado" @keypress="soloNumeros4($event)"
+                            <input type="text" name="formacion" v-model="evaluacion1.grado" @keypress="soloNumeros5($event)"
                                 maxlength="1"> </td>
                     </tr>
                     <tr>
@@ -681,6 +681,13 @@ export default {
         soloNumeros5($event) {
             let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
             if ((keyCode < 48 || keyCode > 53)) { // 46 is dot
+                $event.preventDefault();
+            }
+
+        },
+        soloNumeros6($event) {
+            let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
+            if ((keyCode < 48 || keyCode > 56)) { // 46 is dot
                 $event.preventDefault();
             }
 
