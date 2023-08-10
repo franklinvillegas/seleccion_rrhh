@@ -136,6 +136,7 @@ class EvaluacionController extends Controller
                         INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
                         INNER JOIN persona p ON pc.id_persona=p.id 
                         WHERE sr.id=" . $id_region_user[0]->id . " and id_convocatoria=" .$id ." and e.estado=" . 1);
+                return $mostrar;
                 break;
             case 5:
                 # code...
@@ -146,6 +147,7 @@ class EvaluacionController extends Controller
                         INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
                         INNER JOIN persona p ON pc.id_persona=p.id 
                         WHERE sr.id=" . $id_region_user[0]->id . " and id_convocatoria=" .$id ." and e.estado=" . 1);
+                return $mostrar;
                 break;
             case 6:
                 # code...
@@ -156,6 +158,7 @@ class EvaluacionController extends Controller
                         INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
                         INNER JOIN persona p ON pc.id_persona=p.id 
                         WHERE sr.id=" . $id_region_user[0]->id . " and id_convocatoria=" .$id ." and e.estado=" . 1);
+                return $mostrar;
                 break;
         }
         
