@@ -95,7 +95,7 @@ class EvaluacionController extends Controller
                                             INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
                                             INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
                                             INNER JOIN persona p ON pc.id_persona=p.id 
-                                                                WHERE sr.id=". $id_region_user[0]->id ." and id_convocatoria=".$id)->latest()->first();
+                                                                WHERE sr.id=". $id_region_user[0]->id ." and id_convocatoria=".$id);
         return $mostrar;
     }
     public function mostrarReporte($id){
