@@ -145,7 +145,7 @@ export default {
                     { label: "Apellidos y nombres", field: "datos" },
                     { label: "RNP", field: "rnp" },
                     { label: "Minimo Grado", field: "eva_profesion" },
-                    { label: "Minimo 2 experiencias", field: "certificado_lengua" },
+                    { label: "Minimo 2 experiencias", field: "criterio_cv_1" },
                     { label: "Maximo Grado Alcanzado", field: "grado" },
                     { label: "Experiencia Especifica", field: "criterio_cv_2" },
                     { label: "Experiendia general 1", field: "criterio_cv_3" },
