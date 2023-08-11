@@ -24,8 +24,59 @@
                 </button> -->
             </div>
         </div>
-        <div class="table-responsive">
-            <vue-good-table :columns="listarRegistros.columns" :rows="listarRegistros.data" :search-options="{
+        <div v-if="idConvocatoria == 3">
+            <div  class="table-responsive" >
+            <vue-good-table :columns="listarRegistrosTAP.columns" :rows="listarRegistrosTAP.data" :search-options="{
+                enabled: true,
+                placeholder: 'Buscar en la tabla',
+            }" :pagination-options="{
+                enabled: true,
+                mode: 'pages',
+                nextLabel: 'Sig',
+                prevLabel: 'Ant',
+                rowsPerPageLabel: 'Registros por página',
+                ofLabel: 'de',
+                pageLabel: 'Página', // for 'pages' mode
+                allLabel: 'Todo',
+            }">
+            </vue-good-table>
+        </div>
+        </div>
+        
+        <div class="table-responsive" v-if="idConvocatoria==4">
+            <vue-good-table :columns="listarRegistrosCP.columns" :rows="listarRegistrosCP.data" :search-options="{
+                enabled: true,
+                placeholder: 'Buscar en la tabla',
+            }" :pagination-options="{
+                enabled: true,
+                mode: 'pages',
+                nextLabel: 'Sig',
+                prevLabel: 'Ant',
+                rowsPerPageLabel: 'Registros por página',
+                ofLabel: 'de',
+                pageLabel: 'Página', // for 'pages' mode
+                allLabel: 'Todo',
+            }">
+            </vue-good-table>
+        </div>
+        <div class="table-responsive" v-if="idConvocatoria==5">
+            <vue-good-table :columns="listarRegistrosSPA.columns" :rows="listarRegistrosSPA.data" :search-options="{
+                enabled: true,
+                placeholder: 'Buscar en la tabla',
+            }" :pagination-options="{
+                enabled: true,
+                mode: 'pages',
+                nextLabel: 'Sig',
+                prevLabel: 'Ant',
+                rowsPerPageLabel: 'Registros por página',
+                ofLabel: 'de',
+                pageLabel: 'Página', // for 'pages' mode
+                allLabel: 'Todo',
+            }">
+            </vue-good-table>
+        </div>
+        <div class="table-responsive" v-if="idConvocatoria==6">
+            <vue-good-table :columns="listarRegistrosSAS.columns" :rows="listarRegistrosSAS.data" :search-options="{
                 enabled: true,
                 placeholder: 'Buscar en la tabla',
             }" :pagination-options="{
@@ -51,7 +102,7 @@ export default {
     components: {},
     data() {
         return {
-            listarRegistros: {
+            listarRegistrosTAP: {
                 data: [],
                 columns: [
                     { label: "Sede Regional", field: "region" },
@@ -59,11 +110,95 @@ export default {
                     { label: "N° DNI", field: "documento" },
                     { label: "Apellidos y nombres", field: "datos" },
                     { label: "RNP", field: "rnp" },
+                    { label: "Minimo Grado", field: "eva_profesion" },
+                    { label: "Minimo 6 meses", field: "criterio_cv_6" },
+                    { label: "Minimo 1 experiencia", field: "criterio_cv_1" },
                     { label: "Manejo de herramientas", field: "office" },
-                    { label: "Lengua Originaria", field: "certificado_lengua" },
                     { label: "Maximo Grado Alcanzado", field: "grado" },
                     { label: "Experiencia Especifica", field: "criterio_cv_2" },
-                    { label: "Experiendia general", field: "criterio_cv_3" },
+                    { label: "Numero Registro", field: "num_registro" },
+                    { label: "Fecha Registro", field: "created_at" },
+                ],
+                total: 0,
+                filtrosBusqueda: {
+                    tipo: "",
+                    orden: "asc",
+                    ordenPor: "datos",
+                    regPagina: "10",
+                    cargo: '',
+                },
+
+                deshabilitarEdicion: false,
+            },
+            listarRegistrosCP: {
+                data: [],
+                columns: [
+                    { label: "Sede Regional", field: "region" },
+                    { label: "Sede Provincial", field: "provincia" },
+                    { label: "N° DNI", field: "documento" },
+                    { label: "Apellidos y nombres", field: "datos" },
+                    { label: "RNP", field: "rnp" },
+                    { label: "Minimo Grado", field: "eva_profesion" },
+                    { label: "Minimo 2 experiencias", field: "certificado_lengua" },
+                    { label: "Maximo Grado Alcanzado", field: "grado" },
+                    { label: "Experiencia Especifica", field: "criterio_cv_2" },
+                    { label: "Experiendia general 1", field: "criterio_cv_3" },
+                    { label: "Experiendia general 2", field: "criterio_cv_4" },
+                    { label: "Numero Registro", field: "num_registro" },
+                    { label: "Fecha Registro", field: "created_at" },
+                ],
+                total: 0,
+                filtrosBusqueda: {
+                    tipo: "",
+                    orden: "asc",
+                    ordenPor: "datos",
+                    regPagina: "10",
+                    cargo: '',
+                },
+
+                deshabilitarEdicion: false,
+            },
+            listarRegistrosSPA: {
+                data: [],
+                columns: [
+                    { label: "Sede Regional", field: "region" },
+                    { label: "Sede Provincial", field: "provincia" },
+                    { label: "N° DNI", field: "documento" },
+                    { label: "Apellidos y nombres", field: "datos" },
+                    { label: "RNP", field: "rnp" },
+                    { label: "Minimo Grado", field: "eva_profesion" },
+                    { label: "PERFIL", field: "criterio_cv_1" },
+                    { label: "Formacion Academica", field: "grado" },
+                    { label: "Experiencia Especifica", field: "criterio_cv_2" },
+                    { label: "Experiendia general 1", field: "criterio_cv_3" },
+                    { label: "Experiendia general 2", field: "criterio_cv_4" },
+                    { label: "Numero Registro", field: "num_registro" },
+                    { label: "Fecha Registro", field: "created_at" },
+                ],
+                total: 0,
+                filtrosBusqueda: {
+                    tipo: "",
+                    orden: "asc",
+                    ordenPor: "datos",
+                    regPagina: "10",
+                    cargo: '',
+                },
+
+                deshabilitarEdicion: false,
+            },
+            listarRegistrosSAS: {
+                data: [],
+                columns: [
+                    { label: "Sede Regional", field: "region" },
+                    { label: "Sede Provincial", field: "provincia" },
+                    { label: "N° DNI", field: "documento" },
+                    { label: "Apellidos y nombres", field: "datos" },
+                    { label: "RNP", field: "rnp" },
+                    { label: "Minimo Grado", field: "eva_profesion" },
+                    { label: "PERFIL", field: "criterio_cv_1" },
+                    { label: "Formacion Academica", field: "grado" },
+                    { label: "Experiencia Especifica", field: "criterio_cv_2" },
+                    { label: "Experiendia general 1", field: "criterio_cv_3" },
                     { label: "Numero Registro", field: "num_registro" },
                     { label: "Fecha Registro", field: "created_at" },
                 ],
@@ -103,8 +238,21 @@ export default {
             axios
                 .get("api/evaluacion/mostrarReporte/" + this.idConvocatoria)
                 .then((response) => {
-                    this.listarRegistros.data = response.data;
-                    console.log(this.listarRegistros);
+                    switch (this.idConvocatoria) {
+                        case 3:
+                        this.listarRegistrosTAP.data = response.data;                            
+                        break;
+                        case 3:
+                        this.listarRegistrosCP.data = response.data;
+                        break;
+                        case 3:
+                        this.listarRegistrosSPA.data = response.data;
+                        break;
+                        case 3:
+                        this.listarRegistrosSAS.data = response.data;
+                        break;
+                    }
+                    
                 })
                 .catch((error) => {
                     console.log(error);

@@ -104,8 +104,8 @@ class EvaluacionController extends Controller
         switch ($id) {
             case 1:
                 # code...
-                $mostrar = DB::select("select e.id as id,pc.id as id_persona_convocatoria,p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,e.num_registro,rnp,office,certificado_lengua,
-                    p.profesion,e.grado,e.criterio_cv_1,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.criterio_cv_5,e.criterio_cv_6,e.estado_cv, e.created_at,sp.nombre_sede as provincia, sr.nombre_sede as region
+                $mostrar = DB::select("select e.id as id,pc.id as id_persona_convocatoria,p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,e.num_registro,e.rnp,e.office,e.certificado_lengua,
+                    p.profesion as per_profesion,e.profesion as eva_profesion,e.grado,e.criterio_cv_1,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.criterio_cv_5,e.criterio_cv_6,e.estado_cv, e.created_at,sp.nombre_sede as provincia, sr.nombre_sede as region
                     from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
                         INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
                         INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
@@ -119,7 +119,7 @@ class EvaluacionController extends Controller
             case 3:
                 # code...
                 $mostrar = DB::select("select e.id as id,pc.id as id_persona_convocatoria,p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,e.num_registro,rnp,office,
-                    p.profesion,e.grado,e.criterio_cv_1,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.criterio_cv_5,e.criterio_cv_6,e.estado_cv, e.created_at,sp.nombre_sede as provincia, sr.nombre_sede as region
+                    p.profesion as per_profesion,e.profesion as eva_profesion,e.grado,e.criterio_cv_1,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.criterio_cv_5,e.criterio_cv_6,e.estado_cv, e.created_at,sp.nombre_sede as provincia, sr.nombre_sede as region
                     from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
                         INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
                         INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
@@ -130,7 +130,7 @@ class EvaluacionController extends Controller
             case 4:
                 # code...
                 $mostrar = DB::select("select e.id as id,pc.id as id_persona_convocatoria,p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,e.num_registro,rnp,office,
-                    p.profesion,e.grado,e.criterio_cv_1,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.criterio_cv_5,e.criterio_cv_6,e.estado_cv, e.created_at,sp.nombre_sede as provincia, sr.nombre_sede as region
+                    p.profesion as per_profesion,e.profesion as eva_profesion,e.grado,e.criterio_cv_1,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.criterio_cv_5,e.criterio_cv_6,e.estado_cv, e.created_at,sp.nombre_sede as provincia, sr.nombre_sede as region
                     from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
                         INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
                         INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
@@ -141,7 +141,7 @@ class EvaluacionController extends Controller
             case 5:
                 # code...
                 $mostrar = DB::select("select e.id as id,pc.id as id_persona_convocatoria,p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,e.num_registro,rnp,office,
-                    p.profesion,e.grado,e.criterio_cv_1,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.criterio_cv_5,e.criterio_cv_6,e.estado_cv, e.created_at,sp.nombre_sede as provincia, sr.nombre_sede as region
+                    p.profesion as per_profesion,e.profesion as eva_profesion,e.grado,e.criterio_cv_1,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.criterio_cv_5,e.criterio_cv_6,e.estado_cv, e.created_at,sp.nombre_sede as provincia, sr.nombre_sede as region
                     from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
                         INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
                         INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
@@ -152,7 +152,7 @@ class EvaluacionController extends Controller
             case 6:
                 # code...
                 $mostrar = DB::select("select e.id as id,pc.id as id_persona_convocatoria,p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,e.num_registro,rnp,office,
-                    p.profesion,e.grado,e.criterio_cv_1,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.criterio_cv_5,e.criterio_cv_6,e.estado_cv, e.created_at,sp.nombre_sede as provincia, sr.nombre_sede as region
+                    p.profesion as per_profesion,e.profesion as eva_profesion,e.grado,e.criterio_cv_1,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.criterio_cv_5,e.criterio_cv_6,e.estado_cv, e.created_at,sp.nombre_sede as provincia, sr.nombre_sede as region
                     from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
                         INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
                         INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
