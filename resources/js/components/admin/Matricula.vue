@@ -42,8 +42,8 @@
             </vue-good-table>
         </div>
         </div>
-        
-        <div class="table-responsive" v-if="idConvocatoria==4">
+        <div v-if="idConvocatoria == 4">
+            <div class="table-responsive" >
             <vue-good-table :columns="listarRegistrosCP.columns" :rows="listarRegistrosCP.data" :search-options="{
                 enabled: true,
                 placeholder: 'Buscar en la tabla',
@@ -59,7 +59,9 @@
             }">
             </vue-good-table>
         </div>
-        <div class="table-responsive" v-if="idConvocatoria==5">
+        </div>
+        <div v-if="idConvocatoria==5">
+            <div class="table-responsive" >
             <vue-good-table :columns="listarRegistrosSPA.columns" :rows="listarRegistrosSPA.data" :search-options="{
                 enabled: true,
                 placeholder: 'Buscar en la tabla',
@@ -75,7 +77,9 @@
             }">
             </vue-good-table>
         </div>
-        <div class="table-responsive" v-if="idConvocatoria==6">
+    </div>
+        <div v-if="idConvocatoria==6">
+           <div class="table-responsive" >
             <vue-good-table :columns="listarRegistrosSAS.columns" :rows="listarRegistrosSAS.data" :search-options="{
                 enabled: true,
                 placeholder: 'Buscar en la tabla',
@@ -90,7 +94,9 @@
                 allLabel: 'Todo',
             }">
             </vue-good-table>
+        </div> 
         </div>
+        
     </div>
 </template>
   
@@ -242,13 +248,13 @@ export default {
                         case 3:
                         this.listarRegistrosTAP.data = response.data;                            
                         break;
-                        case 3:
+                        case 4:
                         this.listarRegistrosCP.data = response.data;
                         break;
-                        case 3:
+                        case 5:
                         this.listarRegistrosSPA.data = response.data;
                         break;
-                        case 3:
+                        case 6:
                         this.listarRegistrosSAS.data = response.data;
                         break;
                     }
