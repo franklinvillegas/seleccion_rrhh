@@ -95,7 +95,7 @@ class EvaluacionController extends Controller
                                             INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
                                             INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
                                             INNER JOIN persona p ON pc.id_persona=p.id 
-                                                                WHERE sr.id=". $id_region_user[0]->id ." and id_convocatoria=".$id);
+                                                                WHERE ((".$id_region_user[0]->id." != 1 and sr.id=" . $id_region_user[0]->id . ") or ".$id_region_user[0]->id." = 1) and id_convocatoria=".$id);
         return $mostrar;
     }
     public function mostrarReporte($id){
@@ -124,7 +124,7 @@ class EvaluacionController extends Controller
                         INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
                         INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
                         INNER JOIN persona p ON pc.id_persona=p.id 
-                        WHERE sr.id=" . $id_region_user[0]->id . " and id_convocatoria=" .$id ." and e.estado=" . 1);
+                        WHERE ((".$id_region_user[0]->id." != 1 and sr.id=" . $id_region_user[0]->id . ") or ".$id_region_user[0]->id." = 1) and id_convocatoria=" .$id ." and e.estado=" . 1);
                 return $mostrar;
                 break;
             case 4:
@@ -135,7 +135,7 @@ class EvaluacionController extends Controller
                         INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
                         INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
                         INNER JOIN persona p ON pc.id_persona=p.id 
-                        WHERE sr.id=" . $id_region_user[0]->id . " and id_convocatoria=" .$id ." and e.estado=" . 1);
+                        WHERE ((".$id_region_user[0]->id." != 1 and sr.id=" . $id_region_user[0]->id . ") or ".$id_region_user[0]->id." = 1) and id_convocatoria=" .$id ." and e.estado=" . 1);
                 return $mostrar;
                 break;
             case 5:
@@ -146,7 +146,7 @@ class EvaluacionController extends Controller
                         INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
                         INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
                         INNER JOIN persona p ON pc.id_persona=p.id 
-                        WHERE sr.id=" . $id_region_user[0]->id . " and id_convocatoria=" .$id ." and e.estado=" . 1);
+                        WHERE ((".$id_region_user[0]->id." != 1 and sr.id=" . $id_region_user[0]->id . ") or ".$id_region_user[0]->id." = 1) and id_convocatoria=" .$id ." and e.estado=" . 1);
                 return $mostrar;
                 break;
             case 6:
@@ -157,7 +157,7 @@ class EvaluacionController extends Controller
                         INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
                         INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
                         INNER JOIN persona p ON pc.id_persona=p.id 
-                        WHERE sr.id=" . $id_region_user[0]->id . " and id_convocatoria=" .$id ." and e.estado=" . 1);
+                        WHERE ((".$id_region_user[0]->id." != 1 and sr.id=" . $id_region_user[0]->id . ") or ".$id_region_user[0]->id." = 1) and id_convocatoria=" .$id ." and e.estado=" . 1);
                 return $mostrar;
                 break;
         }
