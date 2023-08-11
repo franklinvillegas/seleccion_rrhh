@@ -223,8 +223,8 @@
                     </tr>
                     <tr>
                         <td scope="row">
-                            <label>Mínimo una (01) experiencia en labores administrativas en instituciones públicas o
-                                privadas.</label>
+                            <label>Mínimo egresado técnico en Administración, Economía, Ingeniería Industrial, Ingeniería 
+                                Empresarial o Contabilidad u otras carreras afines.</label>
                         </td>
                         <td><input type="radio" name="experiencia1" v-model="evaluacion1.criterio_cv_6" value="SI"> Si <input
                                 type="radio" name="experiencia1" v-model="evaluacion1.criterio_cv_6" value="NO"> No </td>
