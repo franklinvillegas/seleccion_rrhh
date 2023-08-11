@@ -226,6 +226,13 @@
                             <label>Mínimo una (01) experiencia en labores administrativas en instituciones públicas o
                                 privadas.</label>
                         </td>
+                        <td><input type="radio" name="experiencia1" v-model="evaluacion1.criterio_cv_6" value="SI"> Si <input
+                                type="radio" name="experiencia1" v-model="evaluacion1.criterio_cv_6" value="NO"> No </td>
+                    </tr><tr>
+                        <td scope="row">
+                            <label>Mínimo una (01) experiencia en labores administrativas en instituciones públicas o
+                                privadas.</label>
+                        </td>
                         <td><input type="radio" name="experiencia" v-model="evaluacion1.criterio_cv_1" value="SI"> Si <input
                                 type="radio" name="experiencia" v-model="evaluacion1.criterio_cv_1" value="NO"> No </td>
                     </tr>
@@ -239,7 +246,7 @@
                     <tr>
                         <th scope="row" style="background-color: #95D0FC;">CUMPLE CON LO SOLICITADO</th>
                         <td
-                            v-if="evaluacion1.rnp == 'SI' && evaluacion1.office == 'SI' && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.profesion == 'SI'">
+                            v-if="evaluacion1.rnp == 'SI' && evaluacion1.office == 'SI' && evaluacion1.criterio_cv_1 == 'SI'  && evaluacion1.criterio_cv_6 == 'SI' && evaluacion1.profesion == 'SI'">
                             <label :value="evaluacion1.estado_cv">SI</label> </td>
                         <td v-else><label :value="evaluacion1.estado_cv">NO</label></td>
 
@@ -256,14 +263,14 @@
                     <tr>
                         <td scope="row">Formacion academica</td>
                         <td
-                            v-if="evaluacion1.rnp == 'SI' && evaluacion1.office == 'SI' && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.profesion == 'SI'">
+                            v-if="evaluacion1.rnp == 'SI' && evaluacion1.office == 'SI' && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.criterio_cv_6 == 'SI' && evaluacion1.profesion == 'SI'">
                             <input type="text" name="formacion" v-model="evaluacion1.grado" @keypress="soloNumeros5($event)"
                                 maxlength="1"> </td>
                     </tr>
                     <tr>
                         <td scope="row">Experiencia administrativas en instituciones públicas o privadas</td>
                         <td
-                            v-if="evaluacion1.rnp == 'SI' && evaluacion1.office == 'SI' && evaluacion1.criterio_cv_1 == 'SI' && evaluacion1.profesion == 'SI'">
+                            v-if="evaluacion1.rnp == 'SI' && evaluacion1.office == 'SI' && evaluacion1.criterio_cv_1 == 'SI'  && evaluacion1.criterio_cv_6 == 'SI' && evaluacion1.profesion == 'SI'">
                             <input type="text" name="expAplicacion" v-model="evaluacion1.criterio_cv_2"
                                 @keypress="soloNumeros6($event)" maxlength="1"> </td>
                     </tr>

@@ -19,7 +19,7 @@ class CreateAsistenciaTable extends Migration
             $table->string('local_capacitacion',100)->nullable();
             $table->string('aula',2)->nullable();
             $table->string('hora_tablet',2)->nullable();
-            $table->int('estado',1)->nullable();
+            $table->integer('estado')->nullable();
             
             $table->foreign('id_persona_convocatoria')->references('id')->on('persona_convocatoria');
 
