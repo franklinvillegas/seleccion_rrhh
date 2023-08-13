@@ -164,12 +164,7 @@ class EvaluacionController extends Controller
         
     }
 
-    public function eliminar($id){
-        $eliminado = Evaluacion::findOrFail($id);
-        $eliminado->delete(); 
-        return response()->json(['message' => 'Se Elimino correctamente']);
-
-    }
+   
 
     public function activar($id){
         $activado = Evaluacion::findOrFail($id);

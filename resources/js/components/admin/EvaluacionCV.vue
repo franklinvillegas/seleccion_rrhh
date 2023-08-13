@@ -216,7 +216,8 @@
                                 name="grado" v-model="evaluacion1.rnp" value="NO"> No </td>
                     </tr>
                     <tr>
-                        <td scope="row">Mínimo egresado técnico (Excepto carreras vinculadas al cuidado personal u oficios).
+                        <td scope="row">Mínimo egresado técnico en Administracion, Economia, Ingenieria Industrial,
+                            Ingenieria Empresarial o Contabilidad u otras carreras afines.
                         </td>
                         <td><input type="radio" name="profesion" v-model="evaluacion1.profesion" value="SI"> Si <input
                                 type="radio" name="profesion" v-model="evaluacion1.profesion" value="NO"> No </td>
