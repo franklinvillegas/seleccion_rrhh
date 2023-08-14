@@ -19,9 +19,9 @@
                 <button class="btn btn-outline-secondary float-right" type="button" @click="mostrar">
                     Mostrar
                 </button>
-                <!-- <button class="btn btn-outline-secondary float-right" type="button" @click="exportar">
+                <button class="btn btn-outline-secondary float-right" type="button" @click="exportar">
                     reporte
-                </button> -->
+                </button>
             </div>
         </div>
         <div v-if="idConvocatoria == 3">
@@ -102,6 +102,9 @@
   
 <script>
 import Helper from "../../services/helper";
+import Crypt from "../../services/Crypt";
+
+
 
 export default {
     name: "Ayudas",
@@ -306,11 +309,41 @@ export default {
                         });
         },
         exportar() {
-            this.listarRegistros.filtrosBusqueda.cargo=this.idConvocatoria;
-            let url =
-                process.env.MIX_APP_URL +"/exportar/reporte_cv" +
-        Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
-      window.open(url);
+
+            let usuario = Crypt.decrypt(this.$store.getters.getAuthUser('identificador'));
+            switch (this.idConvocatoria) {
+                        case 3:
+                        
+                        this.listarRegistrosTAP.filtrosBusqueda.cargo=usuario;
+                        let urlTAP = process.env.MIX_APP_URL +"/exportar/reporteEvalaucionTAP" +
+                        Helper.getFilterURL(this.listarRegistrosTAP.filtrosBusqueda);
+                        window.open(urlTAP);                            
+                        break;
+                        case 4:
+                        this.listarRegistrosTAP.filtrosBusqueda.cargo=usuario;
+                        let urlCP =
+                            process.env.MIX_APP_URL +"/exportar/reporteEvaluacionCP" +
+                        Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
+                        window.open(urlCP); 
+                        break;
+                        case 5:
+                        this.listarRegistrosTAP.filtrosBusqueda.cargo=usuario;
+                        let urlSPA =
+                            process.env.MIX_APP_URL +"/exportar/reporteEvaluacionSPA" +
+                        Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
+                        window.open(urlSPA); 
+                        break;
+                        case 6:
+                        tthis.listarRegistrosTAP.filtrosBusqueda.cargo=usuario;
+                        let urlSAS =
+                            process.env.MIX_APP_URL +"/exportar/reporteEvaluacionSAS" +
+                        Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
+                        window.open(urlSAS); 
+                        default:
+                        this.$toastr.e("Seleccione el Cargo  en convocatoria");
+
+                            break;
+                    }
         },
     },
 };
