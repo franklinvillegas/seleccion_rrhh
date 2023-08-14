@@ -105,6 +105,7 @@ export default {
                         this.mostrar.apellidos = data.persona[0].apellido_pat + " " + data.persona[0].apellido_mat;
                         this.mostrar.documento = data.persona[0].documento;
                         this.mostrar.nombres = data.persona[0].nombres;
+                        this.mostrar.cargo = data.cargo;
                         this.mostrar.provincia = data.provincia.nombre_sede;
                         this.mostrar.num_registro = data.num_registro;
                         this.numeroDni='';
