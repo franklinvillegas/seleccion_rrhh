@@ -315,29 +315,28 @@ export default {
                         case 3:
                         
                         this.listarRegistrosTAP.filtrosBusqueda.cargo=usuario;
-                        let urlTAP = process.env.MIX_APP_URL +"/exportar/reporteEvalaucionTAP" +
+                        let urlTAP = process.env.MIX_APP_URL +"/exportar/reporteEvaluacionTAP" +
                         Helper.getFilterURL(this.listarRegistrosTAP.filtrosBusqueda);
                         window.open(urlTAP);                            
                         break;
                         case 4:
-                        this.listarRegistrosTAP.filtrosBusqueda.cargo=usuario;
-                        let urlCP =
-                            process.env.MIX_APP_URL +"/exportar/reporteEvaluacionCP" +
-                        Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
+                        this.listarRegistrosCP.filtrosBusqueda.cargo=usuario;
+                        let urlCP =process.env.MIX_APP_URL +"/exportar/reporteEvaluacionCP" +
+                        Helper.getFilterURL(this.listarRegistrosCP.filtrosBusqueda);
                         window.open(urlCP); 
                         break;
                         case 5:
-                        this.listarRegistrosTAP.filtrosBusqueda.cargo=usuario;
+                        this.listarRegistrosSPA.filtrosBusqueda.cargo=usuario;
                         let urlSPA =
                             process.env.MIX_APP_URL +"/exportar/reporteEvaluacionSPA" +
-                        Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
+                        Helper.getFilterURL(this.listarRegistrosSPA.filtrosBusqueda);
                         window.open(urlSPA); 
                         break;
                         case 6:
-                        tthis.listarRegistrosTAP.filtrosBusqueda.cargo=usuario;
+                        this.listarRegistrosSAS.filtrosBusqueda.cargo=usuario;
                         let urlSAS =
                             process.env.MIX_APP_URL +"/exportar/reporteEvaluacionSAS" +
-                        Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
+                        Helper.getFilterURL(this.listarRegistrosSAS.filtrosBusqueda);
                         window.open(urlSAS); 
                         default:
                         this.$toastr.e("Seleccione el Cargo  en convocatoria");
