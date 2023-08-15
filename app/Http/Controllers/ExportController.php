@@ -491,7 +491,7 @@ class ExportController extends Controller
                 $resultado = DB::select($query);
                 $valores = array("titulo"=>"REPORTE DE EVALUACION DE COORDINADOR PROVINCIAL", "nombre_hoja"=>"Ev-CV-CP", "nom_archivo"=>"Reporte_CV_Evaluados_CP_ENLA2023".date('Y_m_d'));
                 $cabecera = ['N°','SEDE REGIONAL','SEDE PROVINCIAL','DNI','APELLIDOS Y NOMBRES','FECHA DE NACIMIENTO','PROFESIÓN','GRADO','TIENE RNP','GRADO MINIMO',
-                'MÍNIMO 2 EXP','FORMACIÓN ACADEMICA','EXPERIENCIA LABORAL 1','EXPERIENCIA LABORAL 2','EXPERIENCIA LABORAL 3','NUMERO CV','FECHA Y HORA EVALUACION',];
+                'MÍNIMO 2 EXP','ESTADO','FORMACIÓN ACADEMICA','EXPERIENCIA LABORAL 1','EXPERIENCIA LABORAL 2','EXPERIENCIA LABORAL 3','NUMERO CV','FECHA Y HORA EVALUACION',];
                 return new GeneralExport($resultado, $valores, $cabecera);    
     }
     public function reporteEvaluacionSPA(Request $request){
@@ -511,7 +511,7 @@ class ExportController extends Controller
                 $resultado = DB::select($query);
                 $valores = array("titulo"=>"REPORTE DE EVALUACION DE SUPERVISOR DE PROCESOS DE APLICACION", "nombre_hoja"=>"Ev-CV-SPA", "nom_archivo"=>"Reporte_CV_Evaluados_SPA_ENLA2023".date('Y_m_d'));
                 $cabecera = ['N°','SEDE REGIONAL','SEDE PROVINCIAL','DNI','APELLIDOS Y NOMBRES','FECHA DE NACIMIENTO','PROFESIÓN','GRADO','TIENE RNP','GRADO MINIMO',
-                'PERFIL','FORMACIÓN ACADEMICA','EXPERIENCIA LABORAL 1','EXPERIENCIA LABORAL 2','EXPERIENCIA LABORAL 3','NUMERO CV','FECHA Y HORA EVALUACION',];
+                'PERFIL','ESTADO','FORMACIÓN ACADEMICA','EXPERIENCIA LABORAL 1','EXPERIENCIA LABORAL 2','EXPERIENCIA LABORAL 3','NUMERO CV','FECHA Y HORA EVALUACION',];
                 return new GeneralExport($resultado, $valores, $cabecera);    
     }
     public function reporteEvaluacionSAS(Request $request){
@@ -531,7 +531,7 @@ class ExportController extends Controller
                 $resultado = DB::select($query);
                 $valores = array("titulo"=>"REPORTE DE EVALUACION DE SUPERVISOR DE ALMACEN Y SOPORTE INFORMATICO", "nombre_hoja"=>"Ev-CV-SAS", "nom_archivo"=>"Reporte_CV_Evaluados_SAS_ENLA2023".date('Y_m_d'));
                 $cabecera = ['N°','SEDE REGIONAL','SEDE PROVINCIAL','DNI','APELLIDOS Y NOMBRES','FECHA DE NACIMIENTO','PROFESIÓN','GRADO','TIENE RNP','GRADO MINIMO',
-                'PERFIL','CUMPLE CON PERFIL SOLICITADO','FORMACIÓN ACADEMICA','EXPERIENCIA LABORAL 1','EXPERIENCIA LABORAL 2','NUMERO CV','FECHA Y HORA EVALUACION',];
+                'PERFIL','ESTADO','CUMPLE CON PERFIL SOLICITADO','FORMACIÓN ACADEMICA','EXPERIENCIA LABORAL 1','EXPERIENCIA LABORAL 2','NUMERO CV','FECHA Y HORA EVALUACION',];
                 return new GeneralExport($resultado, $valores, $cabecera);    
     }
 
