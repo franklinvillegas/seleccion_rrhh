@@ -337,7 +337,8 @@ export default {
                         let urlSAS =
                             process.env.MIX_APP_URL +"/exportar/reporteEvaluacionSAS" +
                         Helper.getFilterURL(this.listarRegistrosSAS.filtrosBusqueda);
-                        window.open(urlSAS); 
+                        window.open(urlSAS);
+                        break; 
                         default:
                         this.$toastr.e("Seleccione el Cargo  en convocatoria");
 

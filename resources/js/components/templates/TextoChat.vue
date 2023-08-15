@@ -47,7 +47,7 @@
 
 <script>
 
-import Helper from "../../services/Helper";
+import helper from "../../services/helper";
 import Crypt from "../../services/Crypt";
 
 
@@ -94,13 +94,13 @@ export default {
             }
         },
         getTiempoTranscurrido(time){
-            return Helper.getTiempoTranscurrido(time);
+            return helper.getTiempoTranscurrido(time);
         },
         redireccionarEtiqueta(tipo, etiqueta){
-            Helper.redireccionarEtiqueta(this,(tipo==1 ? 'chat':'publicacion'), etiqueta.url);
+            helper.redireccionarEtiqueta(this,(tipo==1 ? 'chat':'publicacion'), etiqueta.url);
         },
         redireccionarUsuario(usuario){
-            Helper.redireccionarUsuario(this, Crypt.encrypt(usuario));
+            helper.redireccionarUsuario(this, Crypt.encrypt(usuario));
         },
         getAvatar(avatar){
             if(avatar)
@@ -108,7 +108,7 @@ export default {
             return 'img/auth/user-alt.png';
         },
         formatearFecha(fecha){
-            return Helper.formatearFecha(fecha);
+            return helper.formatearFecha(fecha);
         },
         
     }

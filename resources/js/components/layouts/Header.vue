@@ -239,7 +239,7 @@
 
 <script>
 
-import Helper from "../../services/Helper";
+import helper from "../../services/helper";
 import Crypt from "../../services/Crypt";
 
 import Preferencias from "../templates/Preferencias";
@@ -327,7 +327,7 @@ export default {
                 
                 this.filtroBusqueda.tipo = this.redactar.tipo;
                 this.filtroBusqueda.texto = this.redactar.texto;
-                axios.get("api/pregunta/listar_sugerencias"+ Helper.getFilterURL(this.filtroBusqueda))
+                axios.get("api/pregunta/listar_sugerencias"+ helper.getFilterURL(this.filtroBusqueda))
                 .then((response) => {
                     this.listaSugerencias = response.data;
                     this.sugerencias = response.data;
@@ -351,14 +351,14 @@ export default {
         redireccionarDetallePregunta(tipo, pregunta){
             this.redactar.texto = '';
             $('#redactar-pregunta').modal('hide');
-            Helper.redireccionarDetallePregunta(this,(tipo==1 ? 'pregunta':'publicacion'), Crypt.encrypt(pregunta));
+            helper.redireccionarDetallePregunta(this,(tipo==1 ? 'pregunta':'publicacion'), Crypt.encrypt(pregunta));
         },
         redireccionarMenu(tipo, url){
             this.$store.dispatch('setActiveMenu',tipo); 
             this.redireccionar(url);
         },
         redireccionarMiPerfil(){
-            Helper.redireccionarUsuario(this, this.$store.getters.getAuthUser('identificador'));
+            helper.redireccionarUsuario(this, this.$store.getters.getAuthUser('identificador'));
         },
         validarMenuActivo(menu){
           
@@ -386,7 +386,7 @@ export default {
             this.ocultarSugerencias();
         },
         crearPregunta(){
-            if(Helper.mostrarModalInvitado(this)){
+            if(helper.mostrarModalInvitado(this)){
                 return true
             }
             const obj = {
@@ -397,7 +397,7 @@ export default {
             };
             this.$store.dispatch('setTemporal', obj); 
 
-            Helper.redireccionarRedactarPregunta(this,'nueva',this.redactar.descripcion, Helper.generaCaracteresAleatorios(10));
+            helper.redireccionarRedactarPregunta(this,'nueva',this.redactar.descripcion, helper.generaCaracteresAleatorios(10));
             $('#redactar-pregunta').modal('hide');
             this.redactar.texto = '';
         },
