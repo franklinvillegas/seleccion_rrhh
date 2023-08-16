@@ -24,7 +24,8 @@ class EvaluacionController extends Controller
         $persona = Persona::select('id','nombres','apellido_pat','apellido_mat','documento' )->where('documento',$dni)->get();
         $proceso = PersonaConvocatoria::select('id','id_persona','id_convocatoria','id_sede_provincial')
         ->where('id_persona',$persona[0]['id'])->latest('id')->first();
-        $cargo = Convocatoria::select('nombre')->where('id',$proceso->id_convocatoria)->first();
+        if ($proceso->id_convocatoria != 3) {
+            $cargo = Convocatoria::select('nombre')->where('id',$proceso->id_convocatoria)->first();
         $user = auth()->user();
         $id_region_user = DB::select("select sr.id from sede_regional sr RIGHT JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id=".$user->id_sede_provincial);            
         $id_region_proceso = DB::select("select sr.id from sede_regional sr RIGHT JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id=". $proceso->id_sede_provincial);
@@ -46,7 +47,14 @@ class EvaluacionController extends Controller
         } 
         else {
             return response()->json(['message' => 'El postulante no petenece a la sede Regional', 'persona' => $persona, 'proceso'=>$proceso,'cargo' => $cargo->nombre,'flag'=>1]);
-        }                
+        }            
+        } else {
+            # code...
+            return response()->json(['message' => 'EL proceso de recepcion de TAP concluyo','flag'=>2]);
+
+        }
+        
+            
 }
     
     public function evaluar($dni,$id_convocatoria){
@@ -54,23 +62,32 @@ class EvaluacionController extends Controller
         $per_con = PersonaConvocatoria::select('id','id_persona','id_convocatoria','id_sede_provincial')
         ->where('id_persona',$persona[0]['id'])->latest('id')
         ->first();
-        if ($per_con->id_convocatoria == $id_convocatoria) {
+        if ($id_convocatoria !=3) {
             # code...
-            $user = auth()->user();
-        $id_region_user = DB::select("select sr.id from sede_regional sr RIGHT JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id=".$user->id_sede_provincial);            
-        $proceso = DB::select("select e.id as id,pc.id as id_persona_convocatoria,p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,e.num_registro,rnp,office,certificado_lengua,
-        e.profesion,e.grado,e.criterio_cv_1,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.criterio_cv_5,e.criterio_cv_6,e.estado_cv,e.updated_at
-        from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
-                                            INNER JOIN persona p ON pc.id_persona=p.id
-                                            INNER JOIN sede_provincial sp on sp.id=pc.id_sede_provincial
-                                            INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id 
-                                                                WHERE sr.id=" . $id_region_user[0]->id . " and id_convocatoria=" .$per_con->id_convocatoria. " and documento=" .$dni);
-        return response()->json(['message' => 'Datos cargados OK', 'data' => $proceso,'flag' => 1]);
+            if ($per_con->id_convocatoria == $id_convocatoria) {
+                # code...
+                $user = auth()->user();
+            $id_region_user = DB::select("select sr.id from sede_regional sr RIGHT JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id=".$user->id_sede_provincial);            
+            $proceso = DB::select("select e.id as id,pc.id as id_persona_convocatoria,p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,e.num_registro,rnp,office,certificado_lengua,
+            e.profesion,e.grado,e.criterio_cv_1,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.criterio_cv_5,e.criterio_cv_6,e.estado_cv,e.updated_at
+            from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
+                                                INNER JOIN persona p ON pc.id_persona=p.id
+                                                INNER JOIN sede_provincial sp on sp.id=pc.id_sede_provincial
+                                                INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id 
+                                                                    WHERE sr.id=" . $id_region_user[0]->id . " and id_convocatoria=" .$per_con->id_convocatoria. " and documento=" .$dni);
+            return response()->json(['message' => 'Datos cargados OK', 'data' => $proceso,'flag' => 1]);
+            } else {
+                # code...
+            return response()->json(['message' => 'DNI no pertenece al cargo', 'flag' => 0]);
+    
+            }
         } else {
             # code...
-        return response()->json(['message' => 'DNI no pertenece al cargo', 'flag' => 0]);
+            return response()->json(['message' => 'El proceso de evaluacion de TAP ya concluyo', 'flag' => 0]);
 
         }
+        
+        
         
         
     }

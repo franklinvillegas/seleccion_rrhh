@@ -100,7 +100,7 @@ export default {
                         console.log(data);
                         console.log(this.mostrar);
                         this.numeroDni='';
-                    } else {
+                    } else if(response.data.flag == 1) {
                         this.$toastr.s(response.data.message);
                         this.mostrar.apellidos = data.persona[0].apellido_pat + " " + data.persona[0].apellido_mat;
                         this.mostrar.documento = data.persona[0].documento;
@@ -111,6 +111,7 @@ export default {
                         this.numeroDni='';
 
                     }
+                    else{ this.$toastr.e(response.data.message);}
                     //         this.listaAlumnos.data=response.data.lista;
                     //         console.log(this.listaAlumnos);
                     // let dni = response.data;
