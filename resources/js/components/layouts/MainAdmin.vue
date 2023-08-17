@@ -118,7 +118,7 @@
                             <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
                                 <ul class="list-unstyled ps-0" style="font-size:20px;">
                                     <li class="mb-1" >
-                                        <a class="nav-link" href="#" @click.prevent="redireccionar('InformacionDocente')">
+                                        <a class="nav-link" href="#" @click.prevent="redireccionar('CriteriosCapacitacion')">
                                             <i class="fas fa-address-card me-3"></i>Registro Criterios
                                         </a>
                                     </li>

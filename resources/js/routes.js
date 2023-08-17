@@ -26,6 +26,7 @@ import EvaluacionCV from './components/admin/EvaluacionCV';
 import Matricula from './components/admin/Matricula';
 import Notas from './components/admin/Notas';
 import ReporteNotas from './components/admin/ReporteNotas';
+import CriteriosCapacitacion from './components/admin/CriteriosCapacitacion';
 
 
 
@@ -81,7 +82,7 @@ let routes = [
             { path: 'matricula', name: 'Matricula', component: Matricula },
             { path: 'notas', name: 'Notas', component: Notas },
             { path: 'reporte_notas', name: 'ReporteNotas', component: ReporteNotas },
-
+            { path: 'criterios_capa', name: 'CriteriosCapacitacion', component: CriteriosCapacitacion },
             // { path: 'evaluacion', name: 'Evaluacion', component: Evaluacion },
             
  

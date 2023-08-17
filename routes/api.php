@@ -39,6 +39,7 @@ use App\Http\Controllers\EvaluacionRespuestaMatriculaController;
 use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\ExamenController;
 use App\Http\Controllers\CriterioController;
+use App\Http\Controllers\CapacitacionController;
 
 
 
@@ -374,6 +375,21 @@ Route::middleware('auth:api')->group(function () {
     Route::put('activar/{id}', [EvaluacionController::class, 'activar']);
     Route::get('obtener_ayudas', [EvaluacionController::class, 'obtenerAyudas']);
     Route::get('getDateTimeActual', [EvaluacionController::class, 'getDateTimeActual']);
+  });
+  //Grupo Evaluacion
+  Route::group(['prefix' => 'capacitacion'], function () {
+    Route::get('ver/{id}', [CapacitacionController::class, 'ver']);
+    Route::get('llenar_combo', [CapacitacionController::class, 'llenarCombo']);
+    Route::get('aulas/{convocatoria}', [CapacitacionController::class, 'aulas']);
+    Route::post('generar', [CapacitacionController::class, 'generar']);
+    Route::post('guardar', [CapacitacionController::class, 'guardar']);
+    Route::get('mostrar/{id}', [CapacitacionController::class, 'mostrar']);
+    Route::get('mostrarReporte/{id}', [CapacitacionController::class, 'mostrarReporte']);
+    Route::post('modificar_imagen', [CapacitacionController::class, 'modificarImagen']);
+    Route::put('eliminar/{id}', [CapacitacionController::class, 'eliminar']);
+    Route::put('activar/{id}', [CapacitacionController::class, 'activar']);
+    Route::get('obtener_ayudas', [CapacitacionController::class, 'obtenerAyudas']);
+    Route::get('getDateTimeActual', [CapacitacionController::class, 'getDateTimeActual']);
   });
 
   //Grupo Convocatoria

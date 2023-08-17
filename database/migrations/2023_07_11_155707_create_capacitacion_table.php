@@ -36,6 +36,9 @@ class CreateCapacitacionTable extends Migration
             $table->text('observacion')->nullable();
             $table->string('condicion',15)->nullable();
             $table->boolean('estado');
+            $table->double('ponderado');
+            $table->double('estado_capa_total');
+            $table->integer('aula');
 
             $table->foreign('id_persona_convocatoria')->references('id')->on('persona_convocatoria');
 
