@@ -520,7 +520,7 @@ class ExportController extends Controller
             INNER JOIN persona p ON pc.id_persona=p.id 
             WHERE ((".$id_region_user[0]->id." != 1 and sr.id=" . $id_region_user[0]->id . ") or ".$id_region_user[0]->id." = 1) and id_convocatoria=4 order by sp.nombre_sede,e.num_registro";
                 $resultado = DB::select($query);
-                $valores = array("titulo"=>"REPORTE DE CV RECEPCIONADOS DE TECNICO ADMINISTRATIVO PROVINCIAL", "nombre_hoja"=>"Recep-CV-TAP", "nom_archivo"=>"Reporte_CV_Recepcionados_TAP_ENLA2023".date('Y_m_d'));
+                $valores = array("titulo"=>"REPORTE DE CV RECEPCIONADOS DE COORDINADOR PROVINCIAL", "nombre_hoja"=>"Recep-CV-TAP", "nom_archivo"=>"Reporte_CV_Recepcionados_CP_ENLA2023".date('Y_m_d'));
                 $cabecera = ['N°','SEDE REGIONAL','SEDE PROVINCIAL','DNI','APELLIDOS Y NOMBRES','NUMERO CV','FECHA Y HORA EVALUACION',];
                 return new GeneralExport($resultado, $valores, $cabecera);    
     }
@@ -555,7 +555,7 @@ class ExportController extends Controller
             INNER JOIN persona p ON pc.id_persona=p.id 
             WHERE ((".$id_region_user[0]->id." != 1 and sr.id=" . $id_region_user[0]->id . ") or ".$id_region_user[0]->id." = 1) and id_convocatoria=5 order by sp.nombre_sede,e.num_registro";
                 $resultado = DB::select($query);
-                $valores = array("titulo"=>"REPORTE DE CV RECEPCIONADOS DE TECNICO ADMINISTRATIVO PROVINCIAL", "nombre_hoja"=>"Recep-CV-TAP", "nom_archivo"=>"Reporte_CV_Recepcionados_TAP_ENLA2023".date('Y_m_d'));
+                $valores = array("titulo"=>"REPORTE DE CV RECEPCIONADOS DE SUPERVISOR DE PROCESOS DE APLICACION", "nombre_hoja"=>"Recep-CV-TAP", "nom_archivo"=>"Reporte_CV_Recepcionados_SPA_ENLA2023".date('Y_m_d'));
                 $cabecera = ['N°','SEDE REGIONAL','SEDE PROVINCIAL','DNI','APELLIDOS Y NOMBRES','NUMERO CV','FECHA Y HORA EVALUACION',];
                 return new GeneralExport($resultado, $valores, $cabecera);    
     }
@@ -590,7 +590,7 @@ class ExportController extends Controller
             INNER JOIN persona p ON pc.id_persona=p.id 
             WHERE ((".$id_region_user[0]->id." != 1 and sr.id=" . $id_region_user[0]->id . ") or ".$id_region_user[0]->id." = 1) and id_convocatoria=6 order by sp.nombre_sede,e.num_registro";
                 $resultado = DB::select($query);
-                $valores = array("titulo"=>"REPORTE DE CV RECEPCIONADOS DE TECNICO ADMINISTRATIVO PROVINCIAL", "nombre_hoja"=>"Recep-CV-TAP", "nom_archivo"=>"Reporte_CV_Recepcionados_TAP_ENLA2023".date('Y_m_d'));
+                $valores = array("titulo"=>"REPORTE DE CV RECEPCIONADOS DE SUPERVISOR DE ALMACEN Y SOPORTE INFORMATICO", "nombre_hoja"=>"Recep-CV-TAP", "nom_archivo"=>"Reporte_CV_Recepcionados_SAS_ENLA2023".date('Y_m_d'));
                 $cabecera = ['N°','SEDE REGIONAL','SEDE PROVINCIAL','DNI','APELLIDOS Y NOMBRES','NUMERO CV','FECHA Y HORA EVALUACION',];
                 return new GeneralExport($resultado, $valores, $cabecera);    
     }
