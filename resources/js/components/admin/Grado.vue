@@ -19,6 +19,9 @@
         <button class="btn btn-outline-secondary float-right" type="button" @click="mostrar">
           Mostrar
         </button>
+        <button class="btn btn-outline-secondary float-right" type="button" @click="exportar">
+                    Reporte
+                </button>
       </div>
     </div>
     <div class="table-responsive">
@@ -61,7 +64,8 @@
 </template>
 
 <script>
-// import Helper from "../../services/Helper";
+import Helper from "../../services/helper";
+import Crypt from "../../services/Crypt";
 
 export default {
   name: "Ayudas",
@@ -141,11 +145,40 @@ export default {
       });
     },
     exportar() {
-      let url =
-        process.env.MIX_APP_URL +
-        "/exportar/ocupaciones" +
-        Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
-      window.open(url);
+      let usuario = Crypt.decrypt(this.$store.getters.getAuthUser('identificador'));
+      switch (this.idConvocatoria) {
+                        case 3:
+                        
+                        this.listarRegistros.filtrosBusqueda.cargo=usuario;
+                        let urlTAP = process.env.MIX_APP_URL +"/exportar/reporteRecepcionTAP" +
+                        Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
+                        window.open(urlTAP);                            
+                        break;
+                        case 4:
+                        this.listarRegistros.filtrosBusqueda.cargo=usuario;
+                        let urlCP =process.env.MIX_APP_URL +"/exportar/reporteRecepcionCP" +
+                        Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
+                        window.open(urlCP); 
+                        break;
+                        case 5:
+                        this.listarRegistros.filtrosBusqueda.cargo=usuario;
+                        let urlSPA =
+                            process.env.MIX_APP_URL +"/exportar/reporteRecepcionSPA" +
+                        Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
+                        window.open(urlSPA); 
+                        break;
+                        case 6:
+                        this.listarRegistros.filtrosBusqueda.cargo=usuario;
+                        let urlSAS =
+                            process.env.MIX_APP_URL +"/exportar/reporteRecepcionSAS" +
+                        Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
+                        window.open(urlSAS);
+                        break; 
+                        default:
+                        this.$toastr.e("Seleccione el Cargo  en convocatoria");
+
+                            break;
+                    }
     },
   },
 };

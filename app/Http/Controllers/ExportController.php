@@ -461,7 +461,7 @@ class ExportController extends Controller
         p.fecha_nac,p.profesion as per_profesion, p.grado as per_grado,e.rnp,e.profesion as eva_profesion,e.criterio_cv_1,e.criterio_cv_6,e.office,CASE
         WHEN e.rnp = 'SI' AND e.profesion = 'SI' AND e.office = 'SI' AND e.criterio_cv_1 = 'SI' AND e.criterio_cv_6 = 'SI' THEN 'APROBADO'
         ELSE 'DESAPROBADO'
-        END AS CUMPLE_PERFIL_SOLICITADO,e.grado,e.criterio_cv_2,e.num_registro, e.created_at
+        END AS CUMPLE_PERFIL_SOLICITADO,e.grado,e.criterio_cv_2,e.num_registro, e.updated_at
         from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
             INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
             INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
@@ -473,6 +473,21 @@ class ExportController extends Controller
                 'MÍNIMO 1 EXP','MÍNIMO 6 MENES','MANEJO DE OFFICE','ESTADO','FORMACIÓN ACADEMICA','EXPERIENCIA LABORAL 1','NUMERO CV','FECHA Y HORA EVALUACION',];
                 return new GeneralExport($resultado, $valores, $cabecera);    
     }
+    public function reporteRecepcionTAP(Request $request){
+        $id_user = $request->cargo;
+        $id_region_user = DB::select("select sr.id from sede_regional sr INNER JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id= ( SELECT id_sede_provincial from users where id = " . $id_user . ")");
+        $query = "select  @row_number := @row_number + 1 AS `index`,sr.nombre_sede as region,sp.nombre_sede as provincia,  p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,
+        e.num_registro, e.created_at
+        from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
+            INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
+            INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
+            INNER JOIN persona p ON pc.id_persona=p.id 
+            WHERE ((".$id_region_user[0]->id." != 1 and sr.id=" . $id_region_user[0]->id . ") or ".$id_region_user[0]->id." = 1) and id_convocatoria=3 order by sp.nombre_sede,e.num_registro";
+                $resultado = DB::select($query);
+                $valores = array("titulo"=>"REPORTE DE CV RECEPCIONADOS DE TECNICO ADMINISTRATIVO PROVINCIAL", "nombre_hoja"=>"Recep-CV-TAP", "nom_archivo"=>"Reporte_CV_Recepcionados_TAP_ENLA2023".date('Y_m_d'));
+                $cabecera = ['N°','SEDE REGIONAL','SEDE PROVINCIAL','DNI','APELLIDOS Y NOMBRES','NUMERO CV','FECHA Y HORA EVALUACION',];
+                return new GeneralExport($resultado, $valores, $cabecera);    
+    }
     public function reporteEvaluacionCP(Request $request){
         $id_user = $request->cargo;
         $id_region_user = DB::select("select sr.id from sede_regional sr INNER JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id= ( SELECT id_sede_provincial from users where id = " . $id_user . ")");
@@ -482,7 +497,7 @@ class ExportController extends Controller
         WHEN e.rnp = 'SI' AND e.profesion = 'SI' AND e.criterio_cv_1 = 'SI' THEN 'APROBADO'
         ELSE 'DESAPROBADO'
         END AS CUMPLE_PERFIL_SOLICITADO,
-        e.grado,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.num_registro, e.created_at
+        e.grado,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.num_registro, e.updated_at
         from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
             INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
             INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
@@ -494,6 +509,21 @@ class ExportController extends Controller
                 'MÍNIMO 2 EXP','ESTADO','FORMACIÓN ACADEMICA','EXPERIENCIA LABORAL 1','EXPERIENCIA LABORAL 2','EXPERIENCIA LABORAL 3','NUMERO CV','FECHA Y HORA EVALUACION',];
                 return new GeneralExport($resultado, $valores, $cabecera);    
     }
+    public function reporteRecepcionCP(Request $request){
+        $id_user = $request->cargo;
+        $id_region_user = DB::select("select sr.id from sede_regional sr INNER JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id= ( SELECT id_sede_provincial from users where id = " . $id_user . ")");
+        $query = "select  @row_number := @row_number + 1 AS `index`,sr.nombre_sede as region,sp.nombre_sede as provincia,  p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,
+        e.num_registro, e.created_at
+        from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
+            INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
+            INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
+            INNER JOIN persona p ON pc.id_persona=p.id 
+            WHERE ((".$id_region_user[0]->id." != 1 and sr.id=" . $id_region_user[0]->id . ") or ".$id_region_user[0]->id." = 1) and id_convocatoria=4 order by sp.nombre_sede,e.num_registro";
+                $resultado = DB::select($query);
+                $valores = array("titulo"=>"REPORTE DE CV RECEPCIONADOS DE TECNICO ADMINISTRATIVO PROVINCIAL", "nombre_hoja"=>"Recep-CV-TAP", "nom_archivo"=>"Reporte_CV_Recepcionados_TAP_ENLA2023".date('Y_m_d'));
+                $cabecera = ['N°','SEDE REGIONAL','SEDE PROVINCIAL','DNI','APELLIDOS Y NOMBRES','NUMERO CV','FECHA Y HORA EVALUACION',];
+                return new GeneralExport($resultado, $valores, $cabecera);    
+    }
     public function reporteEvaluacionSPA(Request $request){
         $id_user = $request->cargo;
         $id_region_user = DB::select("select sr.id from sede_regional sr INNER JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id= ( SELECT id_sede_provincial from users where id = " . $id_user . ")");
@@ -502,7 +532,7 @@ class ExportController extends Controller
         e.criterio_cv_1,CASE
         WHEN e.rnp = 'SI' AND e.profesion = 'SI' AND (e.criterio_cv_1 = 'A' OR e.criterio_cv_1 = 'B') THEN 'APROBADO'
         ELSE 'DESAPROBADO'
-        END AS CUMPLE_PERFIL_SOLICITADO,e.grado,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.num_registro, e.created_at
+        END AS CUMPLE_PERFIL_SOLICITADO,e.grado,e.criterio_cv_2,e.criterio_cv_3,e.criterio_cv_4,e.num_registro, e.updated_at
         from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
             INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
             INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
@@ -514,6 +544,21 @@ class ExportController extends Controller
                 'PERFIL','ESTADO','FORMACIÓN ACADEMICA','EXPERIENCIA LABORAL 1','EXPERIENCIA LABORAL 2','EXPERIENCIA LABORAL 3','NUMERO CV','FECHA Y HORA EVALUACION',];
                 return new GeneralExport($resultado, $valores, $cabecera);    
     }
+    public function reporteRecepcionSPA(Request $request){
+        $id_user = $request->cargo;
+        $id_region_user = DB::select("select sr.id from sede_regional sr INNER JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id= ( SELECT id_sede_provincial from users where id = " . $id_user . ")");
+        $query = "select  @row_number := @row_number + 1 AS `index`,sr.nombre_sede as region,sp.nombre_sede as provincia,  p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,
+        e.num_registro, e.created_at
+        from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
+            INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
+            INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
+            INNER JOIN persona p ON pc.id_persona=p.id 
+            WHERE ((".$id_region_user[0]->id." != 1 and sr.id=" . $id_region_user[0]->id . ") or ".$id_region_user[0]->id." = 1) and id_convocatoria=5 order by sp.nombre_sede,e.num_registro";
+                $resultado = DB::select($query);
+                $valores = array("titulo"=>"REPORTE DE CV RECEPCIONADOS DE TECNICO ADMINISTRATIVO PROVINCIAL", "nombre_hoja"=>"Recep-CV-TAP", "nom_archivo"=>"Reporte_CV_Recepcionados_TAP_ENLA2023".date('Y_m_d'));
+                $cabecera = ['N°','SEDE REGIONAL','SEDE PROVINCIAL','DNI','APELLIDOS Y NOMBRES','NUMERO CV','FECHA Y HORA EVALUACION',];
+                return new GeneralExport($resultado, $valores, $cabecera);    
+    }
     public function reporteEvaluacionSAS(Request $request){
         $id_user = $request->cargo;
         $id_region_user = DB::select("select sr.id from sede_regional sr INNER JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id= ( SELECT id_sede_provincial from users where id = " . $id_user . ")");
@@ -522,7 +567,7 @@ class ExportController extends Controller
         e.criterio_cv_1,CASE
         WHEN e.rnp = 'SI' AND e.profesion = 'SI' AND (e.criterio_cv_1 = 'A' OR e.criterio_cv_1 = 'B') THEN 'APROBADO'
         ELSE 'DESAPROBADO'
-        END AS CUMPLE_PERFIL_SOLICITADO,e.grado,e.criterio_cv_2,e.criterio_cv_3,e.num_registro, e.created_at
+        END AS CUMPLE_PERFIL_SOLICITADO,e.grado,e.criterio_cv_2,e.criterio_cv_3,e.num_registro, e.updated_at
         from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
             INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
             INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
@@ -534,7 +579,21 @@ class ExportController extends Controller
                 'PERFIL','ESTADO','CUMPLE CON PERFIL SOLICITADO','FORMACIÓN ACADEMICA','EXPERIENCIA LABORAL 1','EXPERIENCIA LABORAL 2','NUMERO CV','FECHA Y HORA EVALUACION',];
                 return new GeneralExport($resultado, $valores, $cabecera);    
     }
-
+    public function reporteRecepcionSAS(Request $request){
+        $id_user = $request->cargo;
+        $id_region_user = DB::select("select sr.id from sede_regional sr INNER JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id= ( SELECT id_sede_provincial from users where id = " . $id_user . ")");
+        $query = "select  @row_number := @row_number + 1 AS `index`,sr.nombre_sede as region,sp.nombre_sede as provincia,  p.documento,CONCAT(p.apellido_pat , ' ' , p.apellido_mat , ' ' , p.nombres) as datos,
+        e.num_registro, e.created_at
+        from evaluacion e INNER JOIN persona_convocatoria pc on e.id_persona_convocatoria= pc.id
+            INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id
+            INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id
+            INNER JOIN persona p ON pc.id_persona=p.id 
+            WHERE ((".$id_region_user[0]->id." != 1 and sr.id=" . $id_region_user[0]->id . ") or ".$id_region_user[0]->id." = 1) and id_convocatoria=6 order by sp.nombre_sede,e.num_registro";
+                $resultado = DB::select($query);
+                $valores = array("titulo"=>"REPORTE DE CV RECEPCIONADOS DE TECNICO ADMINISTRATIVO PROVINCIAL", "nombre_hoja"=>"Recep-CV-TAP", "nom_archivo"=>"Reporte_CV_Recepcionados_TAP_ENLA2023".date('Y_m_d'));
+                $cabecera = ['N°','SEDE REGIONAL','SEDE PROVINCIAL','DNI','APELLIDOS Y NOMBRES','NUMERO CV','FECHA Y HORA EVALUACION',];
+                return new GeneralExport($resultado, $valores, $cabecera);    
+    }
 
     public function prueba(){
         try {
