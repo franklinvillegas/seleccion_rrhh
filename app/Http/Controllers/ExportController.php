@@ -576,7 +576,7 @@ class ExportController extends Controller
                 $resultado = DB::select($query);
                 $valores = array("titulo"=>"REPORTE DE EVALUACION DE SUPERVISOR DE ALMACEN Y SOPORTE INFORMATICO", "nombre_hoja"=>"Ev-CV-SAS", "nom_archivo"=>"Reporte_CV_Evaluados_SAS_ENLA2023".date('Y_m_d'));
                 $cabecera = ['N°','SEDE REGIONAL','SEDE PROVINCIAL','DNI','APELLIDOS Y NOMBRES','FECHA DE NACIMIENTO','PROFESIÓN','GRADO','TIENE RNP','GRADO MINIMO',
-                'PERFIL','ESTADO','CUMPLE CON PERFIL SOLICITADO','FORMACIÓN ACADEMICA','EXPERIENCIA LABORAL 1','EXPERIENCIA LABORAL 2','NUMERO CV','FECHA Y HORA EVALUACION',];
+                'PERFIL','ESTADO','FORMACIÓN ACADEMICA','EXPERIENCIA LABORAL 1','EXPERIENCIA LABORAL 2','NUMERO CV','FECHA Y HORA EVALUACION',];
                 return new GeneralExport($resultado, $valores, $cabecera);    
     }
     public function reporteRecepcionSAS(Request $request){
