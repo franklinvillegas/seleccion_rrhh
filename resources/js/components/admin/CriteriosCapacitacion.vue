@@ -75,45 +75,45 @@
 
                                 <span v-if="props.column.field == 'cap_c1'">
                                     <input type="number" v-model="props.row.cap_c1" class="form-control" data-vv-as="Nota"
-                                        placeholder="C1" name="cap_c1" max="5" min="0" @keyup.enter="modificarNota(props.row.id, props.row.cap_c1)">
+                                        placeholder="C1" name="cap_c1" max="5" min="0" >
                                 </span>
                                 <span v-else-if="props.column.field == 'cap_c2'">
                                     <input type="number" v-model="props.row.cap_c2" class="form-control" data-vv-as="Nota"
-                                        placeholder="C2.1" name="cap_c2" max="5" min="0" @keyup.enter="modificarNota(props.row.id, props.row.cap_c2)">
+                                        placeholder="C2.1" name="cap_c2" max="5" min="0" >
                                 </span>
                                 <span v-else-if="props.column.field == 'cap_c3'">
                                     <input type="number" v-model="props.row.cap_c3" class="form-control" data-vv-as="Nota"
-                                        placeholder="C2.1" name="cap_c3" max="5" min="0" @keyup.enter="modificarNota(props.row.id, props.row.cap_c3)">
+                                        placeholder="C2.1" name="cap_c3" max="5" min="0" >
                                 </span>
                                 <span v-else-if="props.column.field == 'asiste_d1'">
                                     <input type="checkbox" v-model="props.row.asiste_d1" data-vv-as="Nota"
-                                        name="asiste_d1" @keyup.enter="modificarNota(props.row.id, props.row.asiste_d1)">
+                                        name="asiste_d1" >
                                 </span>
                                 <span v-else-if="props.column.field == 'asiste_d2'">
                                     <input type="checkbox" v-model="props.row.asiste_d2" data-vv-as="Nota"
-                                        name="asiste_d2" @keyup.enter="modificarNota(props.row.id, props.row.asiste_d2)">
+                                        name="asiste_d2" >
                                 </span>
                                 <span v-else-if="props.column.field == 'asiste_d3'">
                                     <input type="checkbox" v-model="props.row.asiste_d3" data-vv-as="Nota"
-                                        name="asiste_d3" @keyup.enter="modificarNota(props.row.id, props.row.asiste_d3)">
+                                        name="asiste_d3" >
                                 </span>
                                 <span v-else-if="props.column.field == 'asiste_d4'">
                                     <input type="checkbox" v-model="props.row.asiste_d4" data-vv-as="Nota"
-                                        name="asiste_d4" @keyup.enter="modificarNota(props.row.id, props.row.asiste_d4)">
+                                        name="asiste_d4" >
                                 </span>
                                 <span v-else-if="props.column.field == 'asiste_d5'">
                                     <input type="checkbox" v-model="props.row.asiste_d5" data-vv-as="Nota"
-                                        name="asiste_d5" @keyup.enter="modificarNota(props.row.id, props.row.asiste_d5)">
+                                        name="asiste_d5" >
                                 </span>
                                 <span v-else-if="props.column.field == 'cap_c4'">
                                     <input type="number" v-model="props.row.cap_c4" class="form-control" data-vv-as="Nota"
                                         placeholder="C1 INEI" name="cap_c4" max="5" min="0"
-                                        @keyup.enter="modificarNota(props.row.id, props.row.cap_c4)">
+                                        >
                                 </span>
                                 <span v-else-if="props.column.field == 'cap_c5'">
                                     <input type="number" v-model="props.row.cap_c5" class="form-control" data-vv-as="Nota"
                                         placeholder="C2 INEI" name="cap_c5" max="5" min="0"
-                                        @keyup.enter="modificarNota(props.row.id, props.row.cap_c5)">
+                                        >
                                 </span>
                             </template>
                         </vue-good-table>
@@ -150,6 +150,7 @@ export default {
 
             listarConvocatorias: [],
             listarAulas: [],
+            registros: [],
             listarRegistros: {
                 data: [],
                 columns: [
@@ -221,7 +222,9 @@ export default {
         guardar() {
             this.$validator.validateAll('form_registro').then(result => {
                 if (result) {
-                    axios.post("api/capacitacion/guardar", this.listarRegistros.data)
+                    this.$set(this.registros, index, { ...this.listarRegistros.data[index] });
+
+                    axios.post("api/capacitacion/guardar", this.registros)
                         .then((response) => {
                             this.$toastr.s(response.data.message);
                             $("#modal-nivel").modal('hide');
