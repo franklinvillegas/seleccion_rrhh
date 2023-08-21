@@ -16,8 +16,8 @@ class CapacitacionController extends Controller
     {   
         $examen = DB::select("select c.id, sr.nombre_sede as region,sp.nombre_sede as provincia,
         concat(p.apellido_pat,' ',p.apellido_mat,' ',p.nombres) as datos, p.documento,
-        c.cap_c1,c.cap_c2,c.cap_c3,c.suma_total1,c.asiste_d1,c.asiste_d2,c.asiste_d3,c.asiste_d4,c.asiste_d5,c.suma_total1,c.estado_capa1,
-        c.cap_c4,c.cap_c5,c.suma_total2,c.estado_capa2,
+        c.cap_c1,c.cap_c2,c.cap_c3,c.asiste_d1,c.asiste_d2,c.asiste_d3,c.asiste_d4,c.asiste_d5,c.estado_capa1,
+        c.cap_c4,c.cap_c5,c.estado_capa2,c.suma_total_minedu,
         c.ponderado,c.estado_capa_total,c.observacion
      from capacitacion c 
             INNER JOIN persona_convocatoria pc on c.id_persona_convocatoria = pc.id 
@@ -37,12 +37,80 @@ class CapacitacionController extends Controller
 
         return $aulas;
     }
-    public function guardar(Request $request)
+    public function guardarSN(Request $request)
     {   
         foreach ($request->all() as $key => $value) {
             $editado = Capacitacion::findOrFail($value['id']);
            
-            $editado->update(['cap_c1'=>$value['cap_c1'], 'cap_c2'=>$value['cap_c2'], 'cap_c3'=>$value['cap_c3'], 'asiste_d1'=>$value['asiste_d1'], 'asiste_d2'=>$value['asiste_d2'], 'asiste_d3'=>$value['asiste_d3'], 'asiste_d4'=>$value['asiste_d4'], 'asiste_d5'=>$value['asiste_d5'], 'cap_c4'=>$value['cap_c4'],'cap_c5'=>$value['cap_c5']]);
+            $editado->update([
+            'cap_c1'=>$value['cap_c1'],
+             'cap_c2'=>$value['cap_c2'],
+             'cap_c3'=>$value['cap_c3'],
+             'suma_total1'=>$value['cap_c3'] + $value['cap_c2'],
+             'asiste_d1'=>$value['asiste_d1'],
+             'asiste_d2'=>$value['asiste_d2'],
+             'asiste_d3'=>$value['asiste_d3'],
+             'asiste_d4'=>$value['asiste_d4'],
+             'asiste_d5'=>$value['asiste_d5'],
+             'cap_c4'=>$value['cap_c4'],
+             'cap_c5'=>$value['cap_c5'],
+             'suma_total2'=>$value['cap_c5'] + $value['cap_c4'],
+             'suma_total_minedu'=>$value['cap_c3'] + $value['cap_c2'],
+             'ponderado'=>(($value['cap_c1'] + $value['cap_c2'] + $value['cap_c3']) * 0.7) + (($value['cap_c4'] + $value['cap_c5'])*0.3),
+            ]);
+
+        }
+        
+        return response()->json(['message' => 'Guardado correctamente']);
+    }
+    public function guardarMN(Request $request)
+    {   
+        foreach ($request->all() as $key => $value) {
+            $editado = Capacitacion::findOrFail($value['id']);
+           
+            $editado->update([
+            'cap_c1'=>$value['cap_c1'],
+             'cap_c2'=>$value['cap_c2'],
+             'cap_c3'=>$value['cap_c3'],
+             'suma_total1'=>$value['cap_c3'] + $value['cap_c2'],
+             'asiste_d1'=>$value['asiste_d1'],
+             'asiste_d2'=>$value['asiste_d2'],
+             'asiste_d3'=>$value['asiste_d3'],
+             'asiste_d4'=>$value['asiste_d4'],
+             'asiste_d5'=>$value['asiste_d5'],
+             'cap_c4'=>$value['cap_c4'],
+             'cap_c5'=>$value['cap_c5'],
+             'suma_total2'=>$value['cap_c5'] + $value['cap_c4'],
+             'suma_total_minedu'=>$value['cap_c3'] + $value['cap_c2'],
+             'ponderado'=>(($value['cap_c1'] + $value['cap_c2'] + $value['cap_c3']) * 0.7) + (($value['cap_c4'] + $value['cap_c5'])*0.3),
+            ]);
+
+        }
+        
+        return response()->json(['message' => 'Guardado correctamente']);
+    }
+    public function guardarCR(Request $request)
+    {   
+        foreach ($request->all() as $key => $value) {
+            $editado = Capacitacion::findOrFail($value['id']);
+           
+            $editado->update([
+            'cap_c1'=>$value['cap_c1'],
+             'cap_c2'=>$value['cap_c2'],
+             'cap_c3'=>$value['cap_c3'],
+             'suma_total1'=>$value['cap_c3'] + $value['cap_c2'] + $value['cap_c1'],
+             'asiste_d1'=>$value['asiste_d1'],
+             'asiste_d2'=>$value['asiste_d2'],
+             'asiste_d3'=>$value['asiste_d3'],
+             'asiste_d4'=>$value['asiste_d4'],
+             'asiste_d5'=>$value['asiste_d5'],
+             'cap_c4'=>$value['cap_c4'],
+             'cap_c5'=>$value['cap_c5'],
+             'suma_total2'=>$value['cap_c5'] + $value['cap_c4'],
+             'suma_total_minedu'=>$value['cap_c3'] + $value['cap_c2'],
+             'ponderado'=>(($value['cap_c1'] + $value['cap_c2'] + $value['cap_c3']) * 0.7) + (($value['cap_c4'] + $value['cap_c5'])*0.3),
+            ]);
+
         }
         
         return response()->json(['message' => 'Guardado correctamente']);

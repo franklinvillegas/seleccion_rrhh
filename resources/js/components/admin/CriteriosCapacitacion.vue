@@ -74,16 +74,16 @@
                             <template slot="table-row" slot-scope="props">
 
                                 <span v-if="props.column.field == 'cap_c1'">
-                                    <input type="number" v-model="props.row.cap_c1" class="form-control" data-vv-as="Nota"
-                                        placeholder="C1" name="cap_c1" max="5" min="0" @change="pushData(props.index,'cap_c1', props.row.cap_c1)">
+                                    <input type="text" v-model="props.row.cap_c1" class="form-control" data-vv-as="Nota"
+                                        placeholder="C1" name="cap_c1" max="10" min="0" @change="pushData(props.index,'cap_c1', props.row.cap_c1)">
                                 </span>
                                 <span v-else-if="props.column.field == 'cap_c2'">
-                                    <input type="number" v-model="props.row.cap_c2" class="form-control" data-vv-as="Nota"
-                                        placeholder="C2.1" name="cap_c2" max="5" min="0"  @change="pushData(props.index,'cap_c2', props.row.cap_c2)">
+                                    <input type="text" v-model="props.row.cap_c2" class="form-control" data-vv-as="Nota"
+                                        placeholder="C2.1" name="cap_c2" max="20" min="0"  @change="pushData(props.index,'cap_c2', props.row.cap_c2)">
                                 </span>
                                 <span v-else-if="props.column.field == 'cap_c3'">
-                                    <input type="number" v-model="props.row.cap_c3" class="form-control" data-vv-as="Nota"
-                                        placeholder="C2.1" name="cap_c3" max="5" min="0" @change="pushData(props.index,'cap_c3', props.row.cap_c3)">
+                                    <input type="text" v-model="props.row.cap_c3" class="form-control" data-vv-as="Nota"
+                                        placeholder="C2.1" name="cap_c3" max="20" min="0" @change="pushData(props.index,'cap_c3', props.row.cap_c3)">
                                 </span>
                                 <span v-else-if="props.column.field == 'asiste_d1'">
                                     <input type="checkbox" v-model="props.row.asiste_d1" data-vv-as="Nota"
@@ -106,13 +106,13 @@
                                         name="asiste_d5" @change="pushData(props.index,'asiste_d5', props.row.asiste_d5)">
                                 </span>
                                 <span v-else-if="props.column.field == 'cap_c4'">
-                                    <input type="number" v-model="props.row.cap_c4" class="form-control" data-vv-as="Nota"
+                                    <input type="text" v-model="props.row.cap_c4" class="form-control" data-vv-as="Nota"
                                         placeholder="C1 INEI" name="cap_c4" max="5" min="0" @change="pushData(props.index,'cap_c4', props.row.cap_c4)"
                                         >
                                 </span>
                                 <span v-else-if="props.column.field == 'cap_c5'">
-                                    <input type="number" v-model="props.row.cap_c5" class="form-control" data-vv-as="Nota"
-                                        placeholder="C2 INEI" name="cap_c5" max="5" min="0" @change="pushData(props.index,'cap_c5', props.row.cap_c5)"
+                                    <input type="text" v-model="props.row.cap_c5" class="form-control" data-vv-as="Nota"
+                                        placeholder="C2 INEI" name="cap_c5" max="25" min="0" @change="pushData(props.index,'cap_c5', props.row.cap_c5)"
                                         >
                                 </span>
                             </template>
@@ -120,6 +120,8 @@
                     </div>
                     <div class="form-group col-3">
                     <button class="btn btn-outline-success float-left" type="button" @click="guardar"> Guardar
+                    </button>
+                    <button class="btn btn-outline-success float-left" type="button" @click="exportar"> Export to excel
                     </button>
                 </div>
                 </div>
@@ -136,7 +138,9 @@
 
 <script>
 
-// import Helper from "../../services/Helper";
+import Helper from "../../services/helper";
+import Crypt from "../../services/Crypt";
+
 
 export default {
     name: 'Ayudas',
@@ -220,12 +224,11 @@ export default {
             this.$validator.reset();
         },
         guardar() {
-            // this.$validator.validateAll('form_registro').then(result => {
-            //     if (result) {
-                    // this.$set(this.registros, index, { ...this.listarRegistros.data[index] });
-                    const data = this.listarRegistros.data;
-                    console.log('data', data);
-                    axios.post("api/capacitacion/guardar", data)
+           switch (this.idConvocatoria) {
+            case 1:
+            const data1 = this.listarRegistros.data;
+                    console.log('data', data1);
+                    axios.post("api/capacitacion/guardarSN", data1)
                         .then((response) => {
                             this.$toastr.s(response.data.message);
                         })
@@ -233,8 +236,37 @@ export default {
                             console.log(error);
                             this.$toastr.e(error.response.data.message);
                         });
-            //     }
-            // });
+                break;
+            case 2:
+            const data2 = this.listarRegistros.data;
+                    console.log('data', data2);
+                    axios.post("api/capacitacion/guardarSN", data2)
+                        .then((response) => {
+                            this.$toastr.s(response.data.message);
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            this.$toastr.e(error.response.data.message);
+                        });
+                break;
+            case 7:
+            const data7 = this.listarRegistros.data;
+                    console.log('data', data7);
+                    axios.post("api/capacitacion/guardarSN", data7)
+                        .then((response) => {
+                            this.$toastr.s(response.data.message);
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            this.$toastr.e(error.response.data.message);
+                        });
+                break;
+           
+            default:
+                break;
+           }
+                    
+            
         },
         modificar() {
             this.$validator.validateAll('form_registro').then(result => {
@@ -317,9 +349,49 @@ export default {
 
         },
         exportar() {
-            let url = process.env.MIX_APP_URL + '/exportar/ocupaciones' + Helper.getFilterURL(this.listarSecciones.filtrosBusqueda);
-            window.open(url);
-        },
+
+let usuario = Crypt.decrypt(this.$store.getters.getAuthUser('identificador'));
+switch (this.idConvocatoria) {
+            case 1:
+            
+            this.listarRegistros.filtrosBusqueda.cargo=usuario;
+            let urlTAP = process.env.MIX_APP_URL +"/exportar/reporteCapacitacionSN" +
+            Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
+            window.open(urlTAP);                            
+            break;
+            case 2:
+            this.listarRegistros.filtrosBusqueda.cargo=usuario;
+            let urlCP = process.env.MIX_APP_URL +"/exportar/reporteCapacitacionMN" +
+            Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
+            window.open(urlCP); 
+            break;
+            case 5:
+            this.listarRegistrosSPA.filtrosBusqueda.cargo=usuario;
+            let urlSPA =
+                process.env.MIX_APP_URL +"/exportar/reporteEvaluacionSPA" +
+            Helper.getFilterURL(this.listarRegistrosSPA.filtrosBusqueda);
+            window.open(urlSPA); 
+            break;
+            case 6:
+            this.listarRegistrosSAS.filtrosBusqueda.cargo=usuario;
+            let urlSAS =
+                process.env.MIX_APP_URL +"/exportar/reporteEvaluacionSAS" +
+            Helper.getFilterURL(this.listarRegistrosSAS.filtrosBusqueda);
+            window.open(urlSAS);
+            break; 
+            case 7:
+            this.listarRegistrosSAS.filtrosBusqueda.cargo=usuario;
+            let urlCR =
+                process.env.MIX_APP_URL +"/exportar/reporteEvaluacionSAS" +
+            Helper.getFilterURL(this.listarRegistrosSAS.filtrosBusqueda);
+            window.open(urlCR);
+            break; 
+            default:
+            this.$toastr.e("Seleccione el Cargo  en convocatoria");
+
+                break;
+        }
+},
         pushData(index, label, value){
             this.listarRegistros.data[index][label] = value;
         }

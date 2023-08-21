@@ -594,6 +594,48 @@ class ExportController extends Controller
                 $cabecera = ['N°','SEDE REGIONAL','SEDE PROVINCIAL','DNI','APELLIDOS Y NOMBRES','NUMERO CV','FECHA Y HORA EVALUACION',];
                 return new GeneralExport($resultado, $valores, $cabecera);    
     }
+    public function reporteCapacitacionSN(Request $request){
+        $id_user = $request->cargo;
+        $query = "select sr.nombre_sede as region,sp.nombre_sede as provincia,
+        concat(p.apellido_pat,' ',p.apellido_mat,' ',p.nombres) as datos, p.documento,
+        c.cap_c1,c.cap_c2,c.cap_c3,c.suma_total1,(c.cap_c1 + c.cap_c2 + c.cap_c3) as suma_total_minedu, c.asiste_d1,c.asiste_d2,c.asiste_d3,c.asiste_d4,c.asiste_d5,
+				CASE WHEN (c.cap_c1 + c.cap_c2 + c.cap_c3)>=27 THEN 'Aprobado' ELSE 'Desaprobado' end as estado_capa1,
+        c.cap_c4,c.cap_c5,c.suma_total2, case WHEN(suma_total2 >=16) then 'Aprobado' else 'Desaprobado' END as estado_capa2,
+        c.ponderado,CASE WHEN (c.cap_c1 + c.cap_c2 + c.cap_c3)>=27 and (suma_total2 >=16) then 'Aprobado' else 'Desaprobado' END as estado_capa_total,c.observacion
+     from capacitacion c 
+            INNER JOIN persona_convocatoria pc on c.id_persona_convocatoria = pc.id 
+            inner join persona p on pc.id_persona=p.id 	
+            INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id 
+            INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id where pc.id_convocatoria = 1 order by ponderado DESC, estado_capa_total ASC";
+                $resultado = DB::select($query);
+                $valores = array("titulo"=>"REPORTE DE CV RECEPCIONADOS DE SUPERVISOR DE ALMACEN Y SOPORTE INFORMATICO", "nombre_hoja"=>"Recep-CV-TAP", "nom_archivo"=>"Reporte_CV_Recepcionados_SAS_ENLA2023".date('Y_m_d'));
+                $cabecera = ['SEDE REGIONAL','SEDE PROVINCIAL','APELLIDOS Y NOMBRES','DNI','Desempeño durante la capacitación','Procedimientos de aplicación secundaria',
+                'Procedimientos de aplicación primaria','Resultado final Sumatoria de pruebas escritas','Sumatoria C1+ Resultado final del C2','Dia 1','Dia 2','Dia 3','Dia 4','Dia 5',
+                'CONDICIÓN MINEDU','DESEMPEÑO DURANTE LA  CAPACITACIÓN','PRUEBA ESCRITA INEI','CONDICIÓN INEI','PONDERADO TOTAL','CONDICION FINAL','ESTADO,','OBSERVACIONES'
+                    ];
+                return new GeneralExport($resultado, $valores, $cabecera);    
+    }
+    public function reporteCapacitacionMN(Request $request){
+        $id_user = $request->cargo;
+        $query = "select sr.nombre_sede as region,sp.nombre_sede as provincia,
+        concat(p.apellido_pat,' ',p.apellido_mat,' ',p.nombres) as datos, p.documento,
+        c.cap_c1,c.cap_c2,c.cap_c3,c.suma_total1,(c.cap_c1 + c.cap_c2 + c.cap_c3) as suma_total_minedu, c.asiste_d1,c.asiste_d2,c.asiste_d3,c.asiste_d4,c.asiste_d5,
+				CASE WHEN (c.cap_c1 + c.cap_c2 + c.cap_c3)>=27 THEN 'Aprobado' ELSE 'Desaprobado' end as estado_capa1,
+        c.cap_c4,c.cap_c5,c.suma_total2, case WHEN(suma_total2 >=16) then 'Aprobado' else 'Desaprobado' END as estado_capa2,
+        c.ponderado,CASE WHEN (c.cap_c1 + c.cap_c2 + c.cap_c3)>=27 and (suma_total2 >=16) then 'Aprobado' else 'Desaprobado' END as estado_capa_total,c.observacion
+     from capacitacion c 
+            INNER JOIN persona_convocatoria pc on c.id_persona_convocatoria = pc.id 
+            inner join persona p on pc.id_persona=p.id 	
+            INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id 
+            INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id where pc.id_convocatoria = 2 order by ponderado DESC, estado_capa_total ASC";
+                $resultado = DB::select($query);
+                $valores = array("titulo"=>"REPORTE DE CV RECEPCIONADOS DE SUPERVISOR DE ALMACEN Y SOPORTE INFORMATICO", "nombre_hoja"=>"Recep-CV-TAP", "nom_archivo"=>"Reporte_CV_Recepcionados_SAS_ENLA2023".date('Y_m_d'));
+                $cabecera = ['SEDE REGIONAL','SEDE PROVINCIAL','APELLIDOS Y NOMBRES','DNI','Desempeño durante la capacitación','Procedimientos de aplicación secundaria',
+                'Procedimientos de aplicación primaria','Resultado final Sumatoria de pruebas escritas','Sumatoria C1+ Resultado final del C2','Dia 1','Dia 2','Dia 3','Dia 4','Dia 5',
+                'CONDICIÓN MINEDU','DESEMPEÑO DURANTE LA  CAPACITACIÓN','PRUEBA ESCRITA INEI','CONDICIÓN INEI','PONDERADO TOTAL','CONDICION FINAL','ESTADO,','OBSERVACIONES'
+                    ];
+                return new GeneralExport($resultado, $valores, $cabecera);    
+    }
 
     public function prueba(){
         try {

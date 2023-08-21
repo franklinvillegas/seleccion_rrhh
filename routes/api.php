@@ -382,7 +382,9 @@ Route::middleware('auth:api')->group(function () {
     Route::get('llenar_combo', [CapacitacionController::class, 'llenarCombo']);
     Route::get('aulas/{convocatoria}', [CapacitacionController::class, 'aulas']);
     Route::post('generar', [CapacitacionController::class, 'generar']);
-    Route::post('guardar', [CapacitacionController::class, 'guardar']);
+    Route::post('guardarSN', [CapacitacionController::class, 'guardarSN']);
+    Route::post('guardarMN', [CapacitacionController::class, 'guardarMN']);
+    Route::post('guardarCR', [CapacitacionController::class, 'guardarCR']);
     Route::get('mostrar/{id}', [CapacitacionController::class, 'mostrar']);
     Route::get('mostrarReporte/{id}', [CapacitacionController::class, 'mostrarReporte']);
     Route::post('modificar_imagen', [CapacitacionController::class, 'modificarImagen']);
