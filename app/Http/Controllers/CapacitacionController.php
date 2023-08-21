@@ -56,7 +56,7 @@ class CapacitacionController extends Controller
              'cap_c5'=>$value['cap_c5'],
              'suma_total2'=>$value['cap_c5'] + $value['cap_c4'],
              'suma_total_minedu'=>$value['cap_c3'] + $value['cap_c2'],
-             'ponderado'=>(($value['cap_c1'] + $value['cap_c2'] + $value['cap_c3']) * 0.7) + (($value['cap_c4'] + $value['cap_c5'])*0.3),
+             'ponderado'=>((($value['cap_c1'] + $value['cap_c2'] + $value['cap_c3']) * 0.7)*0.4) + ((($value['cap_c4'] + $value['cap_c5'])*0.3) *0.6666),
             ]);
 
         }
@@ -82,7 +82,7 @@ class CapacitacionController extends Controller
              'cap_c5'=>$value['cap_c5'],
              'suma_total2'=>$value['cap_c5'] + $value['cap_c4'],
              'suma_total_minedu'=>$value['cap_c3'] + $value['cap_c2'],
-             'ponderado'=>(($value['cap_c1'] + $value['cap_c2'] + $value['cap_c3']) * 0.7) + (($value['cap_c4'] + $value['cap_c5'])*0.3),
+             'ponderado'=>((($value['cap_c1'] + $value['cap_c2'] + $value['cap_c3']) * 0.7)*0.4) + ((($value['cap_c4'] + $value['cap_c5'])*0.3) *0.6666),
             ]);
 
         }
