@@ -14,7 +14,7 @@ class CapacitacionController extends Controller
     //
     public function generar(Request $request)
     {   
-        $examen = DB::select("select sr.nombre_sede as region,sp.nombre_sede as provincia,
+        $examen = DB::select("select c.id, sr.nombre_sede as region,sp.nombre_sede as provincia,
         concat(p.apellido_pat,' ',p.apellido_mat,' ',p.nombres) as datos, p.documento,
         c.cap_c1,c.cap_c2,c.cap_c3,c.suma_total1,c.asiste_d1,c.asiste_d2,c.asiste_d3,c.asiste_d4,c.asiste_d5,c.suma_total1,c.estado_capa1,
         c.cap_c4,c.cap_c5,c.suma_total2,c.estado_capa2,
@@ -39,13 +39,12 @@ class CapacitacionController extends Controller
     }
     public function guardar(Request $request)
     {   
-        return $request;
-        $aulas = Capacitacion::select('capacitacion.aula')
-        ->join('persona_convocatoria as pc', 'capacitacion.id_persona_convocatoria', '=', 'pc.id')
-        ->where('pc.id_convocatoria', $cargo)
-        ->groupBy('capacitacion.aula')
-        ->get();
-
-        return $aulas;
+        foreach ($request->all() as $key => $value) {
+            $editado = Capacitacion::findOrFail($value['id']);
+           
+            $editado->update(['cap_c1'=>$value['cap_c1'], 'cap_c2'=>$value['cap_c2'], 'cap_c3'=>$value['cap_c3'], 'asiste_d1'=>$value['asiste_d1'], 'asiste_d2'=>$value['asiste_d2'], 'asiste_d3'=>$value['asiste_d3'], 'asiste_d4'=>$value['asiste_d4'], 'asiste_d5'=>$value['asiste_d5'], 'cap_c4'=>$value['cap_c4'],'cap_c5'=>$value['cap_c5']]);
+        }
+        
+        return response()->json(['message' => 'Guardado correctamente']);
     }
 }
