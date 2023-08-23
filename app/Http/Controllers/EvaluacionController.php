@@ -62,7 +62,7 @@ class EvaluacionController extends Controller
         $per_con = PersonaConvocatoria::select('id','id_persona','id_convocatoria','id_sede_provincial')
         ->where('id_persona',$persona[0]['id'])->latest('id')
         ->first();
-        if ($id_convocatoria !=3) {
+        if ($id_convocatoria !=3 && $id_convocatoria !=4 && $id_convocatoria !=5 && $id_convocatoria !=6) {
             # code...
             if ($per_con->id_convocatoria == $id_convocatoria) {
                 # code...
@@ -83,7 +83,7 @@ class EvaluacionController extends Controller
             }
         } else {
             # code...
-            return response()->json(['message' => 'El proceso de evaluacion de TAP ya concluyo', 'flag' => 0]);
+            return response()->json(['message' => 'El proceso de Evaluacion de CV ya concluyo', 'flag' => 0]);
 
         }
         
