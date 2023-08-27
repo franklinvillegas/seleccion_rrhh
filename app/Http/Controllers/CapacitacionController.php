@@ -15,6 +15,9 @@ class CapacitacionController extends Controller
     public function generar(Request $request)
     {   
         switch ($request->id_user) {
+            case '1': //499
+                $miArray = [59,60,65,69,73,74,62,77,80,83,61,66,76,67,68,70,78,85,64,71,72,79,84,58,75,81,82];
+                break;
             case '45': //499
                 $miArray = [59,60,65,69,73,74];
                 break;
