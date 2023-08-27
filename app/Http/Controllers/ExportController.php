@@ -647,7 +647,7 @@ class ExportController extends Controller
             case '34':
                 $miArray = [62,77,80,83];
                 break;
-            case '30':
+            case '38':
                 $miArray = [61,66,76];
                 break;
             case '40':

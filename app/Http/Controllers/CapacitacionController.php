@@ -16,16 +16,16 @@ class CapacitacionController extends Controller
     {   
         switch ($request->id_user) {
             case '1': //499
-                $miArray = [59,60,65,69,73,74,62,77,80,83,61,66,76,67,68,70,78,85,64,71,72,79,84,58,75,81,82];
+                $miArray = [59,60,65,69,73,74,62,77,80,83,61,66,76,67,68,70,78,85,64,71,72,79,84,58,75,81,82,63];
                 break;
             case '45': //499
-                $miArray = [59,60,65,69,73,74];
+                $miArray = [63,59,60,65,69,73,74];
                 break;
             
             case '34':
                 $miArray = [62,77,80,83];
                 break;
-            case '30':
+            case '38':
                 $miArray = [61,66,76];
                 break;
             case '40':
