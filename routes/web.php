@@ -34,6 +34,7 @@ Route::group(['prefix' => 'exportar'], function () {
     Route::get('reporteCapacitacionSN', [ExportController::class, 'reporteCapacitacionSN']);
     Route::get('reporteCapacitacionCR', [ExportController::class, 'reporteCapacitacionCR']);
     Route::get('reporteCapacitacionMN', [ExportController::class, 'reporteCapacitacionMN']);
+    Route::get('reporteCapacitacionTAP', [ExportController::class, 'reporteCapacitacionTAP']);
     Route::get('examen', [ExportController::class, 'examen']);
     Route::get('usuarios', [ExportController::class, 'exportUsuarios']);
 

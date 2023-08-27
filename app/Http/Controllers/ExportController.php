@@ -636,6 +636,46 @@ class ExportController extends Controller
                     ];
                 return new GeneralExport($resultado, $valores, $cabecera);    
     }
+    public function reporteCapacitacionTAP(Request $request){
+        switch ($request->cargo) {
+            case '499': //499
+                $miArray = [59,60,65,69,73,74];
+                break;
+            
+            case '412':
+                $miArray = [62,77,80,83];
+                break;
+            case '442':
+                $miArray = [61,66,76];
+                break;
+            case '460':
+                $miArray = [67,68,70,78,85];
+                break;
+            case '494':
+                $miArray = [64,71,72,79,84];
+                break;
+            case '548':
+                $miArray = [58,75,81,82];
+                break;
+        }
+        $inClause = implode(',', $miArray); 
+        $query = "select sr.nombre_sede as region,sp.nombre_sede as provincia,
+        concat(p.apellido_pat,' ',p.apellido_mat,' ',p.nombres) as datos, p.documento,
+        c.cap_c1,c.cap_c2,c.cap_c3,c.cap_c4,c.asiste_d1,c.asiste_d2,c.ponderado,case when (ponderado>=12) then 'Aprobado' else 'Desaprobado' end as ESTADO
+        
+     from capacitacion c 
+            INNER JOIN persona_convocatoria pc on c.id_persona_convocatoria = pc.id 
+            inner join persona p on pc.id_persona=p.id 	
+            INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id 
+            INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id 
+            where pc.id_convocatoria = 3 and sr.id IN (". $inClause .") Order by region,provincia,ponderado desc,ESTADO ";
+                $resultado = DB::select($query);
+                $valores = array("titulo"=>"REPORTE DE CRITERIOS DE MONITOR NACIONAL", "nombre_hoja"=>"Result_MN", "nom_archivo"=>"Reporte_Capa_MN".date('Y_m_d'));
+                $cabecera = ['SEDE REGIONAL','SEDE PROVINCIAL','APELLIDOS Y NOMBRES','DNI','Asistencia','Desempeño durante la capacitación',
+                'Prueba de Procedimientos Operativos','Prueba de Sistemas Informáticos','Dia 1','Dia 2','Total Ponderado','ESTADO'
+                    ];
+                return new GeneralExport($resultado, $valores, $cabecera);    
+    }
 
     public function prueba(){
         try {

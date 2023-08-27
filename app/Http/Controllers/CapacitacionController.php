@@ -14,16 +14,39 @@ class CapacitacionController extends Controller
     //
     public function generar(Request $request)
     {   
+        switch ($request->id_user) {
+            case '499': //499
+                $miArray = [59,60,65,69,73,74];
+                break;
+            
+            case '412':
+                $miArray = [62,77,80,83];
+                break;
+            case '442':
+                $miArray = [61,66,76];
+                break;
+            case '460':
+                $miArray = [67,68,70,78,85];
+                break;
+            case '494':
+                $miArray = [64,71,72,79,84];
+                break;
+            case '548':
+                $miArray = [58,75,81,82];
+                break;
+        }
+        $inClause = implode(',', $miArray); 
         $examen = DB::select("select c.id, sr.nombre_sede as region,sp.nombre_sede as provincia,
         concat(p.apellido_pat,' ',p.apellido_mat,' ',p.nombres) as datos, p.documento,
-        c.cap_c1,c.cap_c2,c.cap_c3,c.asiste_d1,c.asiste_d2,c.asiste_d3,c.asiste_d4,c.asiste_d5,c.estado_capa1,
-        c.cap_c4,c.cap_c5,c.estado_capa2,c.suma_total_minedu,
+        c.cap_c1,c.cap_c2,c.cap_c3,c.cap_c4,c.asiste_d1,c.asiste_d2,c.asiste_d3,c.asiste_d4,c.asiste_d5,c.estado_capa1,
+        c.cap_c5,c.estado_capa2,c.suma_total_minedu,
         c.ponderado,c.estado_capa_total,c.observacion
      from capacitacion c 
             INNER JOIN persona_convocatoria pc on c.id_persona_convocatoria = pc.id 
             inner join persona p on pc.id_persona=p.id 	
             INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id 
-            INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id where pc.id_convocatoria = " . $request->convocatoria . " and c.aula= ". $request->aula);
+            INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id 
+            where pc.id_convocatoria = " . $request->convocatoria . " and c.aula= ". $request->aula ." and sr.id IN (". $inClause .")");
         return $examen;
 
     }
@@ -109,6 +132,25 @@ class CapacitacionController extends Controller
              'suma_total2'=>$value['cap_c5'] + $value['cap_c4'],
              'suma_total_minedu'=>$value['cap_c3'] + $value['cap_c2'],
              'ponderado'=>(($value['cap_c1'] + $value['cap_c2'] + $value['cap_c3']) * 0.7) + (($value['cap_c4'] + $value['cap_c5'])*0.3),
+            ]);
+
+        }
+        
+        return response()->json(['message' => 'Guardado correctamente']);
+    }
+    public function guardarTAP(Request $request)
+    {   
+        foreach ($request->all() as $key => $value) {
+            $editado = Capacitacion::findOrFail($value['id']);
+           
+            $editado->update([
+            'cap_c1'=>$value['cap_c1'],
+             'cap_c2'=>$value['cap_c2'],
+             'cap_c3'=>$value['cap_c3'],
+             'cap_c4'=>$value['cap_c4'],
+             'ponderado'=>(($value['cap_c1'] * 4) * 0.1) + (($value['cap_c2'] * 4)* 0.2) + ($value['cap_c3'] * 0.4) + ($value['cap_c4'] * 0.3),
+             'asiste_d1'=>$value['asiste_d1'],
+             'asiste_d2'=>$value['asiste_d2']
             ]);
 
         }

@@ -161,16 +161,12 @@ export default {
 
                     { label: "N° DNI", field: "documento" },
                     { label: "Apellido y Nombres", field: "datos" },
-                    { label: " C1. Desempeño durante la capacitación", field: "cap_c1" },
-                    { label: "C2. Procedimientos de aplicación secundaria", field: "cap_c2" },
-                    { label: "C2. Procedimientos de aplicación primaria", field: "cap_c3" },
+                    { label: " C1. Asistencia", field: "cap_c1" },
+                    { label: "C2. Desempeño durante la capacitación", field: "cap_c2" },
+                    { label: "C2. Prueba de Procedimientos Operativos", field: "cap_c3" },
+                    { label: "C2. Prueba de Sistemas Informáticos (EXCEL)", field: "cap_c4" },
                     { label: "Día 1", field: "asiste_d1" },
                     { label: "Día 2", field: "asiste_d2" },
-                    { label: "Día 3", field: "asiste_d3" },
-                    { label: "Día 4", field: "asiste_d4" },
-                    { label: "Día 5", field: "asiste_d5" },
-                    { label: "C1. DESEMPEÑO DURANTE LA  CAPACITACIÓN", field: "cap_c4" },
-                    { label: "C2. PRUEBA ESCRITA INEI", field: "cap_c5" },
                 ],
                 total: 0,
                 filtrosBusqueda: {
@@ -241,6 +237,18 @@ export default {
             const data2 = this.listarRegistros.data;
                     console.log('data', data2);
                     axios.post("api/capacitacion/guardarSN", data2)
+                        .then((response) => {
+                            this.$toastr.s(response.data.message);
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            this.$toastr.e(error.response.data.message);
+                        });
+                break;
+                case 3:
+            const data3 = this.listarRegistros.data;
+                    console.log('data', data2);
+                    axios.post("api/capacitacion/guardarTAP", data3)
                         .then((response) => {
                             this.$toastr.s(response.data.message);
                         })
@@ -326,9 +334,12 @@ export default {
                 });
         },
         generarLista() {
+        let usuario = Crypt.decrypt(this.$store.getters.getAuthUser('identificador'));
+
             let datos = {
                 convocatoria: this.idConvocatoria,
-                aula: this.aula
+                aula: this.aula,
+                id_user: usuario
             }
             console.log(datos);
             axios.post("api/capacitacion/generar", datos)
@@ -350,20 +361,26 @@ export default {
         },
         exportar() {
 
-let usuario = Crypt.decrypt(this.$store.getters.getAuthUser('identificador'));
-switch (this.idConvocatoria) {
+        let usuario = Crypt.decrypt(this.$store.getters.getAuthUser('identificador'));
+        switch (this.idConvocatoria) {
             case 1:
             
             this.listarRegistros.filtrosBusqueda.cargo=usuario;
-            let urlTAP = process.env.MIX_APP_URL +"/exportar/reporteCapacitacionSN" +
+            let urlSN = process.env.MIX_APP_URL +"/exportar/reporteCapacitacionSN" +
             Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
-            window.open(urlTAP);                            
+            window.open(urlSN);                            
             break;
             case 2:
             this.listarRegistros.filtrosBusqueda.cargo=usuario;
             let urlCP = process.env.MIX_APP_URL +"/exportar/reporteCapacitacionMN" +
             Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
             window.open(urlCP); 
+            break;
+            case 3:
+            this.listarRegistros.filtrosBusqueda.cargo=usuario;
+            let urlTAP = process.env.MIX_APP_URL +"/exportar/reporteCapacitacionTAP" +
+            Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
+            window.open(urlTAP); 
             break;
             case 5:
             this.listarRegistrosSPA.filtrosBusqueda.cargo=usuario;
