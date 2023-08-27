@@ -639,7 +639,7 @@ class ExportController extends Controller
     public function reporteCapacitacionTAP(Request $request){
         switch ($request->cargo) {
             case '1': //499
-                $miArray = [59,60,65,69,73,74,62,77,80,83,61,66,76,67,68,70,78,85,64,71,72,79,84,58,75,81,82];
+                $miArray = [59,60,65,69,73,74,62,77,80,83,61,66,76,67,68,70,78,85,64,71,72,79,84,58,75,81,82,63];
                 break;
             case '45': 
                 $miArray = [59,60,65,69,73,63,74];
