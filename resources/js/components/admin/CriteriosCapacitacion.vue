@@ -161,12 +161,15 @@ export default {
 
                     { label: "N° DNI", field: "documento" },
                     { label: "Apellido y Nombres", field: "datos" },
-                    { label: " C1. Asistencia", field: "cap_c1" },
-                    { label: "C2. Desempeño durante la capacitación", field: "cap_c2" },
-                    { label: "C2. Prueba de Procedimientos Operativos", field: "cap_c3" },
-                    { label: "C2. Prueba de Sistemas Informáticos (EXCEL)", field: "cap_c4" },
+                    { label: "C1. Desempeño en simulaciones", field: "cap_c1" },
+                    { label: "C2. Manejo de los instrumentos ", field: "cap_c2" },
+                    { label: "C3. Manejo de funciones", field: "cap_c3" },
+                    { label: "C4. Manejo de procedimientos", field: "cap_c4" },
                     { label: "Día 1", field: "asiste_d1" },
                     { label: "Día 2", field: "asiste_d2" },
+                    { label: "Día 3", field: "asiste_d3" },
+                    { label: "Día 4", field: "asiste_d4" },
+                    { label: "Día 5", field: "asiste_d5" },
                 ],
                 total: 0,
                 filtrosBusqueda: {
@@ -334,24 +337,67 @@ export default {
                 });
         },
         generarLista() {
-        let usuario = Crypt.decrypt(this.$store.getters.getAuthUser('identificador'));
-
+            let usuario = Crypt.decrypt(this.$store.getters.getAuthUser('identificador'));
             let datos = {
                 convocatoria: this.idConvocatoria,
                 aula: this.aula,
                 id_user: usuario
-            }
-            console.log(datos);
-            axios.post("api/capacitacion/generar", datos)
-                .then((response) => {
-                    this.listarRegistros.data = response.data;
-                    this.$toastr.s(response.data.message);
+                }
+            switch (this.idConvocatoria) {
+                case 1:
+                alert("Este proceso ya finalizo");                            
+                break;
+                case 2:
+                alert("Este proceso ya finalizo"); 
+                break;
+                case 3:
+                alert("Este proceso ya finalizo");  
+                break;
+                case 4:
+                console.log(datos);
+                    axios.post("api/capacitacion/generar", datos)
+                        .then((response) => {
+                        this.listarRegistros.data = response.data;
+                        this.$toastr.s(response.data.message);
                 })
                 .catch((error) => {
                     console.log("error");
                 });
+                break;
+                case 5:
+                console.log(datos);
+                    axios.post("api/capacitacion/generar", datos)
+                        .then((response) => {
+                        this.listarRegistros.data = response.data;
+                        this.$toastr.s(response.data.message);
+                })
+                .catch((error) => {
+                    console.log("error");
+                });
+                break;
+                case 6:
+                console.log(datos);
+                    axios.post("api/capacitacion/generar", datos)
+                        .then((response) => {
+                        this.listarRegistros.data = response.data;
+                        this.$toastr.s(response.data.message);
+                })
+                .catch((error) => {
+                    console.log("error");
+                });
+                break; 
+                case 7:
+                this.listarRegistrosSAS.filtrosBusqueda.cargo=usuario;
+                let urlCR =
+                    process.env.MIX_APP_URL +"/exportar/reporteEvaluacionSAS" +
+                Helper.getFilterURL(this.listarRegistrosSAS.filtrosBusqueda);
+                window.open(urlCR);
+                break; 
+                default:
+                this.$toastr.e("Seleccione el Cargo  en convocatoria");
 
-
+                break;
+            }
         },
         obtenerTipo(row) {
             if (row.tipo == 1) return 'Inicio';

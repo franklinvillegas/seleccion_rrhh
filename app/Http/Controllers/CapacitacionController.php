@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Capacitacion;
+use App\Models\User;
 use App\Models\PersonaConvocatoria;
 use Illuminate\Support\Facades\DB;
 
@@ -14,32 +15,9 @@ class CapacitacionController extends Controller
     //
     public function generar(Request $request)
     {   
-        switch ($request->id_user) {
-            case '1': //499
-                $miArray = [59,60,65,69,73,74,62,77,80,83,61,66,76,67,68,70,78,85,64,71,72,79,84,58,75,81,82];
-                break;
-            case '45': //499
-                $miArray = [59,60,65,69,73,74];
-                break;
-            
-            case '34':
-                $miArray = [62,77,80,83];
-                break;
-            case '30':
-                $miArray = [61,66,76];
-                break;
-            case '40':
-                $miArray = [67,68,70,78,85];
-                break;
-            case '44':
-                $miArray = [64,71,72,79,84];
-                break;
-            case '54':
-                $miArray = [58,75,81,82];
-                break;
-        }
-        $inClause = implode(',', $miArray); 
-        $examen = DB::select("select c.id, sr.nombre_sede as region,sp.nombre_sede as provincia,
+        $provincia = User::select('id_sede_provincial')->where('id',$request->id_user)->first();
+        $id_region_user = DB::select("select sr.id from sede_regional sr RIGHT JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id=".$provincia->id_sede_provincial);            
+        $generado = DB::select("select c.id, sr.nombre_sede as region,sp.nombre_sede as provincia,
         concat(p.apellido_pat,' ',p.apellido_mat,' ',p.nombres) as datos, p.documento,
         c.cap_c1,c.cap_c2,c.cap_c3,c.cap_c4,c.asiste_d1,c.asiste_d2,c.asiste_d3,c.asiste_d4,c.asiste_d5,c.estado_capa1,
         c.cap_c5,c.estado_capa2,c.suma_total_minedu,
@@ -49,8 +27,8 @@ class CapacitacionController extends Controller
             inner join persona p on pc.id_persona=p.id 	
             INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id 
             INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id 
-            where pc.id_convocatoria = " . $request->convocatoria . " and c.aula= ". $request->aula ." and sr.id IN (". $inClause .")");
-        return $examen;
+            where pc.id_convocatoria = " . $request->convocatoria . " and c.aula= ". $request->aula ." and sr.id =". $id_region_user[0]->id);
+        return $generado;
 
     }
     public function aulas($cargo)
