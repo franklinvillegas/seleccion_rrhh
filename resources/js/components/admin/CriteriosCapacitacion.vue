@@ -121,8 +121,8 @@
                     <div class="form-group col-3">
                     <button class="btn btn-outline-success float-left" type="button" @click="guardar"> Guardar
                     </button>
-                    <button class="btn btn-outline-success float-left" type="button" @click="exportar"> Export to excel
-                    </button>
+                    <!-- <button class="btn btn-outline-success float-left" type="button" @click="exportar"> Export to excel
+                    </button> -->
                 </div>
                 </div>
             </fieldset>
