@@ -176,8 +176,8 @@ export default {
                     { label: "Día 3", field: "asiste_d3" },
                     { label: "Día 4", field: "asiste_d4" },
                     { label: "Día 5", field: "asiste_d5" },
-                    { label: "C1. Manejo de procedimientos", field: "cap_c5" },
-                    { label: "C2. Manejo de procedimientos", field: "cap_c6" },
+                    { label: "C1. Desempeño en aula", field: "cap_c5" },
+                    { label: "C2. Manejo de procedimientos INEI", field: "cap_c6" },
                 ],
                 total: 0,
                 filtrosBusqueda: {
