@@ -64,7 +64,7 @@
 
             </div>
             <fieldset class="scheduler-border">
-                <legend class="scheduler-border">Listado</legend>
+                <legend class="scheduler-border">LISTA</legend>
                 <div class="control-group">
                     <div class="table-responsive">
                         <vue-good-table :columns="listarRegistros.columns" :rows="listarRegistros.data" :search-options="{
@@ -107,7 +107,7 @@
                                 </span>
                                 <span v-else-if="props.column.field == 'cap_c4'">
                                     <input type="text" v-model="props.row.cap_c4" class="form-control" data-vv-as="Nota"
-                                        placeholder="C1 INEI" name="cap_c4" max="5" min="0" @change="pushData(props.index,'cap_c4', props.row.cap_c4)"
+                                        placeholder="C4" name="cap_c4" max="5" min="0" @change="pushData(props.index,'cap_c4', props.row.cap_c4)"
                                         >
                                 </span>
                                 <span v-else-if="props.column.field == 'cap_c5'">
@@ -115,6 +115,12 @@
                                         placeholder="C2 INEI" name="cap_c5" max="25" min="0" @change="pushData(props.index,'cap_c5', props.row.cap_c5)"
                                         >
                                 </span>
+                                <span v-else-if="props.column.field == 'cap_c5'">
+                                    <input type="text" v-model="props.row.cap_c5" class="form-control" data-vv-as="Nota"
+                                        placeholder="C2 INEI" name="cap_c5" max="25" min="0" @change="pushData(props.index,'cap_c6', props.row.cap_c5)"
+                                        >
+                                </span>
+                                
                             </template>
                         </vue-good-table>
                     </div>
@@ -170,6 +176,8 @@ export default {
                     { label: "Día 3", field: "asiste_d3" },
                     { label: "Día 4", field: "asiste_d4" },
                     { label: "Día 5", field: "asiste_d5" },
+                    { label: "C1. Manejo de procedimientos", field: "cap_c5" },
+                    { label: "C2. Manejo de procedimientos", field: "cap_c6" },
                 ],
                 total: 0,
                 filtrosBusqueda: {
