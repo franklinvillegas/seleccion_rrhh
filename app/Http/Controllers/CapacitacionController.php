@@ -16,18 +16,18 @@ class CapacitacionController extends Controller
     public function generar(Request $request)
     {   
         $provincia = User::select('id_sede_provincial')->where('id',$request->id_user)->first();
-        $id_region_user = DB::select("select sr.id from sede_regional sr RIGHT JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id=".$provincia->id_sede_provincial);            
+        $id_region_user = DB::select("select sr.id from sede_regional sr RIGHT JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id=".$provincia->id_sede_provincial);
         $generado = DB::select("select c.id, sr.nombre_sede as region,sp.nombre_sede as provincia,
         concat(p.apellido_pat,' ',p.apellido_mat,' ',p.nombres) as datos, p.documento,
         c.cap_c1,c.cap_c2,c.cap_c3,c.cap_c4,c.asiste_d1,c.asiste_d2,c.asiste_d3,c.asiste_d4,c.asiste_d5,c.estado_capa1,
-        c.cap_c5,c.estado_capa2,c.suma_total_minedu,
+        c.cap_c5,c.cap_c6,c.estado_capa2,c.suma_total_minedu,
         c.ponderado,c.estado_capa_total,c.observacion
      from capacitacion c 
             INNER JOIN persona_convocatoria pc on c.id_persona_convocatoria = pc.id 
             inner join persona p on pc.id_persona=p.id 	
             INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id 
             INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id 
-            where pc.id_convocatoria = " . $request->convocatoria . " and c.aula= ". $request->aula ." and sr.id =". $id_region_user[0]->id);
+            where pc.id_convocatoria = " . $request->convocatoria . " and sr.id =". $id_region_user[0]->id);
         return $generado;
 
     }
@@ -138,4 +138,37 @@ class CapacitacionController extends Controller
         
         return response()->json(['message' => 'Guardado correctamente']);
     }
+    public function guardarCP(Request $request)
+    {   
+        foreach ($request->all() as $key => $value) {
+            $editado = Capacitacion::findOrFail($value['id']);
+           
+            $editado->update([
+            'cap_c5'=>$value['cap_c5'],
+             'cap_c6'=>$value['cap_c6'],
+             'ponderado'=>((($value['cap_c1'] + $value['cap_c2'] + $value['cap_c3'] + $value['cap_c4'])*0.3333)*0.7) + ((($value['cap_c5'] + $value['cap_c6'])*0.8)*0.3),
+             'suma_total2'=>$value['cap_c5'] + $value['cap_c6']
+            ]);
+
+        }
+        
+        return response()->json(['message' => 'Guardado correctamente']);
+    }
+    public function guardarSPA(Request $request)
+    {   
+        foreach ($request->all() as $key => $value) {
+            $editado = Capacitacion::findOrFail($value['id']);
+           
+            $editado->update([
+            'cap_c5'=>$value['cap_c5'],
+             'cap_c6'=>$value['cap_c6'],
+             'ponderado'=>((($value['cap_c1'] + $value['cap_c2'] + $value['cap_c3'] + $value['cap_c4'])*0.3333)*0.7) + ((($value['cap_c5'] + $value['cap_c6'])*0.8)*0.3),
+             'suma_total2'=>$value['cap_c5'] + $value['cap_c6']
+            ]);
+
+        }
+        
+        return response()->json(['message' => 'Guardado correctamente']);
+    }
+    
 }

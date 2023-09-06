@@ -386,6 +386,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('guardarMN', [CapacitacionController::class, 'guardarMN']);
     Route::post('guardarTAP', [CapacitacionController::class, 'guardarTAP']);
     Route::post('guardarCR', [CapacitacionController::class, 'guardarCR']);
+    Route::post('guardarCP', [CapacitacionController::class, 'guardarCP']);
+    Route::post('guardarSPA', [CapacitacionController::class, 'guardarSPA']);
     Route::get('mostrar/{id}', [CapacitacionController::class, 'mostrar']);
     Route::get('mostrarReporte/{id}', [CapacitacionController::class, 'mostrarReporte']);
     Route::post('modificar_imagen', [CapacitacionController::class, 'modificarImagen']);

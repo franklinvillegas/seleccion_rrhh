@@ -47,11 +47,11 @@
                     <p class="m-0">
                         <strong>Aula</strong>
                     </p>
-                    <select name="aula" v-model="aula" class="form-control" data-vv-as="Convocatoria"
+                    <!-- <select name="aula" v-model="aula" class="form-control" data-vv-as="Convocatoria"
                         placeholder="Seleccione Convocatoria" v-validate="'required'">
                         <option v-for="row in listarAulas" :key="row.aula" :value="row.aula" v-text="row.aula">
                         </option>
-                    </select>
+                    </select> -->
                     <span class="text-danger">{{ errors.first("form_registro.aula") }}</span>
                 </div>
                 <div class="form-group col-3">
@@ -74,50 +74,50 @@
                             <template slot="table-row" slot-scope="props">
 
                                 <span v-if="props.column.field == 'cap_c1'">
-                                    <input type="text" v-model="props.row.cap_c1" class="form-control" data-vv-as="Nota"
+                                    <input type="text" disabled v-model="props.row.cap_c1" class="form-control" data-vv-as="Nota"
                                         placeholder="C1" name="cap_c1" max="10" min="0" @change="pushData(props.index,'cap_c1', props.row.cap_c1)">
                                 </span>
                                 <span v-else-if="props.column.field == 'cap_c2'">
-                                    <input type="text" v-model="props.row.cap_c2" class="form-control" data-vv-as="Nota"
+                                    <input type="text" disabled v-model="props.row.cap_c2" class="form-control" data-vv-as="Nota"
                                         placeholder="C2.1" name="cap_c2" max="20" min="0"  @change="pushData(props.index,'cap_c2', props.row.cap_c2)">
                                 </span>
                                 <span v-else-if="props.column.field == 'cap_c3'">
-                                    <input type="text" v-model="props.row.cap_c3" class="form-control" data-vv-as="Nota"
+                                    <input type="text" disabled v-model="props.row.cap_c3" class="form-control" data-vv-as="Nota"
                                         placeholder="C2.1" name="cap_c3" max="20" min="0" @change="pushData(props.index,'cap_c3', props.row.cap_c3)">
                                 </span>
                                 <span v-else-if="props.column.field == 'asiste_d1'">
-                                    <input type="checkbox" v-model="props.row.asiste_d1" data-vv-as="Nota"
+                                    <input type="checkbox" disabled v-model="props.row.asiste_d1" data-vv-as="Nota"
                                         name="asiste_d1" @change="pushData(props.index,'asiste_d1', props.row.asiste_d1)">
                                 </span>
                                 <span v-else-if="props.column.field == 'asiste_d2'">
-                                    <input type="checkbox" v-model="props.row.asiste_d2" data-vv-as="Nota"
+                                    <input type="checkbox" disabled v-model="props.row.asiste_d2" data-vv-as="Nota"
                                         name="asiste_d2" @change="pushData(props.index,'asiste_d2', props.row.asiste_d2)">
                                 </span>
                                 <span v-else-if="props.column.field == 'asiste_d3'">
-                                    <input type="checkbox" v-model="props.row.asiste_d3" data-vv-as="Nota"
+                                    <input type="checkbox" disabled v-model="props.row.asiste_d3" data-vv-as="Nota"
                                         name="asiste_d3" @change="pushData(props.index,'asiste_d3', props.row.asiste_d3)">
                                 </span>
                                 <span v-else-if="props.column.field == 'asiste_d4'">
-                                    <input type="checkbox" v-model="props.row.asiste_d4" data-vv-as="Nota"
+                                    <input type="checkbox" disabled v-model="props.row.asiste_d4" data-vv-as="Nota"
                                         name="asiste_d4" @change="pushData(props.index,'asiste_d4', props.row.asiste_d4)">
                                 </span>
                                 <span v-else-if="props.column.field == 'asiste_d5'">
-                                    <input type="checkbox" v-model="props.row.asiste_d5" data-vv-as="Nota"
+                                    <input type="checkbox" disabled v-model="props.row.asiste_d5" data-vv-as="Nota"
                                         name="asiste_d5" @change="pushData(props.index,'asiste_d5', props.row.asiste_d5)">
                                 </span>
                                 <span v-else-if="props.column.field == 'cap_c4'">
-                                    <input type="text" v-model="props.row.cap_c4" class="form-control" data-vv-as="Nota"
+                                    <input type="text" disabled v-model="props.row.cap_c4" class="form-control" data-vv-as="Nota"
                                         placeholder="C4" name="cap_c4" max="5" min="0" @change="pushData(props.index,'cap_c4', props.row.cap_c4)"
                                         >
                                 </span>
                                 <span v-else-if="props.column.field == 'cap_c5'">
                                     <input type="text" v-model="props.row.cap_c5" class="form-control" data-vv-as="Nota"
-                                        placeholder="C2 INEI" name="cap_c5" max="25" min="0" @change="pushData(props.index,'cap_c5', props.row.cap_c5)"
+                                        placeholder="C1 INEI" name="cap_c5" max="25" min="0" @change="pushData(props.index,'cap_c5', props.row.cap_c5)"
                                         >
                                 </span>
-                                <span v-else-if="props.column.field == 'cap_c5'">
-                                    <input type="text" v-model="props.row.cap_c5" class="form-control" data-vv-as="Nota"
-                                        placeholder="C2 INEI" name="cap_c5" max="25" min="0" @change="pushData(props.index,'cap_c6', props.row.cap_c5)"
+                                <span v-else-if="props.column.field == 'cap_c6'">
+                                    <input type="text" v-model="props.row.cap_c6" class="form-control" data-vv-as="Nota"
+                                        placeholder="C2 INEI" name="cap_c6" max="25" min="0" @change="pushData(props.index,'cap_c6', props.row.cap_c6)"
                                         >
                                 </span>
                                 
@@ -127,8 +127,8 @@
                     <div class="form-group col-3">
                     <button class="btn btn-outline-success float-left" type="button" @click="guardar"> Guardar
                     </button>
-                    <!-- <button class="btn btn-outline-success float-left" type="button" @click="exportar"> Export to excel
-                    </button> -->
+                    <button class="btn btn-outline-success float-left" type="button" @click="exportar"> Export to excel
+                    </button>
                 </div>
                 </div>
             </fieldset>
@@ -268,6 +268,30 @@ export default {
                             this.$toastr.e(error.response.data.message);
                         });
                 break;
+                case 4:
+            const data4 = this.listarRegistros.data;
+                    console.log('data', data4);
+                    axios.post("api/capacitacion/guardarCP", data4)
+                        .then((response) => {
+                            this.$toastr.s(response.data.message);
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            this.$toastr.e(error.response.data.message);
+                        });
+                break;
+                case 5:
+            const data5 = this.listarRegistros.data;
+                    console.log('data', data5);
+                    axios.post("api/capacitacion/guardarSPA", data5)
+                        .then((response) => {
+                            this.$toastr.s(response.data.message);
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            this.$toastr.e(error.response.data.message);
+                        });
+                break;
             case 7:
             const data7 = this.listarRegistros.data;
                     console.log('data', data7);
@@ -348,7 +372,6 @@ export default {
             let usuario = Crypt.decrypt(this.$store.getters.getAuthUser('identificador'));
             let datos = {
                 convocatoria: this.idConvocatoria,
-                aula: this.aula,
                 id_user: usuario
                 }
             switch (this.idConvocatoria) {
