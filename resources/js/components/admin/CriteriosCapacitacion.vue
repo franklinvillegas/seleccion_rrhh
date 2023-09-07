@@ -437,11 +437,10 @@ export default {
 
         },
         exportar() {
-
+            console.log(this.idConvocatoria);
         let usuario = Crypt.decrypt(this.$store.getters.getAuthUser('identificador'));
         switch (this.idConvocatoria) {
-            case 1:
-            
+            case 1:            
             this.listarRegistros.filtrosBusqueda.cargo=usuario;
             let urlSN = process.env.MIX_APP_URL +"/exportar/reporteCapacitacionSN" +
             Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
@@ -449,9 +448,9 @@ export default {
             break;
             case 2:
             this.listarRegistros.filtrosBusqueda.cargo=usuario;
-            let urlCP = process.env.MIX_APP_URL +"/exportar/reporteCapacitacionMN" +
+            let urlMN = process.env.MIX_APP_URL +"/exportar/reporteCapacitacionMN" +
             Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
-            window.open(urlCP); 
+            window.open(urlMN); 
             break;
             case 3:
             this.listarRegistros.filtrosBusqueda.cargo=usuario;
@@ -459,11 +458,18 @@ export default {
             Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
             window.open(urlTAP); 
             break;
+            case 4:
+            this.listarRegistros.filtrosBusqueda.cargo=usuario;
+            let urlCP =
+                process.env.MIX_APP_URL +"/exportar/reporteCapacitacionCP" +
+            Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
+            window.open(urlCP); 
+            break;
             case 5:
-            this.listarRegistrosSPA.filtrosBusqueda.cargo=usuario;
+            this.listarRegistros.filtrosBusqueda.cargo=usuario;
             let urlSPA =
-                process.env.MIX_APP_URL +"/exportar/reporteEvaluacionSPA" +
-            Helper.getFilterURL(this.listarRegistrosSPA.filtrosBusqueda);
+                process.env.MIX_APP_URL +"/exportar/reporteCapacitacionSPA" +
+            Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
             window.open(urlSPA); 
             break;
             case 6:
