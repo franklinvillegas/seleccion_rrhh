@@ -15,7 +15,13 @@ class CapacitacionController extends Controller
     //
     public function generar(Request $request)
     {   
-        $provincia = User::select('id_sede_provincial')->where('id',$request->id_user)->first();
+        if ($request->convocatoria == 4 || $request->convocatoria == 5) {
+            # code...
+        return response()->json(['message' => 'Culmino el tiempo de registro de notas']);
+            
+        }
+        else{
+          $provincia = User::select('id_sede_provincial')->where('id',$request->id_user)->first();
         $id_region_user = DB::select("select sr.id from sede_regional sr RIGHT JOIN sede_provincial sp on sr.id = sp.id_sede_regional where sp.id=".$provincia->id_sede_provincial);
         $generado = DB::select("select c.id, sr.nombre_sede as region,sp.nombre_sede as provincia,
         concat(p.apellido_pat,' ',p.apellido_mat,' ',p.nombres) as datos, p.documento,
@@ -28,7 +34,9 @@ class CapacitacionController extends Controller
             INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id 
             INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id 
             where pc.id_convocatoria = " . $request->convocatoria . " and sr.id =". $id_region_user[0]->id);
-        return $generado;
+        return $generado;  
+        }
+        
 
     }
     public function aulas($cargo)
