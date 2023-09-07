@@ -750,7 +750,7 @@ class ExportController extends Controller
         $query = "select sr.nombre_sede as region,sp.nombre_sede as provincia,
         concat(p.apellido_pat,' ',p.apellido_mat,' ',p.nombres) as datos, p.documento,
         c.cap_c1,c.cap_c2,c.cap_c3,c.cap_c4,c.suma_total1,c.asiste_d1,c.asiste_d2,c.asiste_d3,c.asiste_d4,c.asiste_d5,CASE WHEN (c.suma_total1)>=32 and c.cap_c4>=12 THEN 'Aprobado' ELSE 'Desaprobado' end as estado_capa1,
-				c.cap_c5,c.cap_c6,case when (c.cap_c5+c.cap_c6>=16) then 'Aprobado' else 'Desaprobado' end as estado_capa2, (((c.suma_total1 * 0.333) *(20/60))) + ((((c.cap_c5+c.cap_c6) * (20/30)))*0.3)))as total_ponderado,
+				c.cap_c5,c.cap_c6,case when (c.cap_c5+c.cap_c6>=16) then 'Aprobado' else 'Desaprobado' end as estado_capa2, (((c.suma_total1 * (20/60)) * 0.7) + ((((c.cap_c5+c.cap_c6) * (20/30))*0.3)))as total_ponderado,
                 CASE WHEN (c.suma_total1)>=32 and c.cap_c4>=12 and (c.cap_c5+c.cap_c6>=16) THEN 'Aprobado' ELSE 'Desaprobado' END as estado_final
         
      from capacitacion c 
