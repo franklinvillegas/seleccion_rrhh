@@ -766,6 +766,50 @@ class ExportController extends Controller
                     ];
                 return new GeneralExport($resultado, $valores, $cabecera);    
     }
+    public function reporteCapacitacionSAS(Request $request){
+        switch ($request->cargo) {
+            case '1': //499
+                $miArray = [59,60,65,69,73,74,62,77,80,83,61,66,76,67,68,70,78,85,64,71,72,79,84,58,75,81,82,63];
+                break;
+            case '45': 
+                $miArray = [59,60,65,69,73,63,74];
+                break;            
+            case '34':
+                $miArray = [62,77,80,83];
+                break;
+            case '38':
+                $miArray = [61,66,76];
+                break;
+            case '40':
+                $miArray = [67,68,70,78,85];
+                break;
+            case '44':
+                $miArray = [64,71,72,79,84];
+                break;
+            case '54':
+                $miArray = [58,75,81,82];
+                break;
+        }
+        $inClause = implode(',', $miArray); 
+        $query = "select sr.nombre_sede as region,sp.nombre_sede as provincia,
+        concat(p.apellido_pat,' ',p.apellido_mat,' ',p.nombres) as datos, p.documento,
+        c.cap_c1,c.cap_c2,c.cap_c3,c.cap_c4,c.suma_total1,c.asiste_d1,c.asiste_d2,c.asiste_d3,c.asiste_d4,c.asiste_d5,CASE WHEN (c.suma_total1)>=32 and c.cap_c4>=12 THEN 'Aprobado' ELSE 'Desaprobado' end as estado_capa1,
+				c.cap_c5,c.cap_c6,case when (c.cap_c5+c.cap_c6>=16) then 'Aprobado' else 'Desaprobado' end as estado_capa2, (((c.suma_total1 * (20/60)) * 0.7) + ((((c.cap_c5+c.cap_c6) * (20/30))*0.3)))as total_ponderado,
+                CASE WHEN (c.suma_total1)>=32 and c.cap_c4>=12 and (c.cap_c5+c.cap_c6>=16) THEN 'Aprobado' ELSE 'Desaprobado' END as estado_final
+        
+     from capacitacion c 
+            INNER JOIN persona_convocatoria pc on c.id_persona_convocatoria = pc.id 
+            inner join persona p on pc.id_persona=p.id 	
+            INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id 
+            INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id 
+            where pc.id_convocatoria = 6 and sr.id IN (". $inClause .") order by region,provincia,total_ponderado desc,ESTADO ";
+                $resultado = DB::select($query);
+                $valores = array("titulo"=>"REPORTE DE CRITERIOS DE SUPERVISOR DE PROCESOS DE APLICACION", "nombre_hoja"=>"Result_SPA", "nom_archivo"=>"Reporte_Capa_SPA".date('Y_m_d'));
+                $cabecera = ['SEDE REGIONAL','SEDE PROVINCIAL','APELLIDOS Y NOMBRES','DNI','Desempeño en simulaciones','Manejo de instrumentos',
+                'Manejo de Funciones','Manejo de Procedimientos','Total MINEDU','Dia 1','Dia 2','Dia 3','Dia 4','Dia 5','Estado MINEDU','Desempeño en aula','Prueba escrita','Estado INEI','Total Ponderado','ESTADO FINAL'
+                    ];
+                return new GeneralExport($resultado, $valores, $cabecera);    
+    }
 
     public function prueba(){
         try {
