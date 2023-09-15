@@ -47,11 +47,11 @@
                     <p class="m-0">
                         <strong>Aula</strong>
                     </p>
-                    <!-- <select name="aula" v-model="aula" class="form-control" data-vv-as="Convocatoria"
+                    <select name="aula" v-model="aula" class="form-control" data-vv-as="Convocatoria"
                         placeholder="Seleccione Convocatoria" v-validate="'required'">
                         <option v-for="row in listarAulas" :key="row.aula" :value="row.aula" v-text="row.aula">
                         </option>
-                    </select> -->
+                    </select>
                     <span class="text-danger">{{ errors.first("form_registro.aula") }}</span>
                 </div>
                 <div class="form-group col-3">
@@ -174,8 +174,6 @@ export default {
                     { label: "Día 1", field: "asiste_d1" },
                     { label: "Día 2", field: "asiste_d2" },
                     { label: "Día 3", field: "asiste_d3" },
-                    { label: "Día 4", field: "asiste_d4" },
-                    { label: "Día 5", field: "asiste_d5" },
                     { label: "C1. Desempeño en aula", field: "cap_c5" },
                     { label: "C2. Prueba escrita", field: "cap_c6" },
                 ],
@@ -372,7 +370,8 @@ export default {
             let usuario = Crypt.decrypt(this.$store.getters.getAuthUser('identificador'));
             let datos = {
                 convocatoria: this.idConvocatoria,
-                id_user: usuario
+                id_user: usuario,
+                aula:this.aula
                 }
             switch (this.idConvocatoria) {
                 case 1:
@@ -385,26 +384,10 @@ export default {
                 alert("Este proceso ya finalizo");  
                 break;
                 case 4:
-                console.log(datos);
-                    axios.post("api/capacitacion/generar", datos)
-                        .then((response) => {
-                        this.listarRegistros.data = response.data;
-                        this.$toastr.s(response.data.message);
-                })
-                .catch((error) => {
-                    console.log("error");
-                });
+                alert("Este proceso ya finalizo");
                 break;
                 case 5:
-                console.log(datos);
-                    axios.post("api/capacitacion/generar", datos)
-                        .then((response) => {
-                        this.listarRegistros.data = response.data;
-                        this.$toastr.s(response.data.message);
-                })
-                .catch((error) => {
-                    console.log("error");
-                });
+                alert("Este proceso ya finalizo");
                 break;
                 case 6:
                 console.log(datos);
@@ -415,14 +398,9 @@ export default {
                 })
                 .catch((error) => {
                     console.log("error");
-                });
-                break; 
+                }); 
                 case 7:
-                this.listarRegistrosSAS.filtrosBusqueda.cargo=usuario;
-                let urlCR =
-                    process.env.MIX_APP_URL +"/exportar/reporteEvaluacionSAS" +
-                Helper.getFilterURL(this.listarRegistrosSAS.filtrosBusqueda);
-                window.open(urlCR);
+                
                 break; 
                 default:
                 this.$toastr.e("Seleccione el Cargo  en convocatoria");

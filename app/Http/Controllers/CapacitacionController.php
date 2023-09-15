@@ -33,7 +33,7 @@ class CapacitacionController extends Controller
             inner join persona p on pc.id_persona=p.id 	
             INNER JOIN sede_provincial sp on pc.id_sede_provincial=sp.id 
             INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id 
-            where pc.id_convocatoria = " . $request->convocatoria . " and sr.id =". $id_region_user[0]->id);
+            where pc.id_convocatoria = " . $request->convocatoria . " and aula =". $request->aula);
         return $generado;  
         }
         
