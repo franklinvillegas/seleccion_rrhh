@@ -804,7 +804,7 @@ class ExportController extends Controller
             INNER JOIN sede_regional sr on sp.id_sede_regional=sr.id 
             where pc.id_convocatoria = 6 and sr.id IN (". $inClause .") order by region,provincia,total_ponderado desc,ESTADO ";
                 $resultado = DB::select($query);
-                $valores = array("titulo"=>"REPORTE DE CRITERIOS DE SUPERVISOR DE PROCESOS DE APLICACION", "nombre_hoja"=>"Result_SPA", "nom_archivo"=>"Reporte_Capa_SPA".date('Y_m_d'));
+                $valores = array("titulo"=>"REPORTE DE CRITERIOS DE SUPERVISORDE ALMACEN Y SOPORTE INFORMÁTICO", "nombre_hoja"=>"Result_SAS", "nom_archivo"=>"Reporte_Capa_SAS".date('Y_m_d'));
                 $cabecera = ['SEDE REGIONAL','SEDE PROVINCIAL','APELLIDOS Y NOMBRES','DNI','Conocimientos Informáticos','Desempeño durante ejercicios',
                 'Desempeño durante la capacitacion','Prueba escrita de salida','Total MINEDU','Dia 1','Dia 2','Dia 3','Estado MINEDU','Desempeño en aula','Prueba escrita','Estado INEI','Total Ponderado','ESTADO FINAL'
                     ];
