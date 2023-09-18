@@ -167,15 +167,17 @@ export default {
 
                     { label: "N° DNI", field: "documento" },
                     { label: "Apellido y Nombres", field: "datos" },
-                    { label: "C1. Desempeño en simulaciones", field: "cap_c1" },
-                    { label: "C2. Manejo de los instrumentos ", field: "cap_c2" },
-                    { label: "C3. Manejo de funciones", field: "cap_c3" },
-                    { label: "C4. Manejo de procedimientos", field: "cap_c4" },
+                    { label: "C1. Conocimientos informaticos", field: "cap_c1" },
+                    { label: "C2. Desempeño durante los ejercicios ", field: "cap_c2" },
+                    { label: "C3. Desempeño durante la capacitacion", field: "cap_c3" },
+                    { label: "C4. Prueba de Salida", field: "cap_c4" },
                     { label: "Día 1", field: "asiste_d1" },
                     { label: "Día 2", field: "asiste_d2" },
                     { label: "Día 3", field: "asiste_d3" },
                     { label: "C1. Desempeño en aula", field: "cap_c5" },
                     { label: "C2. Prueba escrita", field: "cap_c6" },
+                    { label: "Día 3", field: "asiste_d4" },
+                    
                 ],
                 total: 0,
                 filtrosBusqueda: {
@@ -290,7 +292,7 @@ export default {
                             this.$toastr.e(error.response.data.message);
                         });
                 break;
-            case 7:
+            case 6:
             const data7 = this.listarRegistros.data;
                     console.log('data', data7);
                     axios.post("api/capacitacion/guardarSN", data7)
@@ -451,10 +453,10 @@ export default {
             window.open(urlSPA); 
             break;
             case 6:
-            this.listarRegistrosSAS.filtrosBusqueda.cargo=usuario;
+            this.listarRegistros.filtrosBusqueda.cargo=usuario;
             let urlSAS =
                 process.env.MIX_APP_URL +"/exportar/reporteEvaluacionSAS" +
-            Helper.getFilterURL(this.listarRegistrosSAS.filtrosBusqueda);
+            Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
             window.open(urlSAS);
             break; 
             case 7:

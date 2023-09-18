@@ -178,5 +178,21 @@ class CapacitacionController extends Controller
         
         return response()->json(['message' => 'Guardado correctamente']);
     }
+    public function guardarSAS(Request $request)
+    {   
+        foreach ($request->all() as $key => $value) {
+            $editado = Capacitacion::findOrFail($value['id']);
+           
+            $editado->update([
+            'cap_c5'=>$value['cap_c5'],
+             'cap_c6'=>$value['cap_c6'],
+             'ponderado'=>((($value['cap_c1'] + $value['cap_c2'] + $value['cap_c3'] + $value['cap_c4'])*0.3333)*0.7) + ((($value['cap_c5'] + $value['cap_c6'])*0.8)*0.3),
+             'suma_total2'=>$value['cap_c5'] + $value['cap_c6']
+            ]);
+
+        }
+        
+        return response()->json(['message' => 'Guardado correctamente']);
+    }
     
 }
