@@ -793,9 +793,9 @@ class ExportController extends Controller
         $inClause = implode(',', $miArray); 
         $query = "select sr.nombre_sede as region,sp.nombre_sede as provincia,
         concat(p.apellido_pat,' ',p.apellido_mat,' ',p.nombres) as datos, p.documento,
-        c.cap_c1,c.cap_c2,c.cap_c3,c.cap_c4,c.suma_total1,c.asiste_d1,c.asiste_d2,c.asiste_d3,c.asiste_d4,c.asiste_d5,CASE WHEN (c.suma_total1)>=32 and c.cap_c4>=12 THEN 'Aprobado' ELSE 'Desaprobado' end as estado_capa1,
-				c.cap_c5,c.cap_c6,case when (c.cap_c5+c.cap_c6>=16) then 'Aprobado' else 'Desaprobado' end as estado_capa2, (((c.suma_total1 * (20/60)) * 0.7) + ((((c.cap_c5+c.cap_c6) * (20/30))*0.3)))as total_ponderado,
-                CASE WHEN (c.suma_total1)>=32 and c.cap_c4>=12 and (c.cap_c5+c.cap_c6>=16) THEN 'Aprobado' ELSE 'Desaprobado' END as estado_final
+        c.cap_c1,c.cap_c2,c.cap_c3,c.cap_c4,c.suma_total1,c.asiste_d1,c.asiste_d2,c.asiste_d3,CASE WHEN (c.suma_total1)>=43 and c.cap_c1>=8 THEN 'Aprobado' ELSE 'Desaprobado' end as estado_capa1,
+				c.cap_c5,c.cap_c6,case when (c.cap_c5+c.cap_c6>=16) then 'Aprobado' else 'Desaprobado' end as estado_capa2, (((c.suma_total1 * (20/80)) * 0.7) + ((((c.cap_c5+c.cap_c6) * (20/30))*0.3)))as total_ponderado,
+                CASE WHEN (c.suma_total1)>=43 and c.cap_c1>=8 and (c.cap_c5+c.cap_c6>=16) THEN 'Aprobado' ELSE 'Desaprobado' END as estado_final
         
      from capacitacion c 
             INNER JOIN persona_convocatoria pc on c.id_persona_convocatoria = pc.id 
@@ -805,8 +805,8 @@ class ExportController extends Controller
             where pc.id_convocatoria = 6 and sr.id IN (". $inClause .") order by region,provincia,total_ponderado desc,ESTADO ";
                 $resultado = DB::select($query);
                 $valores = array("titulo"=>"REPORTE DE CRITERIOS DE SUPERVISOR DE PROCESOS DE APLICACION", "nombre_hoja"=>"Result_SPA", "nom_archivo"=>"Reporte_Capa_SPA".date('Y_m_d'));
-                $cabecera = ['SEDE REGIONAL','SEDE PROVINCIAL','APELLIDOS Y NOMBRES','DNI','Desempeño en simulaciones','Manejo de instrumentos',
-                'Manejo de Funciones','Manejo de Procedimientos','Total MINEDU','Dia 1','Dia 2','Dia 3','Dia 4','Dia 5','Estado MINEDU','Desempeño en aula','Prueba escrita','Estado INEI','Total Ponderado','ESTADO FINAL'
+                $cabecera = ['SEDE REGIONAL','SEDE PROVINCIAL','APELLIDOS Y NOMBRES','DNI','Conocimientos Informáticos','Desempeño durante ejercicios',
+                'Desempeño durante la capacitacion','Prueba escrita de salida','Total MINEDU','Dia 1','Dia 2','Dia 3','Estado MINEDU','Desempeño en aula','Prueba escrita','Estado INEI','Total Ponderado','ESTADO FINAL'
                     ];
                 return new GeneralExport($resultado, $valores, $cabecera);    
     }

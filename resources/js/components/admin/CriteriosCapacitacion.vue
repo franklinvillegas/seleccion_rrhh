@@ -455,7 +455,7 @@ export default {
             case 6:
             this.listarRegistros.filtrosBusqueda.cargo=usuario;
             let urlSAS =
-                process.env.MIX_APP_URL +"/exportar/reporteEvaluacionSAS" +
+                process.env.MIX_APP_URL +"/exportar/reporteCapacitacionSAS" +
             Helper.getFilterURL(this.listarRegistros.filtrosBusqueda);
             window.open(urlSAS);
             break; 
