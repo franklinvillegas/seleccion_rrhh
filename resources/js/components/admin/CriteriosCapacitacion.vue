@@ -295,7 +295,7 @@ export default {
             case 6:
             const data7 = this.listarRegistros.data;
                     console.log('data', data7);
-                    axios.post("api/capacitacion/guardarSN", data7)
+                    axios.post("api/capacitacion/guardarSAS", data7)
                         .then((response) => {
                             this.$toastr.s(response.data.message);
                         })
