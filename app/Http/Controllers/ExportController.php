@@ -792,7 +792,7 @@ class ExportController extends Controller
         }
         $inClause = implode(',', $miArray); 
         $query = "select sr.nombre_sede as region,sp.nombre_sede as provincia,
-        concat(p.apellido_pat,' ',p.apellido_mat,' ',p.nombres) as datos, p.documento,
+        concat(p.apellido_pat,' ',p.apellido_mat,' ',p.nombres) as datos, p.documento,c.aula,
         c.cap_c1,c.cap_c2,c.cap_c3,c.cap_c4,c.suma_total1,c.asiste_d1,c.asiste_d2,c.asiste_d3,CASE WHEN (c.suma_total1)>=43 and c.cap_c1>=8 THEN 'Aprobado' ELSE 'Desaprobado' end as estado_capa1,
 				c.cap_c5,c.cap_c6,case when (c.cap_c5+c.cap_c6>=16) then 'Aprobado' else 'Desaprobado' end as estado_capa2, (((c.suma_total1 * (20/80)) * 0.7) + ((((c.cap_c5+c.cap_c6) * (20/30))*0.3)))as total_ponderado,
                 CASE WHEN (c.suma_total1)>=43 and c.cap_c1>=8 and (c.cap_c5+c.cap_c6>=16) THEN 'Aprobado' ELSE 'Desaprobado' END as estado_final
@@ -805,7 +805,7 @@ class ExportController extends Controller
             where pc.id_convocatoria = 6 and sr.id IN (". $inClause .") order by region,provincia,total_ponderado desc,ESTADO ";
                 $resultado = DB::select($query);
                 $valores = array("titulo"=>"REPORTE DE CRITERIOS DE SUPERVISORDE ALMACEN Y SOPORTE INFORMÁTICO", "nombre_hoja"=>"Result_SAS", "nom_archivo"=>"Reporte_Capa_SAS".date('Y_m_d'));
-                $cabecera = ['SEDE REGIONAL','SEDE PROVINCIAL','APELLIDOS Y NOMBRES','DNI','Conocimientos Informáticos','Desempeño durante ejercicios',
+                $cabecera = ['SEDE REGIONAL','SEDE PROVINCIAL','APELLIDOS Y NOMBRES','DNI','AULA','Conocimientos Informáticos','Desempeño durante ejercicios',
                 'Desempeño durante la capacitacion','Prueba escrita de salida','Total MINEDU','Dia 1','Dia 2','Dia 3','Estado MINEDU','Desempeño en aula','Prueba escrita','Estado INEI','Total Ponderado','ESTADO FINAL'
                     ];
                 return new GeneralExport($resultado, $valores, $cabecera);    
